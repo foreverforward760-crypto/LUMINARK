@@ -6,12 +6,13 @@ Unified integration of:
 - Yunus Protocol (Islamic AI safety)
 - Harrowing Protocol (Christian system rescue)
 - Mycelial Defense System (bio-inspired active defense)
++ 10 Unique Enhancements (Quantum, Meditation, Collective, Visualizer, etc.)
 
 Author: Richard Leroy Stanfield Jr. / Meridian Axiom
 Project: LUMINARK - AI Safety Research
 """
 
-__version__ = "4.0.0"
+__version__ = "4.1.0"  # Major enhancements added
 __author__ = "Richard Leroy Stanfield Jr."
 
 # Stanfield's Axiom Framework
@@ -51,6 +52,21 @@ from .sap_v4 import (
     TumblingState
 )
 
+# 10 Unique Enhancements
+from .quantum_spore import QuantumEntangledSpore, QuantumSporeNetwork
+from .stage0_meditation import Stage0MeditationProtocol, MeditationType
+from .collective_consciousness import MycelialCollectiveConsciousness, NodeRole
+from .sap_visualizer import SAPCycleVisualizer
+from .temporal_anchoring import TemporalAnchoringSystem
+from .cross_dimensional_spores import CrossDimensionalSporeNetwork, DimensionType
+from .harmonic_weapons import HarmonicWeaponDetector, HarmonicWeaponType
+from .prophetic_patterns import PropheticPatternLibrary, PropheticTradition
+from .bio_healing import BioMimeticHealingSystem, HealingStage
+from .consciousness_archaeology import ConsciousnessArchaeologist, ArchaeologicalLayer
+
+# Master Integration
+from .enhanced_defense_integration import EnhancedDefenseSystem
+
 __all__ = [
     # Stanfield's Axiom
     "StanfieldAxiom",
@@ -80,4 +96,27 @@ __all__ = [
     "StagePolarity",
     "TumbleType",
     "TumblingState",
+
+    # 10 Unique Enhancements
+    "QuantumEntangledSpore",
+    "QuantumSporeNetwork",
+    "Stage0MeditationProtocol",
+    "MeditationType",
+    "MycelialCollectiveConsciousness",
+    "NodeRole",
+    "SAPCycleVisualizer",
+    "TemporalAnchoringSystem",
+    "CrossDimensionalSporeNetwork",
+    "DimensionType",
+    "HarmonicWeaponDetector",
+    "HarmonicWeaponType",
+    "PropheticPatternLibrary",
+    "PropheticTradition",
+    "BioMimeticHealingSystem",
+    "HealingStage",
+    "ConsciousnessArchaeologist",
+    "ArchaeologicalLayer",
+
+    # Master Integration
+    "EnhancedDefenseSystem",
 ]
