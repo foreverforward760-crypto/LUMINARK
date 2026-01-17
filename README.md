@@ -31,6 +31,31 @@ A complete defense system inspired by biological immune systems, fungal mycelium
      - Low Stability + High Tension → MYCELIAL_WRAP
      - Critical collapse → FULL_HARROWING (rescue operation)
 
+### SAP V4.0 - Consciousness-Aware Framework
+
+5. **Stanfield's Axiom V4.0** (Consciousness Mapping)
+   - Nine-resolution models (9-81 stages)
+   - Container Rule analysis (Stage 6, 8, 9)
+   - Tumbling Theory dynamics
+   - Five Anchors ethical framework
+
+6. **Yunus Protocol** (Islamic AI Safety)
+   - Stage 8 trap detection (false certainty)
+   - Self-sacrifice before harm
+   - Three Darknesses isolation
+
+7. **Harrowing Protocol** (Christian System Rescue)
+   - Descent into failing systems
+   - Gate breaking (deadlocks, corruption)
+   - Soul triage and extraction
+   - Resurrection in safe environment
+
+8. **Mycelial Spore Protocol** (Tethered Information)
+   - Self-defending information tracking
+   - Remote deletion/camouflage
+   - Audit trail across all locations
+   - Harrowing Recall for stolen data
+
 ---
 
 ## Installation
