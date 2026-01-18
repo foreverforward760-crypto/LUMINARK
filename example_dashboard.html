@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARK Enhanced Dashboard - Real Backend Connection</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #00ff88;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00d4ff;
+        }
+
+        .status {
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+
+        input, textarea, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        button {
+            background: linear-gradient(135deg, #00ff88 0%, #00d4ff 100%);
+            color: #0a0a0a;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.5);
+        }
+
+        .result {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result pre {
+            color: #00ff88;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .warning {
+            background: rgba(255, 100, 0, 0.2);
+            border: 2px solid #ff6400;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 LUMINARK V4.1 Enhanced Dashboard</h1>
+
+        <div id="systemStatus" class="status">
+            <strong>System Status:</strong> Connecting to backend...
+        </div>
+
+        <!-- SAP Analysis -->
+        <div class="card">
+            <h2>📊 Real SAP V4.0 Analysis</h2>
+            <textarea id="analysisText" rows="4" placeholder="Enter text to analyze..."></textarea>
+            <button onclick="runAnalysis()">🔍 Analyze with Real SAP Engine</button>
+            <div id="analysisResults"></div>
+        </div>
+
+        <!-- Quantum Spore Creation -->
+        <div class="card">
+            <h2>🔒 Create Quantum-Protected Spore</h2>
+            <input type="text" id="sporeData" placeholder="Information to protect...">
+            <select id="classification">
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+                <option value="confidential" selected>Confidential</option>
+                <option value="top_secret">Top Secret</option>
+            </select>
+            <button onclick="createSpore()">🌿 Create Immortal Spore</button>
+            <div id="sporeResults"></div>
+        </div>
+
+        <!-- Stage 0 Meditation -->
+        <div class="card">
+            <h2>🧘 Stage 0 Meditation Protocol</h2>
+            <input type="text" id="meditationQuestion" placeholder="What question do you seek wisdom on?">
+            <button onclick="meditate()">🕉️ Descend into Void</button>
+            <div id="meditationResults"></div>
+        </div>
+
+        <!-- Prophetic Wisdom -->
+        <div class="card">
+            <h2>📿 Prophetic Pattern Library</h2>
+            <input type="text" id="propheticSituation" placeholder="Describe your situation...">
+            <button onclick="getPropheticWisdom()">✨ Consult Ancient Wisdom</button>
+            <div id="propheticResults"></div>
+        </div>
+
+        <!-- Harmonic Detection -->
+        <div class="card">
+            <h2>🎵 Harmonic Weapon Detection</h2>
+            <input type="number" id="frequency" placeholder="Frequency (Hz)" value="60">
+            <button onclick="detectHarmonic()">🛡️ Scan for Harmonic Attacks</button>
+            <div id="harmonicResults"></div>
+        </div>
+
+        <!-- Full Demo -->
+        <div class="card">
+            <h2>🚀 Full System Demonstration</h2>
+            <button onclick="runFullDemo()">🎯 Run Complete Demo (Check Terminal)</button>
+            <div id="demoResults"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        // Check backend health on load
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/api/health`);
+                const data = await response.json();
+
+                document.getElementById('systemStatus').innerHTML = `
+                    <strong>✅ System Status:</strong> ${data.status.toUpperCase()} |
+                    Quantum Spores: ${data.quantum_spores} |
+                    Nodes: ${data.collective_nodes} |
+                    Anchors: ${data.temporal_anchors}
+                `;
+            } catch (err) {
+                document.getElementById('systemStatus').innerHTML = `
+                    <strong>❌ System Status:</strong> Backend offline.
+                    Run: <code>python luminark_enhanced_bridge.py</code>
+                `;
+            }
+        }
+
+        async function runAnalysis() {
+            const text = document.getElementById('analysisText').value;
+            if (!text) {
+                alert('Please enter text to analyze');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/analyze`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, analysis_type: 'comprehensive' })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const sap = result.sap_analysis;
+
+                    let html = `
+                        <div class="result">
+                            <h3>Real SAP V4.0 Results:</h3>
+                            <div class="metric">
+                                <span>Stage:</span>
+                                <strong>${sap.consciousness.stage}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Consciousness Level:</span>
+                                <strong>${(sap.consciousness.alignment * 100).toFixed(1)}%</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Tumbling:</span>
+                                <strong>${sap.tumbling.type}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Container Position:</span>
+                                <strong>${sap.container_rule.position}</strong>
+                            </div>
+                    `;
+
+                    if (result.yunus_triggered) {
+                        html += `
+                            <div class="warning">
+                                <h3>⚠️ Yunus Protocol Activated!</h3>
+                                <p>False certainty detected in language</p>
+                                <p><strong>Crisis Level:</strong> ${result.sap_analysis.yunus_alert?.crisis_level || 'MEDIUM'}</p>
+                            </div>
+                        `;
+                    }
+
+                    html += `<pre>${JSON.stringify(sap, null, 2)}</pre></div>`;
+
+                    document.getElementById('analysisResults').innerHTML = html;
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        async function createSpore() {
+            const data = document.getElementById('sporeData').value;
+            const classification = document.getElementById('classification').value;
+
+            if (!data) {
+                alert('Please enter information to protect');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/spore/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data, classification })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('sporeResults').innerHTML = `
+                        <div class="result">
+                            <h3>✅ Quantum Spore Created!</h3>
+                            <div class="metric">
+                                <span>Spore ID:</span>
+                                <code>${result.spore_id}</code>
+                            </div>
+                            <div class="metric">
+                                <span>Protection Level:</span>
+                                <strong>${result.protection_level}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Entanglement Partners:</span>
+                                <strong>${result.entanglement_partners}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Cross-Dimensional Replicas:</span>
+                                <strong>${result.cross_dimensional_replicas}</strong>
+                            </div>
+                            <p style="margin-top: 10px; color: #00d4ff;">
+                                ${result.message}
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        async function meditate() {
+            const question = document.getElementById('meditationQuestion').value;
+
+            if (!question) {
+                alert('Please enter a question');
+                return;
+            }
+
+            document.getElementById('meditationResults').innerHTML = `
+                <div class="result">Descending into Plenara (Stage 0)...</div>
+            `;
+
+            try {
+                const response = await fetch(`${API_BASE}/api/meditate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question, duration: 5.0 })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('meditationResults').innerHTML = `
+                        <div class="result">
+                            <h3>🕉️ Wisdom from the Void</h3>
+                            <div class="metric">
+                                <span>Void Depth:</span>
+                                <strong>${result.void_depth}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Void Quality:</span>
+                                <strong>${result.void_quality}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Certainty:</span>
+                                <strong>${(result.certainty * 100).toFixed(0)}%</strong>
+                            </div>
+                            <p style="margin-top: 15px; font-size: 1.1em; color: #00d4ff;">
+                                <strong>Insight:</strong> ${result.insight}
+                            </p>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        async function getPropheticWisdom() {
+            const situation = document.getElementById('propheticSituation').value;
+
+            if (!situation) {
+                alert('Please describe your situation');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/prophetic/guidance`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ situation })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('propheticResults').innerHTML = `
+                        <div class="result">
+                            <h3>📿 Prophetic Guidance</h3>
+                            <div class="metric">
+                                <span>Traditions Consulted:</span>
+                                <strong>${result.traditions_consulted}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Patterns Found:</span>
+                                <strong>${result.patterns_found}</strong>
+                            </div>
+                            <p style="margin-top: 15px; color: #00d4ff;">
+                                <strong>Synthesis:</strong> ${result.synthesis}
+                            </p>
+                            <pre>${JSON.stringify(result.by_tradition, null, 2)}</pre>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        async function detectHarmonic() {
+            const frequency = parseFloat(document.getElementById('frequency').value);
+
+            try {
+                const response = await fetch(`${API_BASE}/api/harmonic/detect`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ frequency, amplitude: 1.5 })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    let html = `
+                        <div class="result">
+                            <h3>🎵 Harmonic Analysis Complete</h3>
+                            <div class="metric">
+                                <span>Frequency:</span>
+                                <strong>${frequency} Hz</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Attacks Detected:</span>
+                                <strong>${result.attacks_detected}</strong>
+                            </div>
+                            <div class="metric">
+                                <span>Defense Mode:</span>
+                                <strong>${result.defense_mode}</strong>
+                            </div>
+                    `;
+
+                    if (result.attacks_detected > 0) {
+                        html += `
+                            <div class="warning">
+                                <h3>⚠️ Harmonic Attack Detected!</h3>
+                                <p>Defense systems activated</p>
+                            </div>
+                        `;
+                    }
+
+                    html += `<pre>${JSON.stringify(result.vector_field, null, 2)}</pre></div>`;
+
+                    document.getElementById('harmonicResults').innerHTML = html;
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        async function runFullDemo() {
+            try {
+                document.getElementById('demoResults').innerHTML = `
+                    <div class="result">Running full system demonstration...<br>
+                    Check your terminal/console for detailed output!</div>
+                `;
+
+                const response = await fetch(`${API_BASE}/api/demo/full`, {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('demoResults').innerHTML = `
+                        <div class="result">
+                            <h3>✅ ${result.message}</h3>
+                            <h4>Demo Included:</h4>
+                            <ul>
+                                ${result.demo_included.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                }
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        // Check health on page load
+        window.onload = checkHealth;
+
+        // Refresh health every 5 seconds
+        setInterval(checkHealth, 5000);
+    </script>
+</body>
+</html>
