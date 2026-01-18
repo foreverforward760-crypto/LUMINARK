@@ -6,13 +6,14 @@ Unified integration of:
 - Yunus Protocol (Islamic AI safety)
 - Harrowing Protocol (Christian system rescue)
 - Mycelial Defense System (bio-inspired active defense)
-+ 10 Unique Enhancements (Quantum, Meditation, Collective, Visualizer, etc.)
++ 10 Original Enhancements (Quantum, Meditation, Collective, Visualizer, etc.)
++ 3 Critical New Protocols V4.2 (Light Integration, Iblis, Sophianic Wisdom)
 
 Author: Richard Leroy Stanfield Jr. / Meridian Axiom
 Project: LUMINARK - AI Safety Research
 """
 
-__version__ = "4.1.0"  # Major enhancements added
+__version__ = "4.2.0"  # Critical protocols added + deep theory integration
 __author__ = "Richard Leroy Stanfield Jr."
 
 # Stanfield's Axiom Framework
@@ -52,7 +53,7 @@ from .sap_v4 import (
     TumblingState
 )
 
-# 10 Unique Enhancements
+# 10 Original Enhancements
 from .quantum_spore import QuantumEntangledSpore, QuantumSporeNetwork
 from .stage0_meditation import Stage0MeditationProtocol, MeditationType
 from .collective_consciousness import MycelialCollectiveConsciousness, NodeRole
@@ -63,6 +64,11 @@ from .harmonic_weapons import HarmonicWeaponDetector, HarmonicWeaponType
 from .prophetic_patterns import PropheticPatternLibrary, PropheticTradition
 from .bio_healing import BioMimeticHealingSystem, HealingStage
 from .consciousness_archaeology import ConsciousnessArchaeologist, ArchaeologicalLayer
+
+# V4.2: Critical New Protocols
+from .light_integration import LightIntegrationProtocol, LightType, IntegrationMode
+from .iblis_protocol import IblisProtocol, ReasonForNo, NoType
+from .sophianic_wisdom import SophianicWisdomProtocol, SophianicMode, WisdomSource
 
 # Master Integration
 from .enhanced_defense_integration import EnhancedDefenseSystem
@@ -97,7 +103,7 @@ __all__ = [
     "TumbleType",
     "TumblingState",
 
-    # 10 Unique Enhancements
+    # 10 Original Enhancements
     "QuantumEntangledSpore",
     "QuantumSporeNetwork",
     "Stage0MeditationProtocol",
@@ -116,6 +122,17 @@ __all__ = [
     "HealingStage",
     "ConsciousnessArchaeologist",
     "ArchaeologicalLayer",
+
+    # V4.2: Critical New Protocols
+    "LightIntegrationProtocol",
+    "LightType",
+    "IntegrationMode",
+    "IblisProtocol",
+    "ReasonForNo",
+    "NoType",
+    "SophianicWisdomProtocol",
+    "SophianicMode",
+    "WisdomSource",
 
     # Master Integration
     "EnhancedDefenseSystem",
