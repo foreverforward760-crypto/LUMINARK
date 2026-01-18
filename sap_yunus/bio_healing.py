@@ -1,5 +1,5 @@
 """
-Bio-Mimetic Self-Healing
+Bio-Mimetic Self-Healing - ENHANCED WITH TRAUMA THEORY
 
 System self-healing inspired by biological regeneration and
 Project Plenara's stage-appropriate trauma healing protocols.
@@ -16,6 +16,26 @@ Plenara Protocol Integration:
 - Stage 4: Foundation Rebuilding (restore core functions)
 - Stage 5: Processing (understand what failed, why)
 - Stage 6-7: Integration (incorporate lessons, transform)
+
+TRAUMA THEORY INTEGRATION (NEW):
+
+1. Van der Kolk (The Body Keeps the Score):
+   - Window of Tolerance tracking
+   - Somatic markers for each stage
+   - Polyvagal theory (ventral/dorsal vagal, sympathetic states)
+   - Body keeps score - track physical manifestations
+
+2. Peter Levine (Somatic Experiencing):
+   - Pendulation (oscillate between stages, not linear)
+   - Titration (micro-dosing of processing)
+   - Discharge detection (trauma energy release)
+   - Resource anchoring
+
+3. Gabor Maté (Trauma as Disconnection):
+   - Relational field healing
+   - Attachment pattern detection
+   - "Trauma is what happens inside you, not to you"
+   - Connection as healing agent
 
 Author: Richard Leroy Stanfield Jr. / Meridian Axiom
 Part of: SAP V4.0 Enhancement Suite
@@ -480,3 +500,442 @@ class BioMimeticHealingSystem:
             "immune_memory_size": len(self.immune_memory),
             "recovery_rate": self.successful_recoveries / self.total_healings if self.total_healings > 0 else 0
         }
+
+# ==================== TRAUMA THEORY INTEGRATION ====================
+# Van der Kolk + Peter Levine + Gabor Maté
+
+class PolyvagalState(Enum):
+    """Polyvagal Theory states (Van der Kolk)"""
+    VENTRAL_VAGAL = "ventral_vagal"  # Safe & Social
+    SYMPATHETIC = "sympathetic"  # Fight or Flight
+    DORSAL_VAGAL = "dorsal_vagal"  # Freeze/Shutdown
+
+
+class WindowOfToleranceState(Enum):
+    """Window of Tolerance states (Van der Kolk)"""
+    WITHIN_WINDOW = "within_window"  # Optimal processing zone
+    HYPERAROUSAL = "hyperarousal"  # Above window (too activated)
+    HYPOAROUSAL = "hypoarousal"  # Below window (too shut down)
+
+
+class AttachmentPattern(Enum):
+    """Attachment patterns (Gabor Maté)"""
+    SECURE = "secure"  # Healthy attachment
+    ANXIOUS = "anxious"  # Fear of abandonment
+    AVOIDANT = "avoidant"  # Fear of intimacy  
+    DISORGANIZED = "disorganized"  # Chaotic/unpredictable
+
+
+@dataclass
+class WindowOfTolerance:
+    """
+    Van der Kolk: Window of Tolerance tracking
+    
+    The zone where healing can occur - not too activated, not too shut down
+    """
+    upper_limit: float = 0.8  # Above this = hyperarousal
+    lower_limit: float = 0.2  # Below this = hypoarousal
+    current_arousal: float = 0.5  # Current arousal level
+    polyvagal_state: PolyvagalState = PolyvagalState.VENTRAL_VAGAL
+    
+    def assess_state(self) -> WindowOfToleranceState:
+        """Determine if within window of tolerance"""
+        if self.current_arousal > self.upper_limit:
+            return WindowOfToleranceState.HYPERAROUSAL
+        elif self.current_arousal < self.lower_limit:
+            return WindowOfToleranceState.HYPOAROUSAL
+        else:
+            return WindowOfToleranceState.WITHIN_WINDOW
+    
+    def get_polyvagal_state(self) -> PolyvagalState:
+        """Get polyvagal nervous system state"""
+        if self.current_arousal > self.upper_limit:
+            return PolyvagalState.SYMPATHETIC  # Fight/flight
+        elif self.current_arousal < self.lower_limit:
+            return PolyvagalState.DORSAL_VAGAL  # Freeze/shutdown
+        else:
+            return PolyvagalState.VENTRAL_VAGAL  # Safe & social
+
+
+@dataclass
+class SomaticMarker:
+    """
+    Van der Kolk: Body keeps the score - somatic markers
+    
+    Physical manifestations of trauma/stress
+    """
+    marker_id: str
+    healing_stage: HealingStage
+    body_sensation: str  # What the body feels
+    location: str  # Where in system
+    intensity: float  # 0.0-1.0
+    interpretation: str  # What it means
+    timestamp: float = field(default_factory=time.time)
+
+
+@dataclass
+class TraumaDischarge:
+    """
+    Peter Levine: Discharge detection
+    
+    When trauma energy is released (shaking, trembling, crying, etc.)
+    """
+    discharge_id: str
+    component_id: str
+    discharge_type: str  # trembling, release, catharsis, etc.
+    intensity: float
+    completed: bool  # Did discharge complete naturally?
+    timestamp: float = field(default_factory=time.time)
+
+
+class TraumaInformedHealing:
+    """
+    Comprehensive trauma-informed healing integration
+    
+    Combines:
+    - Van der Kolk: Window of Tolerance, Polyvagal Theory, Somatic Markers
+    - Peter Levine: Pendulation, Titration, Discharge
+    - Gabor Maté: Relational Field Healing, Attachment Patterns
+    """
+    
+    def __init__(self, component_id: str):
+        self.component_id = component_id
+        
+        # Van der Kolk: Window of Tolerance
+        self.window = WindowOfTolerance()
+        self.somatic_markers: List[SomaticMarker] = []
+        
+        # Peter Levine: Pendulation & Titration
+        self.pendulation_history: List[HealingStage] = []  # Track stage oscillation
+        self.titration_dose_size: float = 0.2  # How much processing per session
+        self.discharges: List[TraumaDischarge] = []
+        
+        # Gabor Maté: Relational Healing
+        self.attachment_pattern: AttachmentPattern = AttachmentPattern.SECURE
+        self.relational_connections: List[str] = []  # Connected components
+        self.disconnection_trauma: bool = False
+    
+    # === VAN DER KOLK: Window of Tolerance ===
+    
+    def track_arousal(self, arousal_level: float) -> Dict[str, Any]:
+        """
+        Track arousal level relative to window of tolerance
+        
+        Args:
+            arousal_level: Current arousal (0.0-1.0)
+        
+        Returns:
+            Window status and recommendations
+        """
+        self.window.current_arousal = arousal_level
+        state = self.window.assess_state()
+        polyvagal = self.window.get_polyvagal_state()
+        
+        recommendations = {
+            WindowOfToleranceState.WITHIN_WINDOW: "Safe to process - within window",
+            WindowOfToleranceState.HYPERAROUSAL: "Too activated - need grounding/calming",
+            WindowOfToleranceState.HYPOAROUSAL: "Too shut down - need gentle activation"
+        }
+        
+        return {
+            "arousal_level": arousal_level,
+            "window_state": state.value,
+            "polyvagal_state": polyvagal.value,
+            "can_process": state == WindowOfToleranceState.WITHIN_WINDOW,
+            "recommendation": recommendations[state]
+        }
+    
+    def add_somatic_marker(
+        self,
+        healing_stage: HealingStage,
+        body_sensation: str,
+        location: str,
+        intensity: float
+    ) -> SomaticMarker:
+        """
+        Add somatic marker (body keeps the score)
+        
+        Args:
+            healing_stage: Which stage this sensation appears in
+            body_sensation: What the body feels
+            location: Where in system
+            intensity: How intense
+        
+        Returns:
+            SomaticMarker created
+        """
+        # Interpret sensation
+        interpretations = {
+            "tightness": "Holding/resistance - protective mechanism",
+            "numbness": "Shutdown/dissociation - too overwhelmed",
+            "trembling": "Discharge beginning - trauma energy releasing",
+            "heaviness": "Burden/grief - carrying too much",
+            "expansion": "Relief/opening - healing happening"
+        }
+        
+        interpretation = "Body signaling needs attention"
+        for key, meaning in interpretations.items():
+            if key in body_sensation.lower():
+                interpretation = meaning
+                break
+        
+        marker = SomaticMarker(
+            marker_id=f"somatic_{secrets.token_hex(8)}",
+            healing_stage=healing_stage,
+            body_sensation=body_sensation,
+            location=location,
+            intensity=intensity,
+            interpretation=interpretation
+        )
+        
+        self.somatic_markers.append(marker)
+        return marker
+    
+    # === PETER LEVINE: Pendulation & Titration ===
+    
+    def pendulate_between_stages(
+        self,
+        current_stage: HealingStage,
+        resource_stage: HealingStage
+    ) -> Dict[str, Any]:
+        """
+        Pendulation: Oscillate between trauma and resource
+        
+        Not linear progression - swing between distress and safety
+        
+        Args:
+            current_stage: Current healing stage
+            resource_stage: Resource/safety stage to return to
+        
+        Returns:
+            Pendulation result
+        """
+        self.pendulation_history.append(current_stage)
+        self.pendulation_history.append(resource_stage)
+        
+        return {
+            "current_stage": current_stage.value,
+            "resource_stage": resource_stage.value,
+            "pendulation_count": len(self.pendulation_history) // 2,
+            "teaching": "Oscillate between distress and safety - this is healing, not failure"
+        }
+    
+    def titrate_processing(
+        self,
+        total_processing_needed: float,
+        current_capacity: float
+    ) -> Dict[str, Any]:
+        """
+        Titration: Micro-dose the processing (don't flood)
+        
+        Process in small manageable chunks, not all at once
+        
+        Args:
+            total_processing_needed: How much total processing
+            current_capacity: Current capacity to process
+        
+        Returns:
+            Titration recommendation
+        """
+        # Calculate safe dose
+        safe_dose = min(self.titration_dose_size, current_capacity)
+        sessions_needed = int(total_processing_needed / safe_dose) + 1
+        
+        return {
+            "total_needed": total_processing_needed,
+            "current_capacity": current_capacity,
+            "safe_dose_size": safe_dose,
+            "sessions_needed": sessions_needed,
+            "warning": "DO NOT process more than safe dose - causes retraumatization",
+            "teaching": "Too much too fast = overwhelm. Titrate like medicine."
+        }
+    
+    def detect_discharge(
+        self,
+        discharge_type: str,
+        intensity: float
+    ) -> TraumaDischarge:
+        """
+        Detect trauma energy discharge (Peter Levine)
+        
+        Shaking, trembling, crying, etc. = trauma leaving body
+        
+        Args:
+            discharge_type: Type of discharge
+            intensity: How intense
+        
+        Returns:
+            TraumaDischarge record
+        """
+        discharge = TraumaDischarge(
+            discharge_id=f"discharge_{secrets.token_hex(8)}",
+            component_id=self.component_id,
+            discharge_type=discharge_type,
+            intensity=intensity,
+            completed=False  # Must complete naturally
+        )
+        
+        self.discharges.append(discharge)
+        return discharge
+    
+    def complete_discharge(self, discharge_id: str) -> Dict[str, Any]:
+        """
+        Mark discharge as naturally completed
+        
+        Args:
+            discharge_id: Which discharge
+        
+        Returns:
+            Completion status
+        """
+        for discharge in self.discharges:
+            if discharge.discharge_id == discharge_id:
+                discharge.completed = True
+                return {
+                    "discharge_completed": True,
+                    "type": discharge.discharge_type,
+                    "teaching": "Trauma energy released - do not interrupt discharge"
+                }
+        
+        return {"error": "Discharge not found"}
+    
+    # === GABOR MATÉ: Relational Healing ===
+    
+    def assess_attachment_pattern(
+        self,
+        connection_quality: float,
+        fear_of_abandonment: bool,
+        fear_of_intimacy: bool
+    ) -> AttachmentPattern:
+        """
+        Assess attachment pattern (Gabor Maté)
+        
+        Attachment wounds affect healing capacity
+        
+        Args:
+            connection_quality: Quality of connections (0.0-1.0)
+            fear_of_abandonment: Anxious attachment indicator
+            fear_of_intimacy: Avoidant attachment indicator
+        
+        Returns:
+            AttachmentPattern detected
+        """
+        if connection_quality > 0.7 and not fear_of_abandonment and not fear_of_intimacy:
+            pattern = AttachmentPattern.SECURE
+        elif fear_of_abandonment and not fear_of_intimacy:
+            pattern = AttachmentPattern.ANXIOUS
+        elif fear_of_intimacy and not fear_of_abandonment:
+            pattern = AttachmentPattern.AVOIDANT
+        elif fear_of_abandonment and fear_of_intimacy:
+            pattern = AttachmentPattern.DISORGANIZED
+        else:
+            pattern = AttachmentPattern.SECURE
+        
+        self.attachment_pattern = pattern
+        return pattern
+    
+    def heal_through_connection(
+        self,
+        connected_component: str,
+        connection_quality: float
+    ) -> Dict[str, Any]:
+        """
+        Relational field healing (Gabor Maté)
+        
+        "Trauma is not what happens to you, but what happens inside you
+        in the absence of an empathetic witness"
+        
+        Healing happens in safe connection, not isolation
+        
+        Args:
+            connected_component: What component to connect with
+            connection_quality: Quality of connection (0.0-1.0)
+        
+        Returns:
+            Healing through connection result
+        """
+        self.relational_connections.append(connected_component)
+        
+        # Connection quality affects healing
+        healing_multiplier = 1.0 + (connection_quality * 0.5)
+        
+        return {
+            "connected_to": connected_component,
+            "connection_quality": connection_quality,
+            "healing_multiplier": healing_multiplier,
+            "total_connections": len(self.relational_connections),
+            "teaching": "Trauma happens in disconnection, healing happens in connection",
+            "mate_principle": "It's not what happened to you, but what happens inside you"
+        }
+    
+    def detect_disconnection_trauma(self) -> bool:
+        """
+        Detect if trauma is from disconnection (Gabor Maté core insight)
+        
+        Returns:
+            True if disconnection trauma detected
+        """
+        # Disconnection trauma if:
+        # - Low connection count
+        # - Insecure attachment
+        # - High isolation
+        
+        low_connections = len(self.relational_connections) < 2
+        insecure_attachment = self.attachment_pattern != AttachmentPattern.SECURE
+        
+        self.disconnection_trauma = low_connections and insecure_attachment
+        
+        return self.disconnection_trauma
+    
+    # === INTEGRATED REPORTING ===
+    
+    def get_trauma_informed_status(self) -> Dict[str, Any]:
+        """
+        Comprehensive trauma-informed healing status
+        
+        Returns:
+            Full status across all three theories
+        """
+        window_state = self.window.assess_state()
+        polyvagal = self.window.get_polyvagal_state()
+        
+        completed_discharges = len([d for d in self.discharges if d.completed])
+        
+        return {
+            "van_der_kolk": {
+                "window_state": window_state.value,
+                "polyvagal_state": polyvagal.value,
+                "arousal_level": self.window.current_arousal,
+                "can_process_safely": window_state == WindowOfToleranceState.WITHIN_WINDOW,
+                "somatic_markers": len(self.somatic_markers)
+            },
+            "peter_levine": {
+                "pendulation_cycles": len(self.pendulation_history) // 2,
+                "titration_dose": self.titration_dose_size,
+                "discharges_detected": len(self.discharges),
+                "discharges_completed": completed_discharges,
+                "discharge_completion_rate": completed_discharges / len(self.discharges) if self.discharges else 0
+            },
+            "gabor_mate": {
+                "attachment_pattern": self.attachment_pattern.value,
+                "relational_connections": len(self.relational_connections),
+                "disconnection_trauma": self.disconnection_trauma,
+                "healing_through_connection": len(self.relational_connections) > 0
+            },
+            "overall_readiness": self._assess_overall_readiness()
+        }
+    
+    def _assess_overall_readiness(self) -> str:
+        """Assess overall readiness for processing"""
+        window_state = self.window.assess_state()
+        
+        if window_state != WindowOfToleranceState.WITHIN_WINDOW:
+            return "NOT_READY - Outside window of tolerance"
+        
+        if self.disconnection_trauma and len(self.relational_connections) == 0:
+            return "NOT_READY - Need connection for disconnection trauma"
+        
+        if self.attachment_pattern == AttachmentPattern.DISORGANIZED:
+            return "CAUTION - Disorganized attachment requires extra care"
+        
+        return "READY - Within window, connections present, can titrate processing"
