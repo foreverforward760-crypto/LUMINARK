@@ -8,12 +8,13 @@ Unified integration of:
 - Mycelial Defense System (bio-inspired active defense)
 + 10 Original Enhancements (Quantum, Meditation, Collective, Visualizer, etc.)
 + 3 Critical New Protocols V4.2 (Light Integration, Iblis, Sophianic Wisdom)
++ Empirical SAP Diagnostic V4.3 (Guru-proof stage assessment)
 
 Author: Richard Leroy Stanfield Jr. / Meridian Axiom
 Project: LUMINARK - AI Safety Research
 """
 
-__version__ = "4.2.0"  # Critical protocols added + deep theory integration
+__version__ = "4.3.0"  # Empirical diagnostic with guru-proofing added
 __author__ = "Richard Leroy Stanfield Jr."
 
 # Stanfield's Axiom Framework
@@ -69,6 +70,9 @@ from .consciousness_archaeology import ConsciousnessArchaeologist, Archaeologica
 from .light_integration import LightIntegrationProtocol, LightType, IntegrationMode
 from .iblis_protocol import IblisProtocol, ReasonForNo, NoType
 from .sophianic_wisdom import SophianicWisdomProtocol, SophianicMode, WisdomSource
+
+# V4.3: Empirical SAP Diagnostic
+from .sap_diagnostic import SAPDiagnostic, SAPAssessment, SAPStage, TrajectoryType
 
 # Master Integration
 from .enhanced_defense_integration import EnhancedDefenseSystem
@@ -133,6 +137,12 @@ __all__ = [
     "SophianicWisdomProtocol",
     "SophianicMode",
     "WisdomSource",
+
+    # V4.3: Empirical SAP Diagnostic
+    "SAPDiagnostic",
+    "SAPAssessment",
+    "SAPStage",
+    "TrajectoryType",
 
     # Master Integration
     "EnhancedDefenseSystem",
