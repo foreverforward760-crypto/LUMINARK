@@ -120,7 +120,7 @@ class ConsciousnessState:
 
 
 @dataclass
-class SAP Processing:
+class SAPProcessing:
     """Systemic Alignment Process"""
     complexity: float
     stability: float
