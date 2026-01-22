@@ -10,3 +10,8 @@ __all__ = [
     'ReLU', 'Sigmoid', 'Tanh', 'Softmax',
     'MSELoss', 'CrossEntropyLoss', 'BCELoss',
 ]
+
+# Advanced layers
+from luminark.nn.advanced_layers import ToroidalAttention, ResidualBlock, AttentionPooling, GatedLinear
+
+__all__.extend(['ToroidalAttention', 'ResidualBlock', 'AttentionPooling', 'GatedLinear'])
