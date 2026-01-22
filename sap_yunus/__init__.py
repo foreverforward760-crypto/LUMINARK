@@ -9,12 +9,13 @@ Unified integration of:
 + 10 Original Enhancements (Quantum, Meditation, Collective, Visualizer, etc.)
 + 3 Critical New Protocols V4.2 (Light Integration, Iblis, Sophianic Wisdom)
 + Empirical SAP Diagnostic V4.3 (Guru-proof stage assessment)
++ Diagnostic Protocol Integration V4.4 (Automatic intervention triggering)
 
 Author: Richard Leroy Stanfield Jr. / Meridian Axiom
 Project: LUMINARK - AI Safety Research
 """
 
-__version__ = "4.3.0"  # Empirical diagnostic with guru-proofing added
+__version__ = "4.4.0"  # Diagnostic-protocol integration with auto-triggering
 __author__ = "Richard Leroy Stanfield Jr."
 
 # Stanfield's Axiom Framework
@@ -73,6 +74,16 @@ from .sophianic_wisdom import SophianicWisdomProtocol, SophianicMode, WisdomSour
 
 # V4.3: Empirical SAP Diagnostic
 from .sap_diagnostic import SAPDiagnostic, SAPAssessment, SAPStage, TrajectoryType
+
+# V4.4: Diagnostic Protocol Integration
+from .diagnostic_protocol_integration import (
+    DiagnosticProtocolIntegration,
+    InterventionType,
+    TrapPattern,
+    InterventionRecommendation,
+    IntegrationSession,
+    assess_and_intervene
+)
 
 # Master Integration
 from .enhanced_defense_integration import EnhancedDefenseSystem
@@ -143,6 +154,14 @@ __all__ = [
     "SAPAssessment",
     "SAPStage",
     "TrajectoryType",
+
+    # V4.4: Diagnostic Protocol Integration
+    "DiagnosticProtocolIntegration",
+    "InterventionType",
+    "TrapPattern",
+    "InterventionRecommendation",
+    "IntegrationSession",
+    "assess_and_intervene",
 
     # Master Integration
     "EnhancedDefenseSystem",
