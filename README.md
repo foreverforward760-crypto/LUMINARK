@@ -11,8 +11,10 @@ A production-ready AI/ML framework for building, training, and deploying neural 
 - 🧠 **Automatic Differentiation** - Complete autograd system with backward propagation
 - 🏗️ **Modular Architecture** - PyTorch-like API for easy model building
 - 🎯 **Multiple Optimizers** - SGD, Adam with momentum and weight decay
+- 📉 **Learning Rate Schedulers** - 6 schedulers including cosine annealing and plateau detection
+- 💾 **Model Checkpointing** - Save/load complete training state for resuming
 - 📊 **Rich Layer Library** - Linear, ReLU, Sigmoid, Tanh, Softmax, Dropout, Sequential
-- 💾 **Data Loading** - Efficient DataLoader with batching and shuffling
+- 🔄 **Data Loading** - Efficient DataLoader with batching and shuffling
 - 📈 **Loss Functions** - MSE, CrossEntropy, BCE for various tasks
 
 ### Monitoring & Defense
@@ -179,7 +181,72 @@ optimizer = Adam(
 )
 ```
 
-### 4. Loss Functions (`luminark.nn.losses`)
+### 4. Learning Rate Schedulers (`luminark.optim.schedulers`)
+
+Adaptive learning rate strategies for better training:
+
+```python
+from luminark.optim import CosineAnnealingLR, ReduceLROnPlateau, StepLR
+
+# Cosine annealing - smooth decay
+scheduler = CosineAnnealingLR(optimizer, T_max=50, eta_min=1e-6)
+
+# Reduce on plateau - adaptive based on metrics
+scheduler = ReduceLROnPlateau(optimizer, mode='min', patience=5, factor=0.5)
+
+# Step decay - reduce every N epochs
+scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
+
+# Use with training
+for epoch in range(num_epochs):
+    train(...)
+    val_loss = validate(...)
+    scheduler.step(val_loss)  # For ReduceLROnPlateau
+    # scheduler.step()  # For other schedulers
+```
+
+**Available Schedulers:**
+- `CosineAnnealingLR` - Smooth cosine decay
+- `ReduceLROnPlateau` - Adaptive based on metrics
+- `StepLR` - Step-wise decay
+- `ExponentialLR` - Exponential decay
+- `OneCycleLR` - Super-convergence policy
+- `WarmupLR` - Linear warmup
+
+### 5. Model Checkpointing (`luminark.io`)
+
+Save and resume training with complete state preservation:
+
+```python
+from luminark.io import save_checkpoint, load_checkpoint
+
+# Save complete training state
+save_checkpoint(
+    model=model,
+    optimizer=optimizer,
+    epoch=10,
+    metrics={'val_acc': 0.98, 'val_loss': 0.05},
+    path='checkpoints/model_epoch10.pkl'
+)
+
+# Resume training
+model, optimizer, epoch, metrics = load_checkpoint(
+    path='checkpoints/model_epoch10.pkl',
+    model=model,
+    optimizer=optimizer
+)
+
+print(f"Resumed from epoch {epoch}")
+# Continue training from epoch + 1
+```
+
+**What's Saved:**
+- Model weights and architecture
+- Optimizer state (Adam m/v, SGD velocities)
+- Training epoch and metrics
+- Custom metadata
+
+### 6. Loss Functions (`luminark.nn.losses`)
 
 Common loss functions for various tasks:
 
