@@ -1,0 +1,7 @@
+include README.md
+include ADVANCED_FEATURES.md
+include ROADMAP.md
+include LICENSE
+include requirements.txt
+recursive-include examples *.py
+recursive-include templates *.html
