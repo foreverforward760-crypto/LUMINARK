@@ -137,8 +137,8 @@ def test_quantum_uncertainty():
         predictions = np.array([0.8, 0.1, 0.1])
         uncertainty = estimator.estimate_uncertainty(predictions)
 
-        assert 'quantum_confidence' in uncertainty, "Missing quantum_confidence"
-        assert isinstance(uncertainty['quantum_confidence'], (int, float)), "Wrong confidence type"
+        assert isinstance(uncertainty, (int, float)), f"Wrong uncertainty type: {type(uncertainty)}"
+        assert 0 <= uncertainty <= 1, f"Uncertainty out of range: {uncertainty}"
         print("✅ test_quantum_uncertainty: PASSED")
     except ImportError:
         print("⚠️  test_quantum_uncertainty: SKIPPED (Qiskit not available)")
@@ -158,7 +158,8 @@ def test_defense_system():
 
     assert 'stage' in result, "Missing stage"
     assert 'risk_level' in result, "Missing risk_level"
-    assert 'stability' in result, "Missing stability"
+    assert 'metrics' in result, "Missing metrics"
+    assert 'stability' in result['metrics'], "Missing stability in metrics"
     print("✅ test_defense_system: PASSED")
 
 def test_advanced_layers():
@@ -174,9 +175,9 @@ def test_advanced_layers():
 
     # Test ToroidalAttention
     attention = ToroidalAttention(10, window_size=3)
-    x = Tensor(np.random.randn(5, 10).astype(np.float32))  # seq_len=5
+    x = Tensor(np.random.randn(2, 5, 10).astype(np.float32))  # (batch, seq_len, hidden)
     output = attention(x)
-    assert output.data.shape == (5, 10), f"Wrong attention output: {output.data.shape}"
+    assert output.data.shape == (2, 5, 10), f"Wrong attention output: {output.data.shape}"
 
     print("✅ test_advanced_layers: PASSED")
 
@@ -190,8 +191,8 @@ def test_associative_memory():
     exp1 = {'state': [1, 2, 3], 'action': 0, 'reward': 1.0}
     memory.store(exp1, tags=['success'])
 
-    # Retrieve
-    samples = memory.sample(batch_size=1, strategy='recent')
+    # Retrieve using replay_batch
+    samples = memory.replay_batch(batch_size=1)
     assert len(samples) == 1, f"Wrong sample count: {len(samples)}"
 
     print("✅ test_associative_memory: PASSED")

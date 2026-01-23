@@ -117,8 +117,8 @@ state = defense.analyze_training_state({
 print(f"✅ Defense analysis complete")
 print(f"   Awareness Stage: {state['stage']}")
 print(f"   Risk Level: {state['risk_level']}")
-print(f"   Stability: {state['stability']:.2f}")
-print(f"   Coherence: {state['coherence']:.2f}")
+print(f"   Stability: {state['metrics']['stability']:.2f}")
+print(f"   Coherence: {state['metrics']['coherence']:.2f}")
 
 # Phase 6: Verify model works
 print("\n[Phase 6] Verifying loaded model inference...")

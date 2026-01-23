@@ -62,7 +62,7 @@ except Exception as e:
 # Training imports
 try:
     from luminark.training import Trainer
-    from luminark.training.meta_learner import MetaLearner
+    from luminark.training.meta_learner import MetaLearningEngine
     print("✅ Training imports: OK")
 except Exception as e:
     print(f"❌ Training imports: FAILED - {e}")
