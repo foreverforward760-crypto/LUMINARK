@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Mycelial Defense Dashboard
+  dashboard:
+    build: .
+    container_name: mycelial-defense-dashboard
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./mycelial_defense:/app/mycelial_defense
+      - ./dashboard:/app/dashboard
+    command: python dashboard/backend/api.py
+    restart: unless-stopped
+
+  # Redis (optional, for future state management)
+  redis:
+    image: redis:7-alpine
+    container_name: mycelial-defense-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    profiles:
+      - with-redis
+
+networks:
+  default:
+    name: mycelial-defense-network
