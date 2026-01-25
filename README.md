@@ -756,6 +756,78 @@ class CustomOptimizer(Optimizer):
 
 ---
 
+## 🎁 Optional Enhancement Features
+
+LUMINARK includes **optional enhancement modules** that extend capabilities without modifying the core:
+
+### 🎤 Voice I/O Interface
+- Speech recognition and text-to-speech
+- Interactive voice sessions
+- Voice-controlled training and generation
+- **Install:** `pip install speechrecognition pyttsx3 pyaudio`
+
+```python
+from luminark.interfaces import VoiceInterface
+
+voice = VoiceInterface()
+text = voice.listen()  # Microphone input
+voice.speak("Training complete!")  # TTS output
+```
+
+### 🧠 FAISS Vector Memory (RAG)
+- Vector similarity search for retrieval-augmented generation
+- Multiple index types (flat, IVF, HNSW)
+- K-means clustering and persistence
+- **Install:** `pip install faiss-cpu`
+
+```python
+from luminark.memory import FAISSMemory
+
+memory = FAISSMemory(dimension=128)
+memory.add(embeddings, texts=documents)
+results = memory.search(query_embedding, k=5)
+```
+
+### 🤗 Hugging Face Export Bridge
+- Export LUMINARK models to HF Hub
+- Share models with the community
+- HF-compatible configs and model cards
+- **Install:** `pip install transformers huggingface-hub`
+
+```python
+from luminark.io.hf_bridge import HFBridge
+
+bridge = HFBridge()
+bridge.export_model(
+    luminark_model=model,
+    output_path="./export",
+    push_to_hub=True,
+    repo_id="username/my-model"
+)
+```
+
+### 📊 Streamlit Interactive Dashboard
+- Real-time training visualization
+- Mycelial sensing dashboard
+- Interactive generation interface
+- QA testing controls
+- **Install:** `pip install streamlit plotly`
+
+```bash
+streamlit run luminark/interfaces/streamlit_dashboard.py
+```
+
+**Features:**
+- 📈 Live training metrics with plotly charts
+- 🍄 Mycelial sensing visualization (octopus, thermal, bio-fusion)
+- ✨ Interactive text generation with voice I/O
+- 🧪 QA testing (awareness, reality, creative modes)
+- 💾 FAISS RAG integration (when available)
+
+**Full Documentation:** See [docs/COMPLEMENTARY_FEATURES.md](docs/COMPLEMENTARY_FEATURES.md) for complete API reference, usage examples, and troubleshooting.
+
+---
+
 ## 🎯 Use Cases
 
 LUMINARK is perfect for:
