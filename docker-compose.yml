@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # Main Dashboard
+  luminark-dashboard:
+    build: .
+    image: luminark:latest
+    container_name: luminark-dashboard
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  # Training Worker (Optional)
+  luminark-train:
+    build: .
+    image: luminark:latest
+    container_name: luminark-train
+    command: python luminark_core.py
+    volumes:
+      - .:/app

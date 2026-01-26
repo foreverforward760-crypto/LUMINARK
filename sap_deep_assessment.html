@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARK V5.1 | VOID TERMINAL</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --emerald: #00ff41;
+            /* CRT Green */
+            --amber: #ffb000;
+            --danger: #ff3333;
+            --dim: #003300;
+            --grid: rgba(0, 255, 65, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', 'Fira Code', monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--emerald);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Scanline effect */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header / Terminal Top */
+        header {
+            border-bottom: 2px solid var(--emerald);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px var(--emerald);
+            margin-bottom: 10px;
+        }
+
+        .system-status {
+            font-size: 0.8rem;
+            color: var(--emerald);
+            opacity: 0.7;
+        }
+
+        /* Abstract Geometry (Mandala/Torus placeholder) */
+        .geometry-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ring {
+            position: absolute;
+            border: 1px solid var(--emerald);
+            border-radius: 50%;
+            animation: spin 10s linear infinite;
+        }
+
+        .r1 {
+            width: 100%;
+            height: 100%;
+            border-style: dashed;
+            animation-duration: 20s;
+        }
+
+        .r2 {
+            width: 70%;
+            height: 70%;
+            border-color: var(--amber);
+            animation-direction: reverse;
+            animation-duration: 12s;
+        }
+
+        .r3 {
+            width: 40%;
+            height: 40%;
+            border: 2px solid var(--emerald);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: flickerIn 0.3s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes flickerIn {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Sliders */
+        .control-group {
+            margin-bottom: 40px;
+            border: 1px solid var(--dim);
+            padding: 20px;
+            background: rgba(0, 50, 0, 0.1);
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            background: var(--dim);
+            outline: none;
+            margin: 15px 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border: 2px solid var(--emerald);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--emerald);
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 20px;
+            background: transparent;
+            border: 2px solid var(--emerald);
+            color: var(--emerald);
+            font-family: inherit;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: var(--emerald);
+            color: #000;
+            box-shadow: 0 0 20px var(--emerald);
+        }
+
+        /* Results */
+        .result-box {
+            border: 2px solid var(--emerald);
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .fractal-id {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed var(--emerald);
+            padding-bottom: 20px;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px dotted var(--dim);
+            padding-bottom: 5px;
+        }
+
+        .value {
+            color: #fff;
+        }
+
+        .historical-context {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 176, 0, 0.1);
+            border-left: 4px solid var(--amber);
+            color: var(--amber);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--emerald);
+            color: #fff;
+            padding: 10px;
+            font-family: inherit;
+            margin-top: 10px;
+        }
+
+        .warning-trap {
+            border-color: var(--danger);
+            color: var(--danger);
+            box-shadow: 0 0 15px var(--danger);
+        }
+
+        /* Personalized VOX Styles */
+        .vox-group {
+            margin-bottom: 30px;
+            border-bottom: 1px dashed var(--dim);
+            padding-bottom: 20px;
+        }
+
+        .vox-label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--amber);
+        }
+
+        .vox-text-input {
+            width: 100%;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--emerald);
+            color: #fff;
+            padding: 15px;
+            font-family: inherit;
+            text-transform: uppercase;
+            outline: none;
+        }
+
+        .vox-text-input:focus {
+            box-shadow: 0 0 10px var(--emerald);
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .vox-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .vox-option {
+            border: 1px solid var(--dim);
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .vox-option:hover {
+            border-color: var(--emerald);
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .vox-option.selected {
+            background: var(--emerald);
+            color: #000;
+            box-shadow: 0 0 10px var(--emerald);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <div class="geometry-container">
+                <div class="ring r1"></div>
+                <div class="ring r2"></div>
+                <div class="ring r3"></div>
+            </div>
+            <h1>LUMINARK V5.1 TERMINAL</h1>
+            <div class="system-status">>> SYSTEM READY. AWAITING BIO-INPUT...</div>
+        </header>
+
+        <!-- STEP 1: INITIAL SCAN -->
+        <div id="section-1" class="section active">
+            <!-- New VOX Inputs -->
+            <div class="vox-group">
+                <span class="vox-label">>> VOX 1: TEMPORAL SENTIMENT (1-2 WORDS)</span>
+                <input type="text" id="feeling" class="vox-text-input" placeholder=">> DESCRIBE FUTURE/PAST STATUS">
+            </div>
+
+            <div class="vox-group">
+                <span class="vox-label">>> VOX 2: DOMINANT ARCHITECTURAL VECTOR</span>
+                <div class="vox-options" id="dominance-options">
+                    <div class="vox-option" data-value="RELATIONSHIP">RELATIONSHIP</div>
+                    <div class="vox-option" data-value="CAREER">CAREER</div>
+                    <div class="vox-option" data-value="FAMILY">FAMILY</div>
+                    <div class="vox-option" data-value="FINANCES">FINANCES</div>
+                    <div class="vox-option" data-value="HEALTH">HEALTH</div>
+                    <div class="vox-option" data-value="GROWTH">SELF-GROWTH</div>
+                </div>
+                <input type="hidden" id="dominant_area" value="">
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <span>VECTOR 1: COMPLEXITY</span>
+                    <span id="val-complexity">5.0</span>
+                </div>
+                <input type="range" id="complexity" min="0" max="10" step="0.5" value="5">
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <span>VECTOR 2: STABILITY</span>
+                    <span id="val-stability">5.0</span>
+                </div>
+                <input type="range" id="stability" min="0" max="10" step="0.5" value="5">
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <span>VECTOR 3: TENSION</span>
+                    <span id="val-tension">5.0</span>
+                </div>
+                <input type="range" id="tension" min="0" max="10" step="0.5" value="5">
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <span>VECTOR 4: ADAPTABILITY</span>
+                    <span id="val-adaptability">5.0</span>
+                </div>
+                <input type="range" id="adaptability" min="0" max="10" step="0.5" value="5">
+            </div>
+
+            <div class="control-group">
+                <div class="label-row">
+                    <span>VECTOR 5: COHERENCE</span>
+                    <span id="val-coherence">5.0</span>
+                </div>
+                <input type="range" id="coherence" min="0" max="10" step="0.5" value="5">
+            </div>
+
+            <button onclick="calculateStage()">>> INITIATE FRACTAL ANALYSIS</button>
+        </div>
+
+        <!-- STEP 2: RESULTS -->
+        <div id="section-2" class="section">
+            <div class="result-box" id="result-box">
+                <div class="fractal-id">
+                    <div>FRACTAL ID DETECTED</div>
+                    <div style="font-size: 3rem; margin-top: 10px; text-shadow: 0 0 20px var(--emerald);"
+                        id="fractal-display">MACRO 0.0.0</div>
+                </div>
+
+                <div class="data-row">
+                    <span>CURRENT STAGE:</span>
+                    <span class="value" id="stage-name">LOADING...</span>
+                </div>
+                <div class="data-row">
+                    <span>VELOCITY:</span>
+                    <span class="value" id="velocity">CALCULATING...</span>
+                </div>
+                <div class="data-row">
+                    <span>ANCHOR FOCUS:</span>
+                    <span class="value" id="anchor">SCANNING...</span>
+                </div>
+
+                <div class="historical-context">
+                    <h3>>> HISTORICAL RESONANCE</h3>
+                    <p id="history-text">...</p>
+                </div>
+
+                <div class="control-group" style="margin-top: 30px;">
+                    <h3>>> GENERATE FULL REPORT</h3>
+                    <p style="font-size: 0.8rem; margin-bottom: 10px;">Enter designation code (email) to receive full
+                        architectural schematics.</p>
+                    <input type="email" id="email" placeholder="USER@NOOSPHERE.NET">
+                    <button onclick="captureEmail()">>> TRANSMIT DATA</button>
+                </div>
+            </div>
+
+            <button onclick="resetTerminal()" style="margin-top: 20px; border-color: #333; color: #555;">>> RESET
+                SYSTEM</button>
+        </div>
+
+    </div>
+
+    <script>
+        // UPDATE SLIDER VALUES LIVE
+        const sliders = ['complexity', 'stability', 'tension', 'adaptability', 'coherence'];
+        sliders.forEach(id => {
+            document.getElementById(id).addEventListener('input', (e) => {
+                document.getElementById('val-' + id).innerText = parseFloat(e.target.value).toFixed(1);
+            });
+        });
+
+        // HANDLE VOX OPTIONS
+        const voxOptions = document.querySelectorAll('.vox-option');
+        const hiddenArea = document.getElementById('dominant_area');
+        voxOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                voxOptions.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                hiddenArea.value = opt.dataset.value;
+            });
+        });
+
+        // DATA MATRIX
+        const sapData = {
+            0: { name: "PLENARA (THE VOID)", history: "Buddhist Śūnyatā (Emptiness). The ground of reality where form is not yet manifest.", anchor: "A0: PURE RECEPTIVITY" },
+            1: { name: "SPARK (IGNITION)", history: "The 'Zinc Spark'. The primordial leap where potential commits to form.", anchor: "A1: PROTECTION" },
+            2: { name: "POLARITY (DUALITY)", history: "Manichaean Dualism. Seeing the world in binary terms: Light vs Dark.", anchor: "A2: DISCERNMENT" },
+            3: { name: "MOTION (INITIATION)", history: "The Baptism of Fire. The jump from thought into kinetic action.", anchor: "A3: MOMENTUM" },
+            4: { name: "FOUNDATION (LAWS)", history: "Moses on Sinai (40 Days). The building of bedrock and unshakeable law.", anchor: "A4: STRUCTURE" },
+            5: { name: "THRESHOLD (THE CHOICE)", history: "The 'Apple Moment' in Eden. A point of no return where spirit commits to flesh.", anchor: "A5: THRESHOLD CARE" },
+            6: { name: "INTEGRATION (HARMONY)", history: "Mahalia Jackson's Voice. Peak flow where the individual light is brightest.", anchor: "A6: RESONANCE" },
+            7: { name: "ILLUSION (THE CRUCIBLE)", history: "Dark Night of the Soul. The Heptagon construction where old forms die.", anchor: "A7: TRUTH TESTING" },
+            8: { name: "RIGIDITY (THE TRAP)", history: "The Fall of Rome. The Permanence Delusion—claiming a peak will last forever before collapse.", anchor: "A8: RADICAL FLEXIBILITY" },
+            9: { name: "RENEWAL (TRANSPARENCY)", history: "John Coltrane's 'A Love Supreme'. Teaching wisdom while ego dissolves.", anchor: "A9: RELEASE" }
+        };
+
+        function calculateStage() {
+            const feeling = document.getElementById('feeling').value;
+            const area = document.getElementById('dominant_area').value;
+            const c = parseFloat(document.getElementById('complexity').value);
+            const s = parseFloat(document.getElementById('stability').value);
+            const t = parseFloat(document.getElementById('tension').value);
+            const a = parseFloat(document.getElementById('adaptability').value);
+            const h = parseFloat(document.getElementById('coherence').value);
+
+            if (!area) {
+                alert(">> ERROR: DOMINANT VECTOR NOT SELECTED.");
+                return;
+            }
+
+            // ALGORITHM
+            let stage = 0;
+            let isTrap = false;
+
+            // Stage 8 Detection (High coherence + stability, LOW adaptability)
+            if (s > 8 && h > 8 && a < 3) {
+                stage = 8;
+                isTrap = true;
+            }
+            // Stage 5 Detection (High tension + split between complexity/stability)
+            else if (t > 7 && Math.abs(c - s) > 3) {
+                stage = 5;
+            }
+            // Stage 9 Detection (High tension + High adaptability + Low stability)
+            else if (t > 7 && a > 8 && s < 3) {
+                stage = 9;
+            }
+            else {
+                // Weighted average
+                const raw = ((c * 2) + ((10 - s) * 1.5) + (t * 1.5) + a + h) / 7.0;
+                stage = Math.round(raw);
+                if (stage > 9) stage = 9;
+                if (stage < 0) stage = 0;
+            }
+
+            // CALCULATE FRACTAL ID (Mock simulation of micro-cycles)
+            const micro = ((c + t) % 9).toFixed(1);
+            const fractalID = `MACRO ${stage}.${Math.floor(micro)}.${Math.floor(a)}`;
+
+            // RENDER RESULTS
+            const data = sapData[stage];
+            document.getElementById('fractal-display').innerText = fractalID;
+            document.getElementById('stage-name').innerText = data.name;
+            document.getElementById('anchor').innerText = data.anchor;
+
+            // Personalize the history/context
+            let personalizedContext = `>> ANALYSIS OF ${area} SECTOR COMPLETE.\n`;
+            if (feeling) {
+                personalizedContext += `>> RESONANCE DETECTED FOR "${feeling.toUpperCase()}".\n`;
+            }
+            personalizedContext += data.history;
+            document.getElementById('history-text').innerText = personalizedContext;
+
+            // VELOCITY CALC
+            const velocity = (t + a) / 2;
+            let velText = "STEADY STATE";
+            if (velocity > 7) velText = "ACCELERATING TUMBLE (HIGH ENERGY)";
+            if (velocity < 3) velText = "STASIS DETECTED";
+            if (isTrap) velText = "⚠️ CRITICAL STAGNATION (TRAP)";
+
+            document.getElementById('velocity').innerText = velText;
+
+            // Warning Styling
+            const box = document.getElementById('result-box');
+            if (isTrap) {
+                box.classList.add('warning-trap');
+                document.documentElement.style.setProperty('--emerald', '#ff3333');
+            } else if (stage === 5) {
+                document.documentElement.style.setProperty('--emerald', '#ffb000'); // Amber for Threshold
+            } else {
+                document.documentElement.style.setProperty('--emerald', '#00ff41'); // Reset
+            }
+
+            // Navigation
+            document.getElementById('section-1').classList.remove('active');
+            document.getElementById('section-2').classList.add('active');
+        }
+
+        function captureEmail() {
+            const email = document.getElementById('email').value;
+            if (email.includes('@')) {
+                alert(">> TRANSMISSION SUCCESSFUL.\n>> DATA PACKET SENT TO: " + email);
+            } else {
+                alert(">> ERROR: INVALID DESIGNATION.");
+            }
+        }
+
+        function resetTerminal() {
+            location.reload();
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAP Stage Assessment - Discover Your Consciousness Level</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-size: 3rem;
+            text-align: center;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.2);
+            }
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .question:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .question:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .question:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .question:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .question:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .question-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.2rem;
+            display: inline-block;
+        }
+
+        .slider-container {
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .slider {
+            width: 100%;
+            height: 12px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #ff6b6b 0%, #ffd93d 50%, #6bcf7f 100%);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            position: relative;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .value-display {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            margin: 15px 0;
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover:before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            animation: resultSlideIn 0.6s ease-out;
+        }
+
+        @keyframes resultSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result h2 {
+            margin-bottom: 25px;
+            font-size: 2.5rem;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stage-badge {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 1.5rem;
+            animation: bounceIn 0.8s ease-out;
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .result p {
+            line-height: 1.8;
+            font-size: 1.15rem;
+            margin: 15px 0;
+        }
+
+        .stage-visual {
+            width: 100%;
+            height: 200px;
+            margin: 30px 0;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .stage-circle {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            animation: rotateIn 1s ease-out;
+        }
+
+        @keyframes rotateIn {
+            from {
+                transform: translateY(-50%) rotate(-180deg) scale(0);
+            }
+
+            to {
+                transform: translateY(-50%) rotate(0) scale(1);
+            }
+        }
+
+        .email-capture {
+            margin-top: 30px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .email-capture h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .email-capture input {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .email-capture input:focus {
+            transform: scale(1.02);
+            outline: 3px solid white;
+        }
+
+        .email-capture button {
+            background: white;
+            color: #667eea;
+            margin-top: 15px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            position: absolute;
+            animation: confetti-fall 3s linear;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            margin-left: 10px;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Personalized Question Styles */
+        .input-group {
+            margin-top: 15px;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+        }
+
+        .text-input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-card {
+            background: white;
+            border: 2px solid #f0f0f0;
+            padding: 15px 10px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .option-card:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-3px);
+            color: #667eea;
+        }
+
+        .option-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated background particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <h1>🌟 SAP Stage Assessment</h1>
+        <p class="subtitle">Discover your current developmental stage using Stanfield's Axiom of Perpetuity</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <form id="assessmentForm">
+            <!-- New Personalized Questions -->
+            <div class="question">
+                <span class="question-number">1</span>
+                <div class="question-text">
+                    In one or two words, how would you describe your current feeling about the future or the past?
+                </div>
+                <div class="input-group">
+                    <input type="text" class="text-input" id="feeling"
+                        placeholder="e.g. Hopeful, Releasing, Uncertain..." required>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-number">2</span>
+                <div class="question-text">
+                    What area of your life is most dominant or important in this moment?
+                </div>
+                <div class="options-grid" id="dominance-options">
+                    <div class="option-card" data-value="Relationship">Relationship</div>
+                    <div class="option-card" data-value="Career">Career</div>
+                    <div class="option-card" data-value="Family">Family</div>
+                    <div class="option-card" data-value="Finances">Finances</div>
+                    <div class="option-card" data-value="Health">Health</div>
+                    <div class="option-card" data-value="Growth">Self-Growth</div>
+                </div>
+                <input type="hidden" id="dominant_area" name="dominant_area" value="" required>
+            </div>
+
+            <div class="question">
+                <span class="question-number">3</span>
+                <div class="question-text">
+                    How complex is your current situation?
+                    <span class="tooltip">ℹ️
+                        <span class="tooltiptext">How many moving parts, relationships, or factors are you
+                            managing?</span>
+                    </span>
+                </div>
+                <div class="value-display" id="complexity-value">5.0</div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" value="5" step="0.5" class="slider" id="complexity">
+                    <div class="slider-labels">
+                        <span>🟢 Simple</span>
+                        <span>🔴 Very Complex</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-number">4</span>
+                <div class="question-text">
+                    How stable do you feel right now?
+                    <span class="tooltip">ℹ️
+                        <span class="tooltiptext">How grounded, secure, and consistent is your current state?</span>
+                    </span>
+                </div>
+                <div class="value-display" id="stability-value">5.0</div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" value="5" step="0.5" class="slider" id="stability">
+                    <div class="slider-labels">
+                        <span>🟢 Very Unstable</span>
+                        <span>🔴 Very Stable</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-number">5</span>
+                <div class="question-text">
+                    How much internal tension/conflict do you feel?
+                    <span class="tooltip">ℹ️
+                        <span class="tooltiptext">How much inner struggle, stress, or competing priorities?</span>
+                    </span>
+                </div>
+                <div class="value-display" id="tension-value">5.0</div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" value="5" step="0.5" class="slider" id="tension">
+                    <div class="slider-labels">
+                        <span>🟢 No Tension</span>
+                        <span>🔴 Extreme Tension</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-number">6</span>
+                <div class="question-text">
+                    How adaptable are you to change?
+                    <span class="tooltip">ℹ️
+                        <span class="tooltiptext">How easily can you pivot, adjust, or embrace new approaches?</span>
+                    </span>
+                </div>
+                <div class="value-display" id="adaptability-value">5.0</div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" value="5" step="0.5" class="slider" id="adaptability">
+                    <div class="slider-labels">
+                        <span>🟢 Very Rigid</span>
+                        <span>🔴 Very Flexible</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <span class="question-number">7</span>
+                <div class="question-text">
+                    How clear is your sense of purpose/direction?
+                    <span class="tooltip">ℹ️
+                        <span class="tooltiptext">How well-defined is your path, mission, or sense of meaning?</span>
+                    </span>
+                </div>
+                <div class="value-display" id="coherence-value">5.0</div>
+                <div class="slider-container">
+                    <input type="range" min="0" max="10" value="5" step="0.5" class="slider" id="coherence">
+                    <div class="slider-labels">
+                        <span>🟢 Very Unclear</span>
+                        <span>🔴 Crystal Clear</span>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">✨ Calculate My SAP Stage ✨</button>
+        </form>
+
+        <div class="result" id="result">
+            <h2>🎯 Your SAP Assessment Results</h2>
+
+            <div class="stage-visual">
+                <div class="stage-circle" id="stageCircle"></div>
+            </div>
+
+            <div class="stage-badge" id="stage-badge"></div>
+            <p id="stage-description"></p>
+            <p id="stage-guidance"></p>
+
+            <div class="email-capture">
+                <h3>📊 Want Your Detailed PDF Report?</h3>
+                <p>Get personalized insights, growth recommendations, and stage-specific practices</p>
+                <input type="email" placeholder="Enter your email" id="email">
+                <button onclick="captureEmail(); return false;">Send Me My Full Report 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particles.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Update slider values and progress
+        const sliders = ['complexity', 'stability', 'tension', 'adaptability', 'coherence'];
+        const totalSteps = 7; // 2 personalized + 5 sliders
+
+        // Handle Option Cards
+        const optionCards = document.querySelectorAll('.option-card');
+        const hiddenInput = document.getElementById('dominant_area');
+        optionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                optionCards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                hiddenInput.value = card.dataset.value;
+                updateProgress();
+            });
+        });
+
+        // Handle Text Input
+        document.getElementById('feeling').addEventListener('input', () => {
+            updateProgress();
+        });
+
+        function updateProgress() {
+            let completed = 0;
+            if (document.getElementById('feeling').value.trim().length > 0) completed++;
+            if (hiddenInput.value.length > 0) completed++;
+
+            // Sliders are considered touched if they've been moved, but for simplicity
+            // we'll update the progress bar primarily in the slider event listener.
+            const progress = (completed / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        sliders.forEach((id, index) => {
+            const slider = document.getElementById(id);
+            const display = document.getElementById(id + '-value');
+
+            slider.addEventListener('input', () => {
+                const value = parseFloat(slider.value);
+                display.textContent = value.toFixed(1);
+                display.style.animation = 'none';
+                setTimeout(() => display.style.animation = 'scaleIn 0.3s ease', 10);
+
+                // Update progress based on the current slider and initial questions
+                let completed = 0;
+                if (document.getElementById('feeling').value.trim().length > 0) completed++;
+                if (hiddenInput.value.length > 0) completed++;
+                completed += (index + 1);
+
+                const progress = Math.min((completed / totalSteps) * 100, 100);
+                document.getElementById('progressFill').style.width = progress + '%';
+            });
+        });
+
+        // SAP Stage info
+        const stageInfo = {
+            0: {
+                name: "Stage 0: Plenara (Primordial)",
+                emoji: "🌑",
+                description: "You're in a state of pure potential. Everything feels formless and undefined. This is a time of receptivity and gathering.",
+                guidance: "💡 Don't force anything. Allow yourself to be in the unknown. This is preparation for what's next."
+            },
+            1: {
+                name: "Stage 1: Spark (Initial Ignition)",
+                emoji: "✨",
+                description: "You're experiencing the first spark of something new. Recognition of self and possibility is emerging.",
+                guidance: "💡 Nurture this spark. Small steps matter more than big leaps. Celebrate beginnings."
+            },
+            2: {
+                name: "Stage 2: Polarity (Duality)",
+                emoji: "⚖️",
+                description: "You're seeing things in binary terms - good/bad, right/wrong. Choices feel clear but limited.",
+                guidance: "💡 This clarity is useful, but remember most decisions aren't permanent. Both/and thinking will come later."
+            },
+            3: {
+                name: "Stage 3: Motion (Action)",
+                emoji: "🚀",
+                description: "You're in motion! Executing, doing, moving forward with momentum.",
+                guidance: "💡 Keep moving, but check in periodically to ensure you're heading in the right direction."
+            },
+            4: {
+                name: "Stage 4: Foundation (Structure)",
+                emoji: "🏛️",
+                description: "You've built a stable foundation. Systems, structure, and logic are in place.",
+                guidance: "💡 This stability is valuable. Use it wisely as a platform for growth."
+            },
+            5: {
+                name: "Stage 5: Threshold (Critical Decision)",
+                emoji: "🚪",
+                description: "You're at a major crossroads. A significant decision or change is imminent.",
+                guidance: "💡 This is a bifurcation point. Take your time. The choice you make will shape your path."
+            },
+            6: {
+                name: "Stage 6: Integration (Harmony)",
+                emoji: "🌈",
+                description: "You're integrating complexity and nuance. Both/and thinking is emerging.",
+                guidance: "💡 Embrace the complexity. This is growth. You're developing sophisticated understanding."
+            },
+            7: {
+                name: "Stage 7: Illusion (Testing Reality)",
+                emoji: "🔍",
+                description: "You're questioning everything. Testing assumptions and challenging beliefs.",
+                guidance: "💡 This skepticism is healthy, not weakness. Keep testing, but don't get lost in doubt."
+            },
+            8: {
+                name: "Stage 8: Rigidity (⚠️ TRAP RISK!)",
+                emoji: "⚠️",
+                description: "WARNING: You may be experiencing the Stage 8 permanence trap. High certainty + low adaptability = danger.",
+                guidance: "💡 CRITICAL: Stay flexible. What feels permanent isn't. Challenge your certainties. Seek diverse perspectives."
+            },
+            9: {
+                name: "Stage 9: Renewal (Transcendence)",
+                emoji: "🦋",
+                description: "You're ready to let go and transcend. Releasing what no longer serves you.",
+                guidance: "💡 Trust the process of letting go. This creates space for what's next. Renewal is coming."
+            }
+        };
+
+        // Form submission
+        document.getElementById('assessmentForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get values
+            const feeling = document.getElementById('feeling').value;
+            const area = document.getElementById('dominant_area').value;
+            const c = parseFloat(document.getElementById('complexity').value);
+            const s = parseFloat(document.getElementById('stability').value);
+            const t = parseFloat(document.getElementById('tension').value);
+            const a = parseFloat(document.getElementById('adaptability').value);
+            const h = parseFloat(document.getElementById('coherence').value);
+
+            if (!area) {
+                alert("Please select a dominant area of your life.");
+                return;
+            }
+
+            // Calculate stage
+            let stage;
+
+            if (s > 8.0 && h > 8.0 && a < 3.0) {
+                stage = 8;
+            } else if (t > 7.0 && Math.abs(c - s) > 3.0) {
+                stage = 5;
+            } else if (t > 8.0 && a > 8.0 && s < 3.0) {
+                stage = 9;
+            } else {
+                const raw = ((c * 2) + ((10 - s) * 1.5) + (t * 1.5) + a + h) / 7.0;
+                stage = Math.round(raw);
+                stage = Math.max(0, Math.min(9, stage));
+            }
+
+            // Display results with animation
+            const info = stageInfo[stage];
+            document.getElementById('stageCircle').textContent = info.emoji;
+            document.getElementById('stage-badge').textContent = info.name;
+
+            // Personalize the description
+            let personalizedDesc = `Regarding your ${area} focus, you are currently manifesting as ${info.name}. `;
+            if (feeling) {
+                personalizedDesc += `Your sense of feeling "${feeling}" reflects this stage's energy. `;
+            }
+            personalizedDesc += info.description;
+
+            document.getElementById('stage-description').textContent = personalizedDesc;
+            document.getElementById('stage-guidance').textContent = info.guidance;
+
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+
+            // Confetti for stages 6, 9
+            if (stage === 6 || stage === 9) {
+                createConfetti();
+            }
+        });
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ffd93d', '#6bcf7f', '#667eea', '#764ba2'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }
+        }
+
+        function captureEmail() {
+            const email = document.getElementById('email').value;
+            if (email && email.includes('@')) {
+                // Show success animation
+                alert('🎉 Success! Your detailed report will be sent to ' + email);
+                createConfetti();
+
+                // In production, send to backend
+                // fetch('/api/capture-email', { method: 'POST', body: JSON.stringify({email}) })
+            } else {
+                alert('Please enter a valid email address');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+HEY NIKKI!
+
+Here is the "SAP Assessment Tool" website ready for launch.
+
+Please do this for me (takes 30 seconds):
+
+1. Unzip this package.
+2. Inside, you will see a folder called "website_folder".
+3. Go to this link: https://app.netlify.com/drop
+4. Drag and drop the "website_folder" onto that page.
+5. It will give you a website link (like "https://random-name.netlify.app").
+6. Text that link to me!
+
+That's it. Once I have the link, I can start sharing it.
+
+Thanks!
+- [Your Name]

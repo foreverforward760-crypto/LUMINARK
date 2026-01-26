@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARK V6.2 | THE ANTIKYTHERA ENGINE</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030305;
+            --primary: #00d2ff;
+            --accent: #3a7bd5;
+            --emerald: #00e676;
+            --amber: #ffb300;
+            --danger: #ff5252;
+            --violet: #8e24aa;
+            --glass: rgba(15, 15, 25, 0.75);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(142, 36, 170, 0.05) 0%, transparent 40%);
+            color: #fff;
+            font-family: 'Inter', -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-window {
+            width: 100%;
+            max-width: 680px;
+            background: var(--glass);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 45px;
+            box-shadow: 0 60px 120px -30px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 0.7rem;
+            font-family: 'JetBrains Mono';
+            opacity: 0.3;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 5px;
+        }
+
+        /* Sliders */
+        .vector-field {
+            margin-bottom: 30px;
+        }
+
+        .label-box {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        .num-val {
+            color: var(--primary);
+            font-family: 'JetBrains Mono';
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid #000;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            transition: 0.2s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 35px var(--primary);
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 22px;
+            border-radius: 20px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            background: #fff;
+            color: #000;
+            margin-top: 15px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-analyze:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Section Navigation */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Results Display */
+        .card-main {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -3px;
+            line-height: 1;
+            margin: 15px 0;
+        }
+
+        .stage-name-top {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .shape-display {
+            font-size: 3rem;
+            opacity: 0.2;
+            margin-bottom: 5px;
+        }
+
+        .analysis-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 24px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .section-header {
+            font-weight: 800;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .body-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+
+        .tradition-tag {
+            background: rgba(142, 36, 170, 0.15);
+            border-left: 5px solid var(--violet);
+            padding: 20px;
+            border-radius: 0 15px 15px 0;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .tradition-name {
+            font-weight: 800;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            color: var(--violet);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .example-desc {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #fff;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        /* Diagnostics */
+        .diag-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .diag-pill {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .d-label {
+            font-size: 0.6rem;
+            opacity: 0.4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .d-val {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .nervous-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            margin-top: 4px;
+        }
+
+        .badge-safe {
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--emerald);
+        }
+
+        .badge-warn {
+            background: rgba(255, 179, 0, 0.15);
+            color: var(--amber);
+        }
+
+        .badge-danger {
+            background: rgba(255, 82, 82, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        /* Octopus Visualization */
+        .viz-container {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        #octopus-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 12px var(--primary));
+        }
+
+        /* Email Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 40px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            margin-bottom: 20px;
+            font-family: inherit;
+        }
+
+        .cta-footer {
+            text-align: center;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            margin-top: 20px;
+        }
+
+        .p-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--emerald);
+            margin-bottom: 8px;
+        }
+
+        .p-sub {
+            font-size: 0.85rem;
+            opacity: 0.5;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Personalized VOX Styles */
+        .vox-group {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 25px;
+        }
+
+        .vox-label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+            font-family: 'JetBrains Mono';
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .vox-text-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 18px;
+            border-radius: 12px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .vox-text-input:focus {
+            border-color: var(--primary);
+            background: rgba(0, 210, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
+        }
+
+        .vox-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+        }
+
+        .vox-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: 0.3s;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .vox-option:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+        }
+
+        .vox-option.selected {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-window">
+        <header>
+            <h1>Luminark <span style="font-weight: 300;">Antikythera</span></h1>
+            <div class="tagline">NSDT v1.2.0 | <span style="color:var(--primary);">BETA ACCESS</span></div>
+        </header>
+
+        <!-- INPUT -->
+        <div id="v-input" class="section active">
+            <div style="margin-bottom: 40px; text-align: center; opacity: 0.6; font-size: 0.85rem; line-height: 1.6;">
+                The Antikythera Engine requires a bio-rhythmic baseline before recursive calculation.
+            </div>
+
+            <div class="vox-group">
+                <span class="vox-label">Temporal Sentiment</span>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">Describe your
+                    feeling on the future or the past (1-2 words):</div>
+                <input type="text" id="feeling" class="vox-text-input"
+                    placeholder="e.g. Hopeful, Uncertain, Releasing...">
+            </div>
+
+            <div class="vox-group">
+                <span class="vox-label">Dominant Life Vector</span>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">What focus is
+                    currently most dominant in your life?</div>
+                <div class="vox-options">
+                    <div class="vox-option" data-value="Relationship">Relationship</div>
+                    <div class="vox-option" data-value="Career">Career</div>
+                    <div class="vox-option" data-value="Family">Family</div>
+                    <div class="vox-option" data-value="Finances">Finances</div>
+                    <div class="vox-option" data-value="Health">Health</div>
+                    <div class="vox-option" data-value="Growth">Self-Growth</div>
+                </div>
+                <input type="hidden" id="dominant_area" value="">
+            </div>
+
+            <div class="vector-field">
+                <div class="label-box"><span>1. SYSTEM COMPLEXITY</span><span class="num-val" id="n1">5.0</span></div>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How complex is
+                    your current situation?</div>
+                <input type="range" id="c" min="0" max="10" step="0.5" value="5">
+            </div>
+            <div class="vector-field">
+                <div class="label-box"><span>2. FOUNDATIONAL STABILITY</span><span class="num-val" id="n2">5.0</span>
+                </div>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How stable do you
+                    feel right now?</div>
+                <input type="range" id="s" min="0" max="10" step="0.5" value="5">
+            </div>
+            <div class="vector-field">
+                <div class="label-box"><span>3. INTERNAL TENSION</span><span class="num-val" id="n3">5.0</span></div>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How much internal
+                    tension/conflict do you feel?</div>
+                <input type="range" id="t" min="0" max="10" step="0.5" value="5">
+            </div>
+            <div class="vector-field">
+                <div class="label-box"><span>4. FLUID ADAPTABILITY</span><span class="num-val" id="n4">5.0</span></div>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How adaptable are
+                    you to change?</div>
+                <input type="range" id="a" min="0" max="10" step="0.5" value="5">
+            </div>
+            <div class="vector-field">
+                <div class="label-box"><span>5. PATTERN COHERENCE</span><span class="num-val" id="n5">5.0</span></div>
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How clear is your
+                    sense of purpose/direction?</div>
+                <input type="range" id="h" min="0" max="10" step="0.5" value="5">
+            </div>
+
+            <button class="btn-analyze" onclick="startEngine()">Initiate Recursive Analysis →</button>
+        </div>
+
+        <!-- REPORT -->
+        <div id="v-report" class="section">
+
+            <div class="viz-container">
+                <svg id="octopus-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
+                    <polygon id="radar-poly" points="50,50 50,50 50,50 50,50 50,50" fill="rgba(0, 210, 255, 0.3)"
+                        stroke="var(--primary)" stroke-width="2.5" />
+                </svg>
+            </div>
+
+            <div class="card-main">
+                <div class="shape-display" id="r-shape">●</div>
+                <div class="stage-name-top" id="r-name">PLENARA</div>
+                <div class="stage-title" id="r-num">Stage 0</div>
+                <div style="font-family:'JetBrains Mono'; font-size:0.65rem; opacity:0.3; margin-top:5px;" id="r-addr">
+                    ADDR: 0.0.0</div>
+            </div>
+
+            <div class="analysis-box">
+                <div class="section-header">Stage Analysis</div>
+                <div class="body-text" id="r-desc">The substrate before structure.</div>
+
+                <div class="tradition-tag">
+                    <div class="tradition-name" id="r-tradition">Ancient Tradition</div>
+                    <div class="example-desc" id="r-story">"The story text goes here."</div>
+                </div>
+
+                <div class="section-header" style="margin-top:35px;">System Warning</div>
+                <div class="body-text" id="r-warn"
+                    style="font-style:italic; border-left:2px solid var(--danger); padding-left:15px; color: #efefef;">
+                    Warning Text.</div>
+
+                <div id="deep-sections">
+                    <div class="section-header" style="margin-top:35px;">Anchor Protocol</div>
+                    <div class="body-text" id="r-anchor" style="color: var(--emerald); font-weight: 600;">Loading
+                        anchor...</div>
+
+                    <div class="section-header" style="margin-top:25px;">Tactical Deployment</div>
+                    <div class="body-text" id="r-tactical">Preparing deployment steps...</div>
+                </div>
+            </div>
+
+            <div class="diag-row">
+                <div class="diag-pill">
+                    <div class="d-label">Nervous Response</div>
+                    <div id="r-ns" class="nervous-badge badge-safe">REGULATED</div>
+                </div>
+                <div class="diag-pill">
+                    <div class="d-label">Accuracy</div>
+                    <div class="d-val" id="r-acc">98.5%</div>
+                </div>
+                <div class="diag-pill">
+                    <div class="d-label">Physicality</div>
+                    <div class="d-val" id="r-phys">STABLE</div>
+                </div>
+                <div class="diag-pill">
+                    <div class="d-label">Consciousness</div>
+                    <div class="d-val" id="r-cons">UNSTABLE</div>
+                </div>
+            </div>
+
+            <div class="cta-footer">
+                <button onclick="location.reload()"
+                    style="background:var(--primary); color:#000; padding: 20px; width: 100%; border-radius: 20px; border:none; font-weight: 800; cursor:pointer; text-transform: uppercase;">Run
+                    New Assessment</button>
+                <div style="font-size: 0.7rem; opacity: 0.3; margin-top: 20px; font-family: 'JetBrains Mono';">LUMINARK
+                    ANTIKYTHERA | OPEN BETA ACCESS</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SAP_MATRIX = {
+            0: {
+                name: "Plenara", shape: "●", phys: "BEYOND", cons: "UNIFIED",
+                desc: "The primordial substrate beyond all duality. You are in the void before form emerged. Pure potential, zero resistance.",
+                warn: "All emanation is temporary. Do not cling to the void for safety, nor the form for identity.",
+                anchor: "Zero-Point Calibration: Accept the stillness as your primary power source.",
+                tactical: "1. Cease all reaching. 2. Observe the emergence of the first thought. 3. Do not engage. Stay in the gap.",
+                pool: [
+                    { t: "Hebrew/Kabbalah", e: "Ein Sof (Infinite) - God before self-limitation (Tzimtzum)." },
+                    { t: "Buddhism", e: "Śūnyatā (Emptiness) - Not void as lack but pregnant potential." },
+                    { t: "Taoism", e: "Wu (無) - Primordial nothingness; the Tao that cannot be named." },
+                    { t: "Ancient Egypt", e: "Nun - Primordial waters of chaos before creation." },
+                    { t: "Gnosticism", e: "Pleroma - The Fullness that contains all potential realities." },
+                    { t: "Christian Mysticism", e: "Meister Eckhart's 'Desert of the Godhead' - Beyond concept." },
+                    { t: "Greek Philosophy", e: "Apeiron (Anaximander) - The boundless indefinite substrate." },
+                    { t: "Sufism", e: "Fana al-Fana - The annihilation of annihilation." },
+                    { t: "Shamanic", e: "The Great Mystery (Wakan Tanka) - Before the spirits took form." },
+                    { t: "Greek Mythology", e: "Chaos (Hesiod) - The primordial gap, not disorder." }
+                ],
+                weights: { c: 0, s: 0, t: 0, a: 0.1, h: 0 }
+            },
+            1: {
+                name: "Pulse", shape: "·", phys: "UNSTABLE", cons: "STABLE",
+                desc: "The first spark of emergence. Initial stirring of energy without fixed form.",
+                warn: "Ground this vibration in a stable anchor or the spiritual charge will dissipate.",
+                anchor: "Intuitive Navigation: Trust the signal, but recognize the noise of the environment.",
+                tactical: "1. Follow the strongest inner impulse. 2. Verify the anchor. 3. Move before the mind rationalizes the light away.",
+                pool: [
+                    { t: "Hebrew", e: "'Let there be light' (Genesis 1:3) - The first divine vibration." },
+                    { t: "Hinduism", e: "AUM/OM - The primordial vibration waking the universe." },
+                    { t: "Taoism", e: "Qi (氣) - The vital energy and breath moving before structure exists." },
+                    { t: "Ancient Egypt", e: "Hu (Divine Utterance) - The first word-power of Ra." },
+                    { t: "Sufism", e: "'Kun!' (Be!) - The divine command that initiates time." },
+                    { t: "Christianity", e: "The Logos - 'In the beginning was the Word' (John 1:1)." },
+                    { t: "Norse", e: "The first sparks flying in Ginnungagap to start life." },
+                    { t: "Buddhism", e: "Bodhicitta - The first movement of the heart toward Awakening." },
+                    { t: "Hopi Tradition", e: "Spider Woman's first thread connecting the worlds." },
+                    { t: "Vedic Tradition", e: "Hiranyagarbha (Golden Embryo) - Cosmic egg beginning to vibrate." },
+                    { t: "Kabbalah", e: "Keter (Crown) descending toward Chokhmah (Wisdom)." },
+                    { t: "Indigenous", e: "Raven's first cry after the light was released." }
+                ],
+                weights: { c: 0.15, s: 0.1, t: 0.2, a: 0.3, h: 0.2 }
+            },
+            2: {
+                name: "Polarity", shape: "—", phys: "STABLE", cons: "UNSTABLE",
+                desc: "The birth of duality. Form is settling, but your spirit is now restless and questioning separation.",
+                warn: "Beware the 'Othering' trap where you blame external forces for your internal restlessness.",
+                anchor: "Synthesis Awareness: Look for the third point that unites the two opposites.",
+                tactical: "1. Map your current conflict. 2. Identify the hidden commonality. 3. Release the need for one side to 'win'.",
+                pool: [
+                    { t: "Zoroastrianism", e: "Ahura Mazda (Light) vs. Angra Mainyu (Darkness)." },
+                    { t: "Taoism", e: "Yin and Yang emerging from the Wuji." },
+                    { t: "Hebrew", e: "The Tree of Knowledge - The entry into 'Good' vs 'Evil' consciousness." },
+                    { t: "Gnosticism", e: "The Demiurge creating the separate material prison." },
+                    { t: "Ancient Egypt", e: "Ma'at (Order) vs. Isfet (Chaos) - The cosmic struggle." },
+                    { t: "Greek", e: "Heraclitus - 'War is father of all' (opposites generating reality)." },
+                    { t: "Christianity", e: "Adam and Eve - The first realization of shame and distinction." },
+                    { t: "Hinduism", e: "Atman appearing separate from Brahman via Maya." },
+                    { t: "Manichaeism", e: "Absolute dualism: The war between Spirit and Matter." },
+                    { t: "Kabbalah", e: "Chokhmah (Wisdom) and Binah (Understanding) pillars." },
+                    { t: "Norse", e: "Asgard (Gods) vs. Jotunheim (Giants)." },
+                    { t: "Confucianism", e: "Tian (Heaven) vs. Di (Earth) polarity." },
+                    { t: "Empedocles", e: "Love vs. Strife as the governing forces." },
+                    { t: "Vedic", e: "Deva (Gods) vs. Asura (Demons) conflict." },
+                    { t: "Shamanic", e: "The division between the Sacred and the Profane." }
+                ],
+                weights: { c: 0.3, s: 0.2, t: 0.6, a: 0.2, h: 0.3 }
+            },
+            3: {
+                name: "Expression", shape: "△", phys: "UNSTABLE", cons: "STABLE",
+                desc: "The breakthrough. Spirit is grounding into matter via powerful creative obsession.",
+                warn: "The Zinc Flash: Your output is exceeding your foundation. Build a sustainable hearth.",
+                anchor: "Sacred Embodiment: Ensure your physical health supports your creative output.",
+                tactical: "1. Prioritize rest cycles. 2. Channel the obsession into a single project. 3. Ground your energy in physical movement.",
+                pool: [
+                    { t: "Christianity", e: "The Incarnation - 'Word became flesh' (Spirit manifest)." },
+                    { t: "Greek", e: "Athena born from Zeus's head - Wisdom springing forth." },
+                    { t: "Hinduism", e: "Avatar descent - The divine taking a physical body to act." },
+                    { t: "Norse", e: "Odin Discovering the Runes - Truth earned through suffering." },
+                    { t: "Sufism", e: "Ana al-Haqq! - The ecstatic realization 'I am Truth!'" },
+                    { t: "Ancient Egypt", e: "Ptah speaking the world into existence - The creative word." },
+                    { t: "Buddhism", e: "The first sermon (Turning the Wheel of Dharma)." },
+                    { t: "Kabbalah", e: "Tiferet (Beauty) - The first harmonic manifestation." },
+                    { t: "Vedic Tradition", e: "Rishi receiving the Vedas as divine sounds." },
+                    { t: "Indigenous", e: "Totem pole raised to make the lineage visible." },
+                    { t: "Alchemy", e: "Aurogenesis - The hidden gold breaking through base metal." },
+                    { t: "Christian Mysticism", e: "Joan of Arc hearing the voices of her mission." },
+                    { t: "Shamanic", e: "The first successful healing proving new spirit power." },
+                    { t: "History", e: "The artist painting a masterpiece in a night of fever." },
+                    { t: "Myth", e: "Prometheus bringing fire as a stolen divine gift to man." }
+                ],
+                weights: { c: 0.4, s: 0.4, t: 0.3, a: 0.2, h: 0.3 }
+            },
+            4: {
+                name: "Foundation", shape: "□", phys: "STABLE", cons: "UNSTABLE",
+                desc: "The Heart of Equilibrium. Maximum stability. But spirit feels caged by the comfort.",
+                warn: "The Comfort Trap: Bedrock becomes a cage. Introduce tension or the universe will force it.",
+                anchor: "Equilibrium Maintenance: Balance the need for safety with the necessity of growth.",
+                tactical: "1. Identify one area of stagnant comfort. 2. Introduce a deliberate micro-tension. 3. Stay in the center of the structure.",
+                pool: [
+                    { t: "Hebrew", e: "Solomon's Temple - The completion of the sacred stable form." },
+                    { t: "Buddhism", e: "The Middle Way - Avoiding extremes to find balance." },
+                    { t: "Islam", e: "The Salat - The stable daily rhythm of five prayers." },
+                    { t: "Confucianism", e: "Li (Ritual Propriety) - Harmony through fixed form." },
+                    { t: "Greek", e: "Aristotle's Golden Mean - Virtue as a balanced center." },
+                    { t: "Ancient Egypt", e: "Nile flood predicted - The agricultural rhythm established." },
+                    { t: "Norse", e: "Midgard - The stable human realm built between fire and ice." },
+                    { t: "Christianity", e: "The establishment of the daily Monastic hours (Liturgy)." },
+                    { t: "Hinduism", e: "Grihastha (Householder) - The balance of family and work." },
+                    { t: "Sufism", e: "Tariqa (Path) - The stable bond between teacher and student." },
+                    { t: "Vedic", e: "Agnihotra - The daily fire ritual maintained with precision." },
+                    { t: "Indigenous", e: "Seasonal ceremonies repeated to ground the tribal role." },
+                    { t: "Jainism", e: "Ahimsa (Non-violence) practiced as a daily foundation." },
+                    { t: "Stoicism", e: "Morning and evening reflection used to anchor the mind." },
+                    { t: "History", e: "Moses' Law - The bedrock structure that sustained a nation." }
+                ],
+                weights: { c: 0.5, s: 0.8, t: 0.1, a: 0.1, h: 0.6 }
+            },
+            5: {
+                name: "Threshold", shape: "⬠", phys: "UNSTABLE", cons: "STABLE",
+                desc: "The Pivot Point. An irreversible choice looms. Your world is shattering to allow a larger truth.",
+                warn: "The Forbidden Fork: There is no return to Stage 4. Commit or remain in perpetual collapse.",
+                anchor: "Absolute Surrender: Stop resisting the collapse. The new identity is on the other side.",
+                tactical: "1. Accept the loss of the old structure. 2. Make the final choice without looking back. 3. Move toward the unknown.",
+                pool: [
+                    { t: "Christianity", e: "Gethsemane - 'Thy will be done' (The point of no return)." },
+                    { t: "Hebrew", e: "Abraham at Mount Moriah - The ultimate test of trust." },
+                    { t: "Hinduism", e: "Arjuna at Kurukshetra - Facing the choice to fight or flee." },
+                    { t: "Islamic", e: "The Hijra - The irreversible departure for Medina." },
+                    { t: "Norse", e: "The decision to fight at Ragnarok knowing defeat is certain." },
+                    { t: "Sufism", e: "Hallaj on the cross - Refusal to deny the internal truth." },
+                    { t: "Greek", e: "Orpheus looking back - The choice between trust and fear." },
+                    { t: "Buddhism", e: "The Raft Parable - Choosing to leave the boat on the shore." },
+                    { t: "Taoism", e: "Laozi leaving through the Western Gate into exile." },
+                    { t: "Gnosticism", e: "Sophia's fall - The choice between Pleroma and Matter." },
+                    { t: "Ancient Egypt", e: "The Weighing of the Heart against the Feather of Ma'at." },
+                    { t: "Native American", e: "Initiation trial: Facing your fear or remaining a child." },
+                    { t: "Zoroastrianism", e: "The crossing of the Chinvat Bridge after death." },
+                    { t: "Kabbalah", e: "Crossing the Abyss to reach the Supernal Triad." },
+                    { t: "Modern", e: "The October Tumble - The irreversible commitment to evolution." }
+                ],
+                weights: { c: 0.6, s: 0.3, t: 0.9, a: 0.6, h: 0.4 }
+            },
+            6: {
+                name: "Integration", shape: "⬡", phys: "STABLE", cons: "UNSTABLE",
+                desc: "Peak Harmony. Flow state. You have integrated the crisis into a beautiful new function.",
+                warn: "The Harmony Illusion: Clinging to this peak prevents the necessary Stage 7 deconstruction.",
+                anchor: "Effortless Agency: Act from your center without forcing outcomes. Stay in the music.",
+                tactical: "1. Sustain your flow state. 2. Do not attempt to analyze the perfection yet. 3. Serve the whole through your mastery.",
+                pool: [
+                    { t: "Taoism", e: "Butcher Ding - Skill so smooth the blade never get dull." },
+                    { t: "Zen", e: "Chopping wood, carrying water - The mundane as the divine." },
+                    { t: "Christian Mysticism", e: "St. Teresa's Spiritual Marriage - Complete union." },
+                    { t: "Hinduism", e: "Sat-Chit-Ananda - Being, Consciousness, and Bliss as one." },
+                    { t: "Ancient Egypt", e: "The Akh - All parts of the soul transfigured as one." },
+                    { t: "Buddhism", e: "Samadhi - Meditative absorption where mind and object unite." },
+                    { t: "Sufism", e: "Baqa - Subsistence in God while living in the world." },
+                    { t: "Vedic", e: "Turiya - The fourth state beyond waking, dream, and sleep." },
+                    { t: "Indigenous", e: "The hunter becoming the deer - Subject and object merged." },
+                    { t: "Plotinus", e: "Henosis - The union of the soul with The One." },
+                    { t: "Art", e: "The Flow State - Perfect mastery where the artist disappears." },
+                    { t: "Neoplatonism", e: "Beauty recognized as the divine shining through form." }
+                ],
+                weights: { c: 0.75, s: 0.65, t: 0.2, a: 0.7, h: 0.85 }
+            },
+            7: {
+                name: "Analysis", shape: "⬢", phys: "UNSTABLE", cons: "STABLE",
+                desc: "The Crucible. Deconstruction of truth. You see the patterns, but you are isolated.",
+                warn: "The Brilliant Hermit: Wisdom is dead if it disconnects from the pulse of the whole.",
+                anchor: "Ruthless Truth: Break everything down until only the indestructible remains.",
+                tactical: "1. Challenge your primary assumptions. 2. Isolate the signal from the noise. 3. Reconnect with the heart pulse.",
+                pool: [
+                    { t: "Christianity", e: "Job on the ash heap - Everything stripped to find the core." },
+                    { t: "Alchemy", e: "Nigredo - The blackening and rot required before gold." },
+                    { t: "Buddhism", e: "Dukkha nana - The knowledge of suffering as the final truth." },
+                    { t: "Hinduism", e: "Shiva's Tandava - The destructive dance for rebirth." },
+                    { t: "Sufism", e: "Jalal (Majesty) - God's overwhelming, terrible beauty." },
+                    { t: "Greek", e: "Prometheus on the rock - Eternal recurring dissolution." },
+                    { t: "Kabbalah", e: "The Breaking of the Vessels (Shevirat HaKelim)." },
+                    { t: "Gnosticism", e: "Recognizing the Archons and the prison of the world." },
+                    { t: "Norse", e: "Ragnarok - The burning of the old world for the new." },
+                    { t: "Ancient Egypt", e: "Osiris dismembered into fourteen separate parts." },
+                    { t: "Taoism", e: "The 'Great Doubt' that precedes the great breakthrough." },
+                    { t: "Judaism", e: "The Babylonian Exile - Searching for God in a lost land." },
+                    { t: "Shamanic", e: "Dismemberment vision - Spirits tearing the initiate apart." },
+                    { t: "Vedic", e: "Tapas - Self-mortification and the fire of purification." },
+                    { t: "Modern", e: "The Dark Night of the Soul - Finding your own internal light." }
+                ],
+                weights: { c: 0.85, s: 0.25, t: 0.85, a: 0.5, h: 0.3 }
+            },
+            8: {
+                name: "Unity Peak", shape: "⯃", phys: "STABLE", cons: "UNSTABLE",
+                desc: "The peak of form. You claim permanence but your spirit is in its most unstable seeking state.",
+                warn: "PERMANENCE TRAP: Release the container now, or the environment will shatter it.",
+                anchor: "Vessel Liberation: Use the structure you built, but do not mistake it for yourself.",
+                tactical: "1. Release ownership of the achievement. 2. Prepare for dissolution. 3. Look for the next cycle's Pulse.",
+                pool: [
+                    { t: "History", e: "The Fall of Rome - Believing the empire was eternal." },
+                    { t: "Christianity", e: "The Transfiguration - Wanting to build tents on the mountain." },
+                    { t: "Alchemy", e: "The Philosopher's Stone - mistaking the result for the Source." },
+                    { t: "Islam", e: "The Qutb - The Pole that supports all from a fixed point." },
+                    { t: "Norse", e: "Odin on his throne, all-seeing but unable to stop Ragnarok." },
+                    { t: "Buddhism", e: "The Arhat - Achieving the goal but staying on the shore." },
+                    { t: "Hinduism", e: "Moksha reached but still in a physical vehicle." },
+                    { t: "Taoism", e: "Becoming an Immortal but claiming a separate existence." },
+                    { t: "Sufism", e: "Insan al-Kamil (The Perfect Human) at their peak power." },
+                    { t: "Ancient Egypt", e: "The Pyramid completed - mistaking the stone for the king." },
+                    { t: "Gnosticism", e: "Pistis Sophia potentially trapped at the peak of her knowledge." },
+                    { t: "Greek", e: "Hercules at his Apotheosis - The struggle for eternal status." },
+                    { t: "Confucianism", e: "The Mandate of Heaven secured, but under risk of pride." },
+                    { t: "Vedic", e: "Brahmin at peak knowledge, claiming exclusive truth." },
+                    { t: "Kabbalah", e: "Keter attained - The highest point before dissolution." }
+                ],
+                weights: { c: 0.95, s: 0.95, t: 0.1, a: 0.1, h: 0.9 }
+            },
+            9: {
+                name: "Release", shape: "⯄", phys: "UNSTABLE", cons: "STABLE",
+                desc: "The Transparent Return. True realization. Acceptance of impermanence and dissolution.",
+                warn: "The Final Attachment: Do not claim 'enlightenment' as a possession. Breathe.",
+                anchor: "Infinite Presence: You are both the sound and the silence. No more seeking.",
+                tactical: "1. Return to the marketplace. 2. Share the gifts of wisdom without ego. 3. Wait for the silent Pulse of the next cycle.",
+                pool: [
+                    { t: "Zen", e: "Entering the Marketplace - Returning with gift-bestowing hands." },
+                    { t: "Hinduism", e: "Ramana Maharshi - 'I have nowhere to go. I am here.'" },
+                    { t: "History", e: "John Coltrane - 'A Love Supreme' (Music as pure release)." },
+                    { t: "Christianity", e: "The Resurrection - Acceptance of the end to find the beginning." },
+                    { t: "Sufism", e: "Sobriety after Drunkenness - Returning home with the truth." },
+                    { t: "Taoism", e: "The Empty Boat - No identity left to defend." },
+                    { t: "Indigenous", e: "The Death Chant - Teaching others how to release gracefully." },
+                    { t: "Buddhism", e: "The Bodhisattva returning to help with muddy hands." },
+                    { t: "Gnosticism", e: "The Redeemed Redeemer returning to guide others." },
+                    { t: "Philosophy", e: "Socrates knowing his ultimate wisdom is knowing nothing." },
+                    { t: "Ancient Egypt", e: "Osiris risen as the merciful Judge of the Dead." },
+                    { t: "Kabbalah", e: "Malkhut - Heaven finally brought down to Earth." },
+                    { t: "Vedic", e: "The Avadhuta - He who has shaken off all dualities." },
+                    { t: "Sufi Wisdom", e: "Al-Insan al-Kamil serving as the servant of all." },
+                    { t: "Christian Mysticism", e: "Therese of Lisieux's 'Little Way' of total surrender." }
+                ],
+                weights: { c: 0.8, s: 0.6, t: 0.4, a: 0.98, h: 0.85 }
+            }
+        };
+
+        ['c', 's', 't', 'a', 'h'].forEach((k, i) => {
+            document.getElementById(k).oninput = function () {
+                document.getElementById('n' + (i + 1)).innerText = parseFloat(this.value).toFixed(1);
+            };
+        });
+
+        // VOX Logic
+        const voxOptions = document.querySelectorAll('.vox-option');
+        const hiddenArea = document.getElementById('dominant_area');
+        voxOptions.forEach(opt => {
+            opt.addEventListener('click', () => {
+                voxOptions.forEach(o => o.classList.remove('selected'));
+                opt.classList.add('selected');
+                hiddenArea.value = opt.dataset.value;
+            });
+        });
+
+        function startEngine() {
+            const feeling = document.getElementById('feeling').value.trim();
+            const area = document.getElementById('dominant_area').value;
+
+            if (!area) {
+                alert(">> ERROR: DOMINANT LIFE VECTOR NOT SELECTED.");
+                return;
+            }
+
+            const u = {
+                c: parseFloat(document.getElementById('c').value) / 10,
+                s: parseFloat(document.getElementById('s').value) / 10,
+                t: parseFloat(document.getElementById('t').value) / 10,
+                a: parseFloat(document.getElementById('a').value) / 10,
+                h: parseFloat(document.getElementById('h').value) / 10
+            };
+
+            let best = 0; let min = Infinity;
+            for (let sNum in SAP_MATRIX) {
+                const arch = SAP_MATRIX[sNum].weights;
+                const d = Math.sqrt(Math.pow(u.c - arch.c, 2) + Math.pow(u.s - arch.s, 2) + Math.pow(u.t - arch.t, 2) + Math.pow(u.a - arch.a, 2) + Math.pow(u.h - arch.h, 2));
+                if (d < min) { min = d; best = parseInt(sNum); }
+            }
+
+            const data = SAP_MATRIX[best];
+            const randomAnchor = data.pool[Math.floor(Math.random() * data.pool.length)];
+            const accuracy = (Math.max(0, (1 - min)) * 100).toFixed(1);
+            const addrStr = best + "." + (Math.floor(u.t * 100) % 9) + (Math.floor(u.s * 100) % 9);
+
+            document.getElementById('r-name').innerText = data.name;
+            document.getElementById('r-num').innerText = "Stage " + best;
+            document.getElementById('r-shape').innerText = data.shape;
+            document.getElementById('r-addr').innerText = "ADDR: " + addrStr;
+
+            // Personalize the analysis
+            let personalizedDesc = `In the context of your ${area} focus, you are currently manifesting as ${data.name}. `;
+            if (feeling) {
+                personalizedDesc += `Your current sense of "${feeling}" is a direct resonator for this state. `;
+            }
+            personalizedDesc += data.desc;
+
+            document.getElementById('r-desc').innerText = personalizedDesc;
+            document.getElementById('r-tradition').innerText = "Recursive Tradition: " + randomAnchor.t;
+            document.getElementById('r-story').innerText = '"' + randomAnchor.e + '"';
+            document.getElementById('r-warn').innerText = data.warn;
+            document.getElementById('r-anchor').innerText = data.anchor;
+            document.getElementById('r-tactical').innerText = data.tactical;
+            document.getElementById('r-phys').innerText = data.phys;
+            document.getElementById('r-cons').innerText = data.cons;
+            document.getElementById('r-acc').innerText = accuracy + "%";
+
+            let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
+            if (u.t > 0.75 && u.s < 0.4) { nv = "SYMPATHETIC"; pCl = "badge-warn"; }
+            else if (u.t < 0.3 && u.h < 0.45) { nv = "DORSAL SHUTDOWN"; pCl = "badge-danger"; }
+            const nsPill = document.getElementById('r-ns');
+            nsPill.innerText = nv; nsPill.className = "nervous-badge " + pCl;
+
+            if (best === 8 && u.a < 0.3) { nsPill.innerText = "TRAP: CRITICAL"; nsPill.className = "nervous-badge badge-danger"; }
+
+            const pts = [`50,${50 - u.c * 45}`, `${50 + u.s * 45},${50 - u.s * 15}`, `${50 + u.t * 35},${50 + u.t * 35}`, `${50 - u.a * 35},${50 + u.a * 35}`, `${50 - u.h * 45},${50 - u.h * 15}`];
+            document.getElementById('radar-poly').setAttribute('points', pts.join(' '));
+
+            document.documentElement.style.setProperty('--primary', (best === 8 || best === 7 || best === 5) ? (best === 5 ? '#ffb300' : '#ff5252') : '#00d2ff');
+
+            window.scrollTo(0, 0);
+            document.getElementById('v-input').classList.remove('active');
+            document.getElementById('v-report').classList.add('active');
+        }
+    </script>
+
+</body>
+
+</html>

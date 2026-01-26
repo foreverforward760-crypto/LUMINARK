@@ -1,0 +1,62 @@
+{
+  "measurements": [
+    {
+      "timestamp": "2026-01-25T00:09:46.868083",
+      "heart_rate": 54.457042498822446,
+      "hrv": 28.375071776025102,
+      "stress_level": 0.11783430968566325,
+      "coherence": 1,
+      "emotional_state": "calm"
+    },
+    {
+      "timestamp": "2026-01-25T00:09:47.370280",
+      "heart_rate": 76.91957063335175,
+      "hrv": 102.42257607325807,
+      "stress_level": 0.39059838212442166,
+      "coherence": 0.6449293107330509,
+      "emotional_state": "neutral"
+    },
+    {
+      "timestamp": "2026-01-25T00:09:47.871015",
+      "heart_rate": 73.741600109463,
+      "hrv": 79.17152136409089,
+      "stress_level": 0.009069878493375316,
+      "coherence": 1,
+      "emotional_state": "calm"
+    },
+    {
+      "timestamp": "2026-01-25T00:09:48.371938",
+      "heart_rate": 65.78369091523915,
+      "hrv": 58.55350513631177,
+      "stress_level": 0.25395507117714944,
+      "coherence": 0.7996103044620024,
+      "emotional_state": "calm"
+    },
+    {
+      "timestamp": "2026-01-25T00:09:48.872809",
+      "heart_rate": 60.488600643484176,
+      "hrv": 46.15578731365755,
+      "stress_level": 0.33835305570166,
+      "coherence": 0.6765583840480671,
+      "emotional_state": "neutral"
+    }
+  ],
+  "statistics": {
+    "total_measurements": 5,
+    "hrv": {
+      "mean": 62.93569233266868,
+      "min": 28.375071776025102,
+      "max": 102.42257607325807
+    },
+    "stress": {
+      "mean": 0.22196213943645393,
+      "min": 0.009069878493375316,
+      "max": 0.39059838212442166
+    },
+    "coherence": {
+      "mean": 0.8242195998486241,
+      "min": 0.6449293107330509,
+      "max": 1
+    }
+  }
+}

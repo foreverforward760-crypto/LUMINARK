@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            width: 350px;
+            padding: 15px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        h2 {
+            margin: 0 0 15px 0;
+        }
+
+        .result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .stage-badge {
+            background: white;
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        button {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .upgrade {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>🌟 SAP Stage Detector</h2>
+    <button id="analyzeBtn">Analyze Selected Text</button>
+
+    <div id="loading" class="loading" style="display:none;">
+        Analyzing...
+    </div>
+
+    <div id="result" style="display:none;">
+        <div class="result">
+            <div class="stage-badge" id="stageBadge"></div>
+            <p id="stageDesc"></p>
+            <p id="guidance"></p>
+        </div>
+
+        <div class="upgrade">
+            <small>Free: 10 analyses/day</small><br>
+            <button onclick="window.open('https://sapframework.com/upgrade')">
+                Upgrade to Pro - $9.99/mo
+            </button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
