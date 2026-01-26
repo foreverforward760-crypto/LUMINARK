@@ -88,7 +88,7 @@ Use the stage library as a foundation but make it UNIQUELY theirs.
         print(f"Oracle API Error: {e}")
         return "The Oracle is momentarily veiled. Please calibrate your vectors and try again."
 
-@app.post("/v1/analyze")
+@app.post("/api/v1/analyze")
 async def analyze_fractal(data: AssessmentData):
     """
     THE BRAIN (Layer 2): Processes SPAT vectors and Kinetic patterns.

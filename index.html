@@ -1074,9 +1074,10 @@
             const win = document.querySelector('.app-window');
             win.classList.add('tumble-active');
 
-            // --- STEP 2: BIO-BRIDGE CONNECTION ---
+            // --- STEP 2: BIO-BRIDGE CONNECTION (CLOUD + LOCAL) ---
             try {
-                const response = await fetch('http://localhost:8000/v1/analyze', {
+                // Point to the Vercel API path
+                const response = await fetch('/api/v1/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1088,7 +1089,7 @@
                         area: area,
                         feeling: feeling,
                         timeframe: timeframe,
-                        movements: sliderMovements // Sending Kinetic Intel
+                        movements: sliderMovements
                     })
                 });
 
