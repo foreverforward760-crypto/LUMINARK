@@ -10,15 +10,17 @@
         rel="stylesheet">
     <style>
         :root {
-            --bg: #030305;
+            --bg: #050508;
             --primary: #00d2ff;
             --accent: #3a7bd5;
             --emerald: #00e676;
             --amber: #ffb300;
             --danger: #ff5252;
-            --violet: #8e24aa;
-            --glass: rgba(15, 15, 25, 0.75);
-            --border: rgba(255, 255, 255, 0.08);
+            --zinc: #a1a1aa;
+            --obsidian: #09090b;
+            --glass: rgba(9, 9, 11, 0.85);
+            --border: rgba(255, 255, 255, 0.05);
+            --glow: rgba(0, 210, 255, 0.3);
         }
 
         * {
@@ -30,8 +32,8 @@
         body {
             background-color: var(--bg);
             background-image:
-                radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(142, 36, 170, 0.05) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.02) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 230, 118, 0.02) 0%, transparent 40%);
             color: #fff;
             font-family: 'Inter', -apple-system, sans-serif;
             min-height: 100vh;
@@ -39,43 +41,66 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .app-window {
             width: 100%;
-            max-width: 680px;
+            max-width: 720px;
             background: var(--glass);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(60px);
+            -webkit-backdrop-filter: blur(60px);
             border: 1px solid var(--border);
             border-radius: 40px;
-            padding: 45px;
-            box-shadow: 0 60px 120px -30px rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9);
             position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        /* 3D TUMBLE ANIMATION */
+        .tumble-active {
+            animation: torusTumble 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        @keyframes torusTumble {
+            0% {
+                transform: rotateX(0) rotateY(0) scale(1);
+                filter: blur(0);
+            }
+
+            30% {
+                transform: rotateX(15deg) rotateY(-10deg) scale(0.98);
+                filter: blur(1px);
+            }
+
+            100% {
+                transform: rotateX(360deg) rotateY(0) scale(1);
+                filter: blur(0);
+            }
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         h1 {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(to right, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--zinc);
         }
 
         .tagline {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-family: 'JetBrains Mono';
-            opacity: 0.3;
+            opacity: 0.4;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 5px;
+            letter-spacing: 5px;
+            margin-top: 8px;
         }
 
         /* Sliders */
@@ -169,38 +194,84 @@
         }
 
         /* Results Display */
+        .viz-container {
+            margin: 0 auto 40px auto;
+            width: 320px;
+            height: 320px;
+            position: relative;
+        }
+
+        .vector-label {
+            position: absolute;
+            font-family: 'JetBrains Mono';
+            font-size: 0.55rem;
+            color: var(--zinc);
+            opacity: 0.5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        /* Radar Positions */
+        .vl-complexity {
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .vl-stability {
+            top: 35%;
+            right: -60px;
+        }
+
+        .vl-tension {
+            bottom: -5px;
+            right: 20%;
+        }
+
+        .vl-adaptability {
+            bottom: -5px;
+            left: 20%;
+        }
+
+        .vl-coherence {
+            top: 35%;
+            left: -60px;
+        }
+
         .card-main {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--border);
             border-radius: 30px;
-            padding: 40px;
+            padding: 45px;
             text-align: center;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 35px;
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.02);
+            transition: 0.5s;
         }
 
         .stage-title {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 900;
-            letter-spacing: -3px;
+            letter-spacing: -2px;
             line-height: 1;
-            margin: 15px 0;
+            margin: 12px 0;
+            color: #fff;
         }
 
         .stage-name-top {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-            opacity: 0.9;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--zinc);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
         }
 
         .shape-display {
-            font-size: 3rem;
-            opacity: 0.2;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            opacity: 0.3;
+            margin-bottom: 8px;
+            color: var(--primary);
         }
 
         .analysis-box {
@@ -536,10 +607,29 @@
         <div id="v-report" class="section">
 
             <div class="viz-container">
-                <svg id="octopus-svg" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
-                    <polygon id="radar-poly" points="50,50 50,50 50,50 50,50 50,50" fill="rgba(0, 210, 255, 0.3)"
-                        stroke="var(--primary)" stroke-width="2.5" />
+                <div class="vector-label vl-complexity">COMPLEXITY</div>
+                <div class="vector-label vl-stability">STABILITY</div>
+                <div class="vector-label vl-tension">TENSION</div>
+                <div class="vector-label vl-adaptability">ADAPTABILITY</div>
+                <div class="vector-label vl-coherence">COHERENCE</div>
+
+                <svg id="octopus-svg" viewBox="0 0 100 100"
+                    style="filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.2));">
+                    <!-- Web Grids -->
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+                    <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5" />
+
+                    <!-- Axis -->
+                    <line x1="50" y1="50" x2="50" y2="5" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+                    <line x1="50" y1="50" x2="95" y2="35" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+                    <line x1="50" y1="50" x2="80" y2="95" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+                    <line x1="50" y1="50" x2="20" y2="95" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+                    <line x1="50" y1="50" x2="5" y2="35" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" />
+
+                    <polygon id="radar-poly" points="50,50 50,50 50,50 50,50 50,50" fill="rgba(0, 210, 255, 0.1)"
+                        stroke="var(--primary)" stroke-width="2" stroke-linejoin="round"
+                        style="transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 0 10px rgba(0, 210, 255, 0.4));" />
                 </svg>
             </div>
 
@@ -908,80 +998,96 @@
                 if (d < min) { min = d; best = parseInt(sNum); }
             }
 
-            const data = SAP_MATRIX[best];
-            const randomAnchor = data.pool[Math.floor(Math.random() * data.pool.length)];
-            const accuracy = (Math.max(0, (1 - min)) * 100).toFixed(1);
-            const addrStr = best + "." + (Math.floor(u.t * 100) % 9) + (Math.floor(u.s * 100) % 9);
+            // 3D MOTION TRIGGER
+            const win = document.querySelector('.app-window');
+            win.classList.add('tumble-active');
 
-            document.getElementById('r-name').innerText = data.name;
-            document.getElementById('r-num').innerText = "Stage " + best;
-            document.getElementById('r-shape').innerText = data.shape;
-            document.getElementById('r-addr').innerText = "ADDR: " + addrStr;
+            setTimeout(() => {
+                const data = SAP_MATRIX[best];
+                const accuracy = (Math.max(0, (1 - min)) * 100).toFixed(1);
+                const addrStr = best + "." + (Math.floor(u.t * 100) % 9) + (Math.floor(u.s * 100) % 9);
 
-            // Wisdom Core Backend Integration
-            const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[best] : null;
-            const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[timeframe] : null;
+                document.getElementById('r-name').innerText = data.name;
+                document.getElementById('r-num').innerText = "Stage " + best;
+                document.getElementById('r-shape').innerText = data.shape;
+                document.getElementById('r-addr').innerText = "ADDR: " + addrStr;
 
-            // Personalized Reasoning Logic
-            let pAnalysis = data.desc;
-            if (wisdom && wisdom.pattern_analysis) {
-                pAnalysis = wisdom.pattern_analysis;
-            }
+                // Wisdom Core Backend Integration
+                const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[best] : null;
+                const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[timeframe] : null;
 
-            let contextPreamble = `In the context of your ${area} focus, you are currently manifesting as ${data.name}. `;
-            if (feeling && modulation) {
-                let modText = "";
-                for (let key in modulation) {
-                    if (feeling.toLowerCase().includes(key.toLowerCase())) {
-                        modText = modulation[key];
-                        break;
-                    }
+                // Personalized Reasoning Logic
+                let pAnalysis = data.desc;
+                if (wisdom && wisdom.pattern_analysis) {
+                    pAnalysis = wisdom.pattern_analysis;
                 }
-                if (!modText) modText = `Your current sense of "${feeling}" regarding the ${timeframe} is a direct resonator for this state. `;
-                contextPreamble += modText + " ";
-            }
 
-            document.getElementById('r-pattern').innerText = contextPreamble + pAnalysis;
+                let contextPreamble = `In the context of your ${area} focus, you are currently manifesting as ${data.name}. `;
+                if (feeling && modulation) {
+                    let modText = "";
+                    for (let key in modulation) {
+                        if (feeling.toLowerCase().includes(key.toLowerCase())) {
+                            modText = modulation[key];
+                            break;
+                        }
+                    }
+                    if (!modText) modText = `Your current sense of "${feeling}" regarding the ${timeframe} is a direct resonator for this state. `;
+                    contextPreamble += modText + " ";
+                }
 
-            // Guru Protocol & Mirror
-            if (wisdom) {
-                document.getElementById('r-nav').innerText = wisdom.navigation_protocol;
-                document.getElementById('r-mirror').innerText = wisdom.historical_mirror;
-                document.getElementById('r-comparison').innerText = wisdom.comparison;
-            }
+                document.getElementById('r-pattern').innerText = contextPreamble + pAnalysis;
 
-            document.getElementById('r-warn').innerText = data.warn;
+                // Guru Protocol & Mirror
+                if (wisdom) {
+                    document.getElementById('r-nav').innerText = wisdom.navigation_protocol;
+                    document.getElementById('r-mirror').innerText = wisdom.historical_mirror;
+                    document.getElementById('r-comparison').innerText = wisdom.comparison;
+                }
 
-            // Deep Action Plan Integration
-            let actionPlan = data.tactical; // Default fallback
-            if (WISDOM_BASE && WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[best] && WISDOM_BASE.tactical_plans[best][area]) {
-                const areaPlan = WISDOM_BASE.tactical_plans[best][area];
-                actionPlan = areaPlan.join("\n");
-                document.getElementById('r-tactical').style.whiteSpace = "pre-line";
-                document.getElementById('r-tactical').style.color = "var(--primary)";
-                document.getElementById('r-tactical').style.fontWeight = "600";
-            }
-            document.getElementById('r-tactical').innerText = actionPlan;
-            document.getElementById('r-phys').innerText = data.phys;
-            document.getElementById('r-cons').innerText = data.cons;
-            document.getElementById('r-acc').innerText = accuracy + "%";
+                document.getElementById('r-warn').innerText = data.warn;
 
-            let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
-            if (u.t > 0.75 && u.s < 0.4) { nv = "SYMPATHETIC"; pCl = "badge-warn"; }
-            else if (u.t < 0.3 && u.h < 0.45) { nv = "DORSAL SHUTDOWN"; pCl = "badge-danger"; }
-            const nsPill = document.getElementById('r-ns');
-            nsPill.innerText = nv; nsPill.className = "nervous-badge " + pCl;
+                // Deep Action Plan Integration
+                let actionPlan = data.tactical; // Default fallback
+                if (WISDOM_BASE && WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[best] && WISDOM_BASE.tactical_plans[best][area]) {
+                    const areaPlan = WISDOM_BASE.tactical_plans[best][area];
+                    actionPlan = areaPlan.join("\n");
+                    document.getElementById('r-tactical').style.whiteSpace = "pre-line";
+                    document.getElementById('r-tactical').style.color = "var(--primary)";
+                    document.getElementById('r-tactical').style.fontWeight = "600";
+                }
+                document.getElementById('r-tactical').innerText = actionPlan;
+                document.getElementById('r-phys').innerText = data.phys;
+                document.getElementById('r-cons').innerText = data.cons;
+                document.getElementById('r-acc').innerText = accuracy + "%";
 
-            if (best === 8 && u.a < 0.3) { nsPill.innerText = "TRAP: CRITICAL"; nsPill.className = "nervous-badge badge-danger"; }
+                let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
+                if (u.t > 0.75 && u.s < 0.4) { nv = "SYMPATHETIC"; pCl = "badge-warn"; }
+                else if (u.t < 0.3 && u.h < 0.45) { nv = "DORSAL SHUTDOWN"; pCl = "badge-danger"; }
+                const nsPill = document.getElementById('r-ns');
+                nsPill.innerText = nv; nsPill.className = "nervous-badge " + pCl;
 
-            const pts = [`50,${50 - u.c * 45}`, `${50 + u.s * 45},${50 - u.s * 15}`, `${50 + u.t * 35},${50 + u.t * 35}`, `${50 - u.a * 35},${50 + u.a * 35}`, `${50 - u.h * 45},${50 - u.h * 15}`];
-            document.getElementById('radar-poly').setAttribute('points', pts.join(' '));
+                if (best === 8 && u.a < 0.3) { nsPill.innerText = "TRAP: CRITICAL"; nsPill.className = "nervous-badge badge-danger"; }
 
-            document.documentElement.style.setProperty('--primary', (best === 8 || best === 7 || best === 5) ? (best === 5 ? '#ffb300' : '#ff5252') : '#00d2ff');
+                // RADAR VECTOR MATH (72-SPAT)
+                const pts = [
+                    `50,${50 - u.c * 45}`,       // Complexity (Top)
+                    `${50 + u.s * 45},${50 - u.s * 15}`, // Stability (Right-Top)
+                    `${50 + u.t * 30},${50 + u.t * 45}`, // Tension (Right-Bottom)
+                    `${50 - u.a * 30},${50 + u.a * 45}`, // Adaptability (Left-Bottom)
+                    `${50 - u.h * 45},${50 - u.h * 15}`  // Coherence (Left-Top)
+                ];
+                document.getElementById('radar-poly').setAttribute('points', pts.join(' '));
 
-            window.scrollTo(0, 0);
-            document.getElementById('v-input').classList.remove('active');
-            document.getElementById('v-report').classList.add('active');
+                document.documentElement.style.setProperty('--primary',
+                    (best === 8 || best === 7 || best === 5) ? (best === 5 ? '#ffb300' : '#ff5252') : '#00d2ff'
+                );
+
+                window.scrollTo(0, 0);
+                document.getElementById('v-input').classList.remove('active');
+                document.getElementById('v-report').classList.add('active');
+
+                setTimeout(() => win.classList.remove('tumble-active'), 500);
+            }, 1000);
         }
     </script>
 
