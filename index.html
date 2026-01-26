@@ -8,6 +8,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+    <script defer src="/_vercel/insights/script.js"></script>
     <style>
         :root {
             --bg: #050508;
@@ -56,7 +57,45 @@
             box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.9);
             position: relative;
             transform-style: preserve-3d;
-            perspective: 1000px;
+            perspective: 2000px;
+            /* Increased for mobile depth */
+        }
+
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .app-window {
+                padding: 25px;
+                border-radius: 30px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .stage-title {
+                font-size: 2.2rem;
+            }
+
+            .viz-container {
+                width: 260px;
+                height: 260px;
+            }
+
+            .vector-label {
+                font-size: 0.5rem;
+            }
+
+            .vl-stability {
+                right: -40px;
+            }
+
+            .vl-coherence {
+                left: -40px;
+            }
         }
 
         /* 3D TUMBLE ANIMATION */
