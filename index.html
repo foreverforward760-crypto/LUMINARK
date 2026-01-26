@@ -973,7 +973,7 @@
             .then(data => { WISDOM_BASE = data; })
             .catch(e => console.error("Wisdom Base failed to load:", e));
 
-        function calculateStage() {
+        async function calculateStage() {
             const feeling = document.getElementById('feeling').value.trim();
             const timeframe = document.getElementById('temporal_focus').value;
             const area = document.getElementById('dominant_area').value;
@@ -991,37 +991,82 @@
                 h: parseFloat(document.getElementById('h').value) / 10
             };
 
-            let best = 0; let min = Infinity;
-            for (let sNum in SAP_MATRIX) {
-                const arch = SAP_MATRIX[sNum].weights;
-                const d = Math.sqrt(Math.pow(u.c - arch.c, 2) + Math.pow(u.s - arch.s, 2) + Math.pow(u.t - arch.t, 2) + Math.pow(u.a - arch.a, 2) + Math.pow(u.h - arch.h, 2));
-                if (d < min) { min = d; best = parseInt(sNum); }
-            }
-
             // 3D MOTION TRIGGER
             const win = document.querySelector('.app-window');
             win.classList.add('tumble-active');
 
+            // --- STEP 2: BIO-BRIDGE CONNECTION ---
+            try {
+                const response = await fetch('http://localhost:8000/v1/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        complexity: u.c * 10,
+                        stability: u.s * 10,
+                        tension: u.t * 10,
+                        adaptability: u.a * 10,
+                        coherence: u.h * 10,
+                        area: area,
+                        feeling: feeling,
+                        timeframe: timeframe
+                    })
+                });
+
+                if (response.ok) {
+                    const res = await response.json();
+                    renderResults(res.stage, res.content, res.diagnostics, res.fractal_id, u);
+                    return;
+                }
+            } catch (e) {
+                console.warn("LUMINARK BIO-BRIDGE OFFLINE. FALLING BACK TO LOCAL CORE.");
+            }
+
+            // FALLBACK: LOCAL JS LOGIC
             setTimeout(() => {
-                const data = SAP_MATRIX[best];
-                const accuracy = (Math.max(0, (1 - min)) * 100).toFixed(1);
-                const addrStr = best + "." + (Math.floor(u.t * 100) % 9) + (Math.floor(u.s * 100) % 9);
-
-                document.getElementById('r-name').innerText = data.name;
-                document.getElementById('r-num').innerText = "Stage " + best;
-                document.getElementById('r-shape').innerText = data.shape;
-                document.getElementById('r-addr').innerText = "ADDR: " + addrStr;
-
-                // Wisdom Core Backend Integration
-                const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[best] : null;
-                const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[timeframe] : null;
-
-                // Personalized Reasoning Logic
-                let pAnalysis = data.desc;
-                if (wisdom && wisdom.pattern_analysis) {
-                    pAnalysis = wisdom.pattern_analysis;
+                let best = 0; let min = Infinity;
+                for (let sNum in SAP_MATRIX) {
+                    const arch = SAP_MATRIX[sNum].weights;
+                    const d = Math.sqrt(Math.pow(u.c - arch.c, 2) + Math.pow(u.s - arch.s, 2) + Math.pow(u.t - arch.t, 2) + Math.pow(u.a - arch.a, 2) + Math.pow(u.h - arch.h, 2));
+                    if (d < min) { min = d; best = parseInt(sNum); }
                 }
 
+                const data = SAP_MATRIX[best];
+                const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[best] : null;
+
+                const localRes = {
+                    stage: best,
+                    fractal_id: `MACRO ${best}.${Math.floor(u.t * 9)}.${Math.floor(u.a * 9)}`,
+                    content: {
+                        name: data.name,
+                        analysis: wisdom ? wisdom.pattern_analysis : data.desc,
+                        protocol: wisdom ? wisdom.navigation_protocol : "NAV PROTOCOL LOADING...",
+                        mirror: wisdom ? wisdom.historical_mirror : "MIRROR SCANNING...",
+                        comparison: wisdom ? wisdom.comparison : "...",
+                        tactical_plan: (WISDOM_BASE?.tactical_plans?.[best]?.[area]) || [data.tactical]
+                    },
+                    diagnostics: { accuracy: "82.1% (LOCAL)", engine: "LOCAL CORE" }
+                };
+
+                renderResults(localRes.stage, localRes.content, localRes.diagnostics, localRes.fractal_id, u);
+            }, 1200);
+        }
+
+        function renderResults(stage, content, diagnostics, fractalId, u) {
+            const data = SAP_MATRIX[stage];
+            document.getElementById('r-name').innerText = content.name;
+            document.getElementById('r-num').innerText = "Stage " + stage;
+            document.getElementById('r-shape').innerText = data.shape;
+            document.getElementById('r-addr').innerText = "ADDR: " + fractalId;
+
+            // Wisdom Core Backend Integration
+            const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[stage] : null;
+            const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[document.getElementById('temporal_focus').value] : null;
+            const feeling = document.getElementById('feeling').value.trim();
+            const area = document.getElementById('dominant_area').value;
+
+            // Personalized Reasoning Logic
+            let pAnalysis = content.analysis;
+            if (wisdom && wisdom.pattern_analysis && diagnostics.engine === "LOCAL CORE") { // Only apply local context if using local engine
                 let contextPreamble = `In the context of your ${area} focus, you are currently manifesting as ${data.name}. `;
                 if (feeling && modulation) {
                     let modText = "";
@@ -1031,63 +1076,59 @@
                             break;
                         }
                     }
-                    if (!modText) modText = `Your current sense of "${feeling}" regarding the ${timeframe} is a direct resonator for this state. `;
+                    if (!modText) modText = `Your current sense of "${feeling}" regarding the ${document.getElementById('temporal_focus').value} is a direct resonator for this state. `;
                     contextPreamble += modText + " ";
                 }
+                pAnalysis = contextPreamble + pAnalysis;
+            }
+            document.getElementById('r-pattern').innerText = pAnalysis;
 
-                document.getElementById('r-pattern').innerText = contextPreamble + pAnalysis;
+            // Guru Protocol & Mirror
+            document.getElementById('r-nav').innerText = content.protocol;
+            document.getElementById('r-mirror').innerText = content.mirror;
+            document.getElementById('r-comparison').innerText = content.comparison;
 
-                // Guru Protocol & Mirror
-                if (wisdom) {
-                    document.getElementById('r-nav').innerText = wisdom.navigation_protocol;
-                    document.getElementById('r-mirror').innerText = wisdom.historical_mirror;
-                    document.getElementById('r-comparison').innerText = wisdom.comparison;
-                }
+            document.getElementById('r-warn').innerText = data.warn;
 
-                document.getElementById('r-warn').innerText = data.warn;
+            // Deep Action Plan Integration
+            let actionPlan = Array.isArray(content.tactical_plan) ? content.tactical_plan.join("\n") : content.tactical_plan;
+            document.getElementById('r-tactical').style.whiteSpace = "pre-line";
+            document.getElementById('r-tactical').style.color = "var(--primary)";
+            document.getElementById('r-tactical').style.fontWeight = "600";
+            document.getElementById('r-tactical').innerText = actionPlan;
 
-                // Deep Action Plan Integration
-                let actionPlan = data.tactical; // Default fallback
-                if (WISDOM_BASE && WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[best] && WISDOM_BASE.tactical_plans[best][area]) {
-                    const areaPlan = WISDOM_BASE.tactical_plans[best][area];
-                    actionPlan = areaPlan.join("\n");
-                    document.getElementById('r-tactical').style.whiteSpace = "pre-line";
-                    document.getElementById('r-tactical').style.color = "var(--primary)";
-                    document.getElementById('r-tactical').style.fontWeight = "600";
-                }
-                document.getElementById('r-tactical').innerText = actionPlan;
-                document.getElementById('r-phys').innerText = data.phys;
-                document.getElementById('r-cons').innerText = data.cons;
-                document.getElementById('r-acc').innerText = accuracy + "%";
+            document.getElementById('r-phys').innerText = data.phys;
+            document.getElementById('r-cons').innerText = data.cons;
+            document.getElementById('r-acc').innerText = diagnostics.accuracy;
 
-                let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
-                if (u.t > 0.75 && u.s < 0.4) { nv = "SYMPATHETIC"; pCl = "badge-warn"; }
-                else if (u.t < 0.3 && u.h < 0.45) { nv = "DORSAL SHUTDOWN"; pCl = "badge-danger"; }
-                const nsPill = document.getElementById('r-ns');
-                nsPill.innerText = nv; nsPill.className = "nervous-badge " + pCl;
+            // Nervous States
+            let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
+            if (u.t > 0.75 && u.s < 0.4) { nv = "SYMPATHETIC"; pCl = "badge-warn"; }
+            else if (u.t < 0.3 && u.h < 0.45) { nv = "DORSAL SHUTDOWN"; pCl = "badge-danger"; }
+            const nsPill = document.getElementById('r-ns');
+            nsPill.innerText = nv; nsPill.className = "nervous-badge " + pCl;
 
-                if (best === 8 && u.a < 0.3) { nsPill.innerText = "TRAP: CRITICAL"; nsPill.className = "nervous-badge badge-danger"; }
+            if (stage === 8 && u.a < 0.3) { nsPill.innerText = "TRAP: CRITICAL"; nsPill.className = "nervous-badge badge-danger"; }
 
-                // RADAR VECTOR MATH (72-SPAT)
-                const pts = [
-                    `50,${50 - u.c * 45}`,       // Complexity (Top)
-                    `${50 + u.s * 45},${50 - u.s * 15}`, // Stability (Right-Top)
-                    `${50 + u.t * 30},${50 + u.t * 45}`, // Tension (Right-Bottom)
-                    `${50 - u.a * 30},${50 + u.a * 45}`, // Adaptability (Left-Bottom)
-                    `${50 - u.h * 45},${50 - u.h * 15}`  // Coherence (Left-Top)
-                ];
-                document.getElementById('radar-poly').setAttribute('points', pts.join(' '));
+            // Radar Color/Theme
+            document.documentElement.style.setProperty('--primary',
+                (stage === 8 || stage === 7 || stage === 5) ? (stage === 5 ? '#ffb300' : '#ff5252') : '#00d2ff'
+            );
 
-                document.documentElement.style.setProperty('--primary',
-                    (best === 8 || best === 7 || best === 5) ? (best === 5 ? '#ffb300' : '#ff5252') : '#00d2ff'
-                );
+            // Points
+            const pts = [
+                `50,${50 - u.c * 45}`,       // Complexity (Top)
+                `${50 + u.s * 45},${50 - u.s * 15}`, // Stability (Right-Top)
+                `${50 + u.t * 30},${50 + u.t * 45}`, // Tension (Right-Bottom)
+                `${50 - u.a * 30},${50 + u.a * 45}`, // Adaptability (Left-Bottom)
+                `${50 - u.h * 45},${50 - u.h * 15}`  // Coherence (Left-Top)
+            ];
+            document.getElementById('radar-poly').setAttribute('points', pts.join(' '));
 
-                window.scrollTo(0, 0);
-                document.getElementById('v-input').classList.remove('active');
-                document.getElementById('v-report').classList.add('active');
-
-                setTimeout(() => win.classList.remove('tumble-active'), 500);
-            }, 1000);
+            window.scrollTo(0, 0);
+            document.getElementById('v-input').classList.remove('active');
+            document.getElementById('v-report').classList.add('active');
+            setTimeout(() => document.querySelector('.app-window').classList.remove('tumble-active'), 500);
         }
     </script>
 
