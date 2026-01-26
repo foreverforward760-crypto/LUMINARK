@@ -455,24 +455,62 @@
             margin-right: auto;
         }
 
-        /* Personalized VOX Styles */
-        .vox-group {
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 25px;
-        }
-
-        .vox-label {
-            display: block;
+        /* Help Tooltips */
+        .vox-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 12px;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono';
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        .vox-text-input {
+        .info-btn {
+            font-family: 'JetBrains Mono';
+            font-size: 0.6rem;
+            color: var(--primary);
+            background: rgba(0, 210, 255, 0.1);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+
+        .info-btn:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .help-text {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: var(--zinc);
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .help-text.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .vox-text-area {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
@@ -482,9 +520,11 @@
             font-family: inherit;
             outline: none;
             transition: 0.3s;
+            resize: vertical;
+            min-height: 80px;
         }
 
-        .vox-text-input:focus {
+        .vox-text-area:focus {
             border-color: var(--primary);
             background: rgba(0, 210, 255, 0.05);
             box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
@@ -551,23 +591,38 @@
                 </button>
             </div>
 
-            <div class="vox-group">
-                <span class="vox-label">Temporal Sentiment</span>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px; font-weight: 500;">Describe your
-                    feeling on the future or the past (1-2 words):</div>
+            <div class="vox-group"
+                style="margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 25px;">
+                <div class="vox-label-row">
+                    <span class="vox-label">Temporal Sentiment</span>
+                    <button class="info-btn" onclick="toggleHelp('h-temporal')">[?] Info</button>
+                </div>
+                <div id="h-temporal" class="help-text">Explain the emotional charge behind your current outlook. Be as
+                    detailed as you like — the Oracle uses these exact words to theme your personalized guidance.</div>
+
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px; font-weight: 500;" id="temporal-q">
+                    How do you feel about your future?</div>
 
                 <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <div class="vox-option" id="btn-future" onclick="setTemporal('Future')" style="flex:1;">FUTURE</div>
-                    <div class="vox-option" id="btn-past" onclick="setTemporal('Past')" style="flex:1;">PAST</div>
+                    <div class="vox-option selected" id="btn-future" onclick="setTemporal('Future')">FUTURE</div>
+                    <div class="vox-option" id="btn-past" onclick="setTemporal('Past')">PAST</div>
                 </div>
                 <input type="hidden" id="temporal_focus" value="Future">
 
-                <input type="text" id="feeling" class="vox-text-input"
-                    placeholder="e.g. Hopeful, Uncertain, Releasing...">
+                <textarea id="feeling" class="vox-text-area"
+                    placeholder="Provide a detailed description of your current state..."></textarea>
             </div>
 
-            <div class="vox-group">
-                <span class="vox-label">Dominant Life Vector</span>
+            <div class="vox-group"
+                style="margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 25px;">
+                <div class="vox-label-row">
+                    <span class="vox-label">Dominant Life Vector</span>
+                    <button class="info-btn" onclick="toggleHelp('h-vector')">[?] Info</button>
+                </div>
+                <div id="h-vector" class="help-text">Choose the primary container where your energy is most focused.
+                    This determines the specific tactical protocols you'll receive (e.g., Career-specific vs.
+                    Relationship-specific steps).</div>
+
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">What focus is
                     currently most dominant in your life?</div>
                 <div class="vox-options">
@@ -582,39 +637,70 @@
             </div>
 
             <div class="vector-field">
-                <div class="label-box"><span>1. SYSTEM COMPLEXITY</span><span class="num-val" id="c-val">5.0</span>
+                <div class="vox-label-row">
+                    <div class="label-box" style="margin-bottom: 0;"><span>1. SYSTEM COMPLEXITY</span><span
+                            class="num-val" id="c-val">5.0</span></div>
+                    <button class="info-btn" onclick="toggleHelp('h-c')">[?] Info</button>
+                </div>
+                <div id="h-c" class="help-text">Measures the number of moving parts or variables in your current
+                    situation. High complexity means many interdependent factors; Low means a simple, focused challenge.
                 </div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How complex is
                     your current situation?</div>
                 <input type="range" id="c" min="0" max="10" step="0.1" value="5"
                     oninput="trackMovement('c', this.value)">
             </div>
+
             <div class="vector-field">
-                <div class="label-box"><span>2. FOUNDATIONAL STABILITY</span><span class="num-val" id="s-val">5.0</span>
+                <div class="vox-label-row">
+                    <div class="label-box" style="margin-bottom: 0;"><span>2. FOUNDATIONAL STABILITY</span><span
+                            class="num-val" id="s-val">5.0</span></div>
+                    <button class="info-btn" onclick="toggleHelp('h-s')">[?] Info</button>
                 </div>
+                <div id="h-s" class="help-text">Measures your base-level security (financial, emotional, physical). High
+                    Stability means you are on solid ground; Low means things are shaky or in rapid flux.</div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How stable do you
                     feel right now?</div>
                 <input type="range" id="s" min="0" max="10" step="0.1" value="5"
                     oninput="trackMovement('s', this.value)">
             </div>
+
             <div class="vector-field">
-                <div class="label-box"><span>3. INTERNAL TENSION</span><span class="num-val" id="n3">5.0</span></div>
+                <div class="vox-label-row">
+                    <div class="label-box" style="margin-bottom: 0;"><span>3. INTERNAL TENSION</span><span
+                            class="num-val" id="t-val">5.0</span></div>
+                    <button class="info-btn" onclick="toggleHelp('h-t')">[?] Info</button>
+                </div>
+                <div id="h-t" class="help-text">Measures the pressure of unmade decisions or internal conflict. High
+                    Tension often precedes a major breakthrough or breakdown; Low means ease of being.</div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How much internal
                     tension/conflict do you feel?</div>
                 <input type="range" id="t" min="0" max="10" step="0.1" value="5"
                     oninput="trackMovement('t', this.value)">
             </div>
+
             <div class="vector-field">
-                <div class="label-box"><span>4. FLUID ADAPTABILITY</span><span class="num-val" id="a-val">5.0</span>
+                <div class="vox-label-row">
+                    <div class="label-box" style="margin-bottom: 0;"><span>4. FLUID ADAPTABILITY</span><span
+                            class="num-val" id="a-val">5.0</span></div>
+                    <button class="info-btn" onclick="toggleHelp('h-a')">[?] Info</button>
                 </div>
+                <div id="h-a" class="help-text">Measures your willingness and ability to change direction. High
+                    Adaptability means you are flexible and open to new paths; Low means you are fixed or rigid.</div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How adaptable are
                     you to change?</div>
                 <input type="range" id="a" min="0" max="10" step="0.1" value="5"
                     oninput="trackMovement('a', this.value)">
             </div>
+
             <div class="vector-field">
-                <div class="label-box"><span>5. PATTERN COHERENCE</span><span class="num-val" id="h-val">5.0</span>
+                <div class="vox-label-row">
+                    <div class="label-box" style="margin-bottom: 0;"><span>5. PATTERN COHERENCE</span><span
+                            class="num-val" id="h-val">5.0</span></div>
+                    <button class="info-btn" onclick="toggleHelp('h-h')">[?] Info</button>
                 </div>
+                <div id="h-h" class="help-text">Measures how clearly you see the "Why" behind your current situation.
+                    High Coherence means a clear sense of purpose; Low means confusion or lack of meaning.</div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How clear is your
                     sense of purpose/direction?</div>
                 <input type="range" id="h" min="0" max="10" step="0.1" value="5"
@@ -966,32 +1052,37 @@
             }
         };
 
-        ['c', 's', 't', 'a', 'h'].forEach((k, i) => {
-            document.getElementById(k).oninput = function () {
-                document.getElementById('n' + (i + 1)).innerText = parseFloat(this.value).toFixed(1);
-            };
-        });
+        // Show/Hide Help Text
+        function toggleHelp(id) {
+            const el = document.getElementById(id);
+            const isActive = el.classList.contains('active');
+            // Close others
+            document.querySelectorAll('.help-text').forEach(h => h.classList.remove('active'));
+            if (!isActive) el.classList.add('active');
+        }
 
-        // VOX Logic
-        const voxOptions = document.querySelectorAll('.vox-option');
-        const hiddenArea = document.getElementById('dominant_area');
-        voxOptions.forEach(opt => {
-            opt.addEventListener('click', () => {
-                if (opt.id === "btn-future" || opt.id === "btn-past") return; // Handled separately
-                voxOptions.forEach(o => { if (o.id !== "btn-future" && o.id !== "btn-past") o.classList.remove('selected'); });
-                opt.classList.add('selected');
-                hiddenArea.value = opt.dataset.value;
-            });
-        });
-
+        // Temporal Question Logic
         function setTemporal(focus) {
             document.getElementById('temporal_focus').value = focus;
             document.getElementById('btn-future').classList.remove('selected');
             document.getElementById('btn-past').classList.remove('selected');
             document.getElementById('btn-' + focus.toLowerCase()).classList.add('selected');
+
+            const q = document.getElementById('temporal-q');
+            const placeholder = focus === 'Future' ? 'How do you feel about your future?' : 'How do you feel about your past?';
+            q.innerText = placeholder;
+            document.getElementById('feeling').placeholder = `Describe your relationship with your ${focus.toLowerCase()} in detail...`;
         }
+
+        // VOX Logic
         // Initialize temporal focus
         setTemporal('Future');
+
+        function selectVector(btn, val) {
+            document.querySelectorAll('.vox-group:nth-of-type(2) .vox-option').forEach(o => o.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('dominant_area').value = val;
+        }
 
         let WISDOM_BASE = null;
         fetch('wisdom_core.json')
