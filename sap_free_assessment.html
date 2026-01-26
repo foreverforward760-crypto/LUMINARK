@@ -597,8 +597,13 @@
             <div class="question">
                 <span class="question-number">1</span>
                 <div class="question-text">
-                    In one or two words, how would you describe your current feeling about the future or the past?
+                    In one or two words, how would you describe your current feeling?
                 </div>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <div class="option-card timeframe-btn" data-time="Future" style="flex:1;">Future Focus</div>
+                    <div class="option-card timeframe-btn" data-time="Past" style="flex:1;">Past Focus</div>
+                </div>
+                <input type="hidden" id="temporal_focus" value="Future">
                 <div class="input-group">
                     <input type="text" class="text-input" id="feeling"
                         placeholder="e.g. Hopeful, Releasing, Uncertain..." required>
@@ -724,6 +729,32 @@
 
             <div class="stage-badge" id="stage-badge"></div>
             <p id="stage-description"></p>
+
+            <div id="wisdom-container"
+                style="text-align: left; margin: 25px 0; border-top: 1px solid #eee; padding-top: 20px; display: none;">
+                <h4 style="color: #667eea; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">Recursive
+                    Wisdom</h4>
+                <p id="wisdom-text" style="font-style: italic; color: #444; margin-bottom: 15px;"></p>
+
+                <h4 style="color: #764ba2; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">
+                    Historical / Philosophical Pattern</h4>
+                <p id="pattern-text" style="color: #666; font-size: 0.95rem;"></p>
+
+                <div style="background: #f8f9ff; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: #333; margin-bottom: 5px; font-size: 0.8rem;">Stage Comparison</h4>
+                    <p id="comparison-text" style="font-size: 0.85rem; color: #777;"></p>
+                </div>
+            </div>
+
+            <div id="action-container"
+                style="text-align: left; margin: 25px 0; background: #e6fffa; border: 1px solid #38b2ac; border-radius: 20px; padding: 25px; display: none;">
+                <h4
+                    style="color: #2c7a7b; margin-bottom: 12px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">
+                    🚀 Personalized Action Protocol</h4>
+                <div id="action-steps"
+                    style="font-weight: 600; color: #234e52; line-height: 1.8; white-space: pre-line;"></div>
+            </div>
+
             <p id="stage-guidance"></p>
 
             <div class="email-capture">
@@ -770,6 +801,26 @@
         document.getElementById('feeling').addEventListener('input', () => {
             updateProgress();
         });
+
+        // Timeframe Detection
+        const timeframeBtns = document.querySelectorAll('.timeframe-btn');
+        const temporalInput = document.getElementById('temporal_focus');
+        timeframeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                timeframeBtns.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                temporalInput.value = btn.dataset.time;
+                updateProgress();
+            });
+        });
+        // Set default
+        document.querySelector('.timeframe-btn[data-time="Future"]').classList.add('selected');
+
+        let WISDOM_BASE = null;
+        fetch('wisdom_core.json')
+            .then(r => r.json())
+            .then(data => { WISDOM_BASE = data; })
+            .catch(e => console.error("Wisdom Base failed to load:", e));
 
         function updateProgress() {
             let completed = 0;
@@ -900,6 +951,11 @@
                 stage = Math.max(0, Math.min(9, stage));
             }
 
+            // Personalized Result Modulation
+            const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[stage] : null;
+            const timeframe = document.getElementById('temporal_focus').value;
+            const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[timeframe] : null;
+
             // Display results with animation
             const info = stageInfo[stage];
             document.getElementById('stageCircle').textContent = info.emoji;
@@ -907,12 +963,40 @@
 
             // Personalize the description
             let personalizedDesc = `Regarding your ${area} focus, you are currently manifesting as ${info.name}. `;
-            if (feeling) {
-                personalizedDesc += `Your sense of feeling "${feeling}" reflects this stage's energy. `;
-            }
-            personalizedDesc += info.description;
 
+            if (feeling && modulation) {
+                let modText = "";
+                for (let key in modulation) {
+                    if (feeling.toLowerCase().includes(key.toLowerCase())) {
+                        modText = modulation[key];
+                        break;
+                    }
+                }
+                if (!modText) modText = `Your sense of "${feeling}" regarding the ${timeframe} is a direct resonator for this stage. `;
+                personalizedDesc += modText;
+            }
+
+            personalizedDesc += " " + info.description;
             document.getElementById('stage-description').textContent = personalizedDesc;
+
+            // Handle Recursive Wisdom Variety
+            if (wisdom) {
+                const sp = wisdom.spiritual[Math.floor(Math.random() * wisdom.spiritual.length)];
+                const ph = wisdom.philosophical[Math.floor(Math.random() * wisdom.philosophical.length)];
+
+                document.getElementById('wisdom-container').style.display = 'block';
+                document.getElementById('wisdom-text').innerText = `"${sp.text}" — (${sp.tradition})`;
+                document.getElementById('pattern-text').innerText = `${ph.text} (Source: ${ph.tradition})`;
+                document.getElementById('comparison-text').innerText = wisdom.comparison;
+            }
+
+            // Deep Action Plan
+            if (WISDOM_BASE && WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[stage] && WISDOM_BASE.tactical_plans[stage][area]) {
+                const areaPlan = WISDOM_BASE.tactical_plans[stage][area];
+                document.getElementById('action-container').style.display = 'block';
+                document.getElementById('action-steps').innerText = areaPlan.join("\n");
+            }
+
             document.getElementById('stage-guidance').textContent = info.guidance;
 
             document.getElementById('result').style.display = 'block';

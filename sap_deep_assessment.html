@@ -338,8 +338,14 @@
         <div id="section-1" class="section active">
             <!-- New VOX Inputs -->
             <div class="vox-group">
-                <span class="vox-label">>> VOX 1: TEMPORAL SENTIMENT (1-2 WORDS)</span>
-                <input type="text" id="feeling" class="vox-text-input" placeholder=">> DESCRIBE FUTURE/PAST STATUS">
+                <span class="vox-label">>> VOX 1: TEMPORAL SENTIMENT</span>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <div class="vox-option" id="btn-future" onclick="setTemporal('Future')" style="flex:1;">>> FUTURE
+                    </div>
+                    <div class="vox-option" id="btn-past" onclick="setTemporal('Past')" style="flex:1;">>> PAST</div>
+                </div>
+                <input type="hidden" id="temporal_focus" value="Future">
+                <input type="text" id="feeling" class="vox-text-input" placeholder=">> DESCRIBE STATUS (1-2 WORDS)">
             </div>
 
             <div class="vox-group">
@@ -425,6 +431,24 @@
                     <p id="history-text">...</p>
                 </div>
 
+                <div class="historical-context"
+                    style="background: rgba(0, 255, 65, 0.05); border-color: var(--emerald); margin-top: 15px;">
+                    <h3>>> PHILOSOPHICAL ALIGNMENT</h3>
+                    <p id="philosophy-text">...</p>
+                </div>
+
+                <div class="historical-context"
+                    style="background: rgba(255, 255, 255, 0.03); border-color: #555; margin-top: 15px;">
+                    <h3>>> GATE COMPARISON</h3>
+                    <p id="comparison-text" style="font-size: 0.75rem; color: #888;"></p>
+                </div>
+
+                <div class="historical-context"
+                    style="background: rgba(0, 255, 65, 0.1); border-color: var(--emerald); margin-top: 15px; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);">
+                    <h3 style="color: var(--emerald);">>> TACTICAL DEPLOYMENT PROTOCOL</h3>
+                    <p id="action-steps" style="font-weight: 700; white-space: pre-line; color: #fff;"></p>
+                </div>
+
                 <div class="control-group" style="margin-top: 30px;">
                     <h3>>> GENERATE FULL REPORT</h3>
                     <p style="font-size: 0.8rem; margin-bottom: 10px;">Enter designation code (email) to receive full
@@ -454,11 +478,26 @@
         const hiddenArea = document.getElementById('dominant_area');
         voxOptions.forEach(opt => {
             opt.addEventListener('click', () => {
-                voxOptions.forEach(o => o.classList.remove('selected'));
+                if (opt.id === "btn-future" || opt.id === "btn-past") return;
+                voxOptions.forEach(o => { if (o.id !== "btn-future" && o.id !== "btn-past") o.classList.remove('selected'); });
                 opt.classList.add('selected');
                 hiddenArea.value = opt.dataset.value;
             });
         });
+
+        function setTemporal(focus) {
+            document.getElementById('temporal_focus').value = focus;
+            document.getElementById('btn-future').classList.remove('selected');
+            document.getElementById('btn-past').classList.remove('selected');
+            document.getElementById('btn-' + focus.toLowerCase()).classList.add('selected');
+        }
+        setTemporal('Future');
+
+        let WISDOM_BASE = null;
+        fetch('wisdom_core.json')
+            .then(r => r.json())
+            .then(data => { WISDOM_BASE = data; })
+            .catch(e => console.error("Wisdom Base failed to load:", e));
 
         // DATA MATRIX
         const sapData = {
@@ -475,7 +514,8 @@
         };
 
         function calculateStage() {
-            const feeling = document.getElementById('feeling').value;
+            const feeling = document.getElementById('feeling').value.trim();
+            const timeframe = document.getElementById('temporal_focus').value;
             const area = document.getElementById('dominant_area').value;
             const c = parseFloat(document.getElementById('complexity').value);
             const s = parseFloat(document.getElementById('stability').value);
@@ -513,6 +553,10 @@
                 if (stage < 0) stage = 0;
             }
 
+            // Wisdom Core Integration
+            const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[stage] : null;
+            const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[timeframe] : null;
+
             // CALCULATE FRACTAL ID (Mock simulation of micro-cycles)
             const micro = ((c + t) % 9).toFixed(1);
             const fractalID = `MACRO ${stage}.${Math.floor(micro)}.${Math.floor(a)}`;
@@ -525,11 +569,37 @@
 
             // Personalize the history/context
             let personalizedContext = `>> ANALYSIS OF ${area} SECTOR COMPLETE.\n`;
-            if (feeling) {
-                personalizedContext += `>> RESONANCE DETECTED FOR "${feeling.toUpperCase()}".\n`;
+            if (feeling && modulation) {
+                let modText = "";
+                for (let key in modulation) {
+                    if (feeling.toLowerCase().includes(key.toLowerCase())) {
+                        modText = modulation[key];
+                        break;
+                    }
+                }
+                if (!modText) modText = `>> ${timeframe.toUpperCase()} RESONANCE DETECTED FOR "${feeling.toUpperCase()}".\n`;
+                else modText = `>> ${modText}\n`;
+                personalizedContext += modText;
             }
+
             personalizedContext += data.history;
             document.getElementById('history-text').innerText = personalizedContext;
+
+            // Randomized Variety Wisdom
+            if (wisdom) {
+                const sp = wisdom.spiritual[Math.floor(Math.random() * wisdom.spiritual.length)];
+                const ph = wisdom.philosophical[Math.floor(Math.random() * wisdom.philosophical.length)];
+
+                document.getElementById('history-text').innerText += `\n\n>> RECURSIVE PATTERN recorded in ${sp.tradition}:\n   "${sp.text.toUpperCase()}"`;
+                document.getElementById('philosophy-text').innerText = `>> ALIGNED WITH ${ph.tradition.toUpperCase()}:\n   "${ph.text.toUpperCase()}"`;
+                document.getElementById('comparison-text').innerText = `>> GATE COMPARISON: ${wisdom.comparison.toUpperCase()}`;
+
+                const normalizedArea = area.charAt(0).toUpperCase() + area.slice(1).toLowerCase();
+                if (WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[stage] && WISDOM_BASE.tactical_plans[stage][normalizedArea]) {
+                    const areaPlan = WISDOM_BASE.tactical_plans[stage][normalizedArea];
+                    document.getElementById('action-steps').innerText = areaPlan.join("\n").toUpperCase();
+                }
+            }
 
             // VELOCITY CALC
             const velocity = (t + a) / 2;

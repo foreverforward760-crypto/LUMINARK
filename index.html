@@ -469,8 +469,15 @@
 
             <div class="vox-group">
                 <span class="vox-label">Temporal Sentiment</span>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">Describe your
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 20px; font-weight: 500;">Describe your
                     feeling on the future or the past (1-2 words):</div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <div class="vox-option" id="btn-future" onclick="setTemporal('Future')" style="flex:1;">FUTURE</div>
+                    <div class="vox-option" id="btn-past" onclick="setTemporal('Past')" style="flex:1;">PAST</div>
+                </div>
+                <input type="hidden" id="temporal_focus" value="Future">
+
                 <input type="text" id="feeling" class="vox-text-input"
                     placeholder="e.g. Hopeful, Uncertain, Releasing...">
             </div>
@@ -552,6 +559,36 @@
                     <div class="tradition-name" id="r-tradition">Ancient Tradition</div>
                     <div class="example-desc" id="r-story">"The story text goes here."</div>
                 </div>
+
+                <div class="tradition-tag"
+                    style="background: rgba(0, 210, 255, 0.05); border-left-color: var(--primary); margin-top:15px;">
+                    <div class="tradition-name" style="color: var(--primary);">Philosophical Alignment</div>
+                    <div id="r-philosophy" class="example-desc" style="font-size: 0.9rem;">...</div>
+                </div>
+
+                <div class="tradition-tag"
+                    style="background: rgba(255, 179, 0, 0.05); border-left-color: var(--amber); margin-top:15px;">
+                    <div class="tradition-name" style="color: var(--amber);">Historical Resonance</div>
+                    <div id="r-history-resonance" class="example-desc" style="font-size: 0.9rem;">...</div>
+                </div>
+
+                <div class="section-header" style="margin-top:35px;">Stage Comparison</div>
+                <div class="body-text" id="r-comparison" style="font-size: 0.85rem; opacity: 0.8;">...</div>
+
+                <div class="tradition-tag"
+                    style="background: rgba(0, 210, 255, 0.05); border-left-color: var(--primary); margin-top:15px;">
+                    <div class="tradition-name" style="color: var(--primary);">Philosophical Alignment</div>
+                    <div id="r-philosophy" class="example-desc" style="font-size: 0.9rem;">...</div>
+                </div>
+
+                <div class="tradition-tag"
+                    style="background: rgba(255, 179, 0, 0.05); border-left-color: var(--amber); margin-top:15px;">
+                    <div class="tradition-name" style="color: var(--amber);">Historical Resonance</div>
+                    <div id="r-history-resonance" class="example-desc" style="font-size: 0.9rem;">...</div>
+                </div>
+
+                <div class="section-header" style="margin-top:35px;">Stage Comparison</div>
+                <div class="body-text" id="r-comparison" style="font-size: 0.85rem; opacity: 0.8;">...</div>
 
                 <div class="section-header" style="margin-top:35px;">System Warning</div>
                 <div class="body-text" id="r-warn"
@@ -851,14 +888,31 @@
         const hiddenArea = document.getElementById('dominant_area');
         voxOptions.forEach(opt => {
             opt.addEventListener('click', () => {
-                voxOptions.forEach(o => o.classList.remove('selected'));
+                if (opt.id === "btn-future" || opt.id === "btn-past") return; // Handled separately
+                voxOptions.forEach(o => { if (o.id !== "btn-future" && o.id !== "btn-past") o.classList.remove('selected'); });
                 opt.classList.add('selected');
                 hiddenArea.value = opt.dataset.value;
             });
         });
 
-        function startEngine() {
+        function setTemporal(focus) {
+            document.getElementById('temporal_focus').value = focus;
+            document.getElementById('btn-future').classList.remove('selected');
+            document.getElementById('btn-past').classList.remove('selected');
+            document.getElementById('btn-' + focus.toLowerCase()).classList.add('selected');
+        }
+        // Initialize temporal focus
+        setTemporal('Future');
+
+        let WISDOM_BASE = null;
+        fetch('wisdom_core.json')
+            .then(r => r.json())
+            .then(data => { WISDOM_BASE = data; })
+            .catch(e => console.error("Wisdom Base failed to load:", e));
+
+        function calculateStage() {
             const feeling = document.getElementById('feeling').value.trim();
+            const timeframe = document.getElementById('temporal_focus').value;
             const area = document.getElementById('dominant_area').value;
 
             if (!area) {
@@ -891,19 +945,53 @@
             document.getElementById('r-shape').innerText = data.shape;
             document.getElementById('r-addr').innerText = "ADDR: " + addrStr;
 
-            // Personalize the analysis
+            // Wisdom Core Backend Integration
+            const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[best] : null;
+            const modulation = WISDOM_BASE ? WISDOM_BASE.sentiment_modulations[timeframe] : null;
+
+            // Personalize Reasoning
             let personalizedDesc = `In the context of your ${area} focus, you are currently manifesting as ${data.name}. `;
-            if (feeling) {
-                personalizedDesc += `Your current sense of "${feeling}" is a direct resonator for this state. `;
+            if (feeling && modulation) {
+                let modText = "";
+                for (let key in modulation) {
+                    if (feeling.toLowerCase().includes(key.toLowerCase())) {
+                        modText = modulation[key];
+                        break;
+                    }
+                }
+                if (!modText) modText = `Your current sense of "${feeling}" regarding the ${timeframe} is a direct resonator for this state. `;
+                personalizedDesc += modText + " ";
             }
             personalizedDesc += data.desc;
 
             document.getElementById('r-desc').innerText = personalizedDesc;
-            document.getElementById('r-tradition').innerText = "Recursive Tradition: " + randomAnchor.t;
-            document.getElementById('r-story').innerText = '"' + randomAnchor.e + '"';
+
+            // Randomized Wisdom Retrieval
+            if (wisdom) {
+                const sp = wisdom.spiritual[Math.floor(Math.random() * wisdom.spiritual.length)];
+                const ph = wisdom.philosophical[Math.floor(Math.random() * wisdom.philosophical.length)];
+                const hi = wisdom.historical[Math.floor(Math.random() * wisdom.historical.length)];
+
+                document.getElementById('r-tradition').innerText = "Spiritual Recursive Pattern: " + sp.tradition;
+                document.getElementById('r-story').innerText = '"' + sp.text + '"';
+                document.getElementById('r-philosophy').innerText = '"' + ph.text + '" (Tradition: ' + ph.tradition + ')';
+                document.getElementById('r-history-resonance').innerText = '"' + hi.text + '" (Context: ' + hi.tradition + ')';
+                document.getElementById('r-comparison').innerText = wisdom.comparison;
+            }
+
             document.getElementById('r-warn').innerText = data.warn;
             document.getElementById('r-anchor').innerText = data.anchor;
-            document.getElementById('r-tactical').innerText = data.tactical;
+
+            // Deep Action Plan Integration
+            let actionPlan = data.tactical; // Default fallback
+            if (WISDOM_BASE && WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[best] && WISDOM_BASE.tactical_plans[best][area]) {
+                const areaPlan = WISDOM_BASE.tactical_plans[best][area];
+                actionPlan = areaPlan.join("\n");
+                document.getElementById('r-tactical').style.whiteSpace = "pre-line";
+                document.getElementById('r-tactical').style.color = "var(--primary)";
+                document.getElementById('r-tactical').style.fontWeight = "600";
+            }
+            document.getElementById('r-tactical').innerText = actionPlan;
             document.getElementById('r-phys').innerText = data.phys;
             document.getElementById('r-cons').innerText = data.cons;
             document.getElementById('r-acc').innerText = accuracy + "%";

@@ -697,6 +697,328 @@
             "comparison": "Stage 9 is the circle's end. It looks like Stage 0, but it is a silence filled with the wisdom of the journey."
         }
     },
+    "tactical_plans": {
+        "0": {
+            "Relationship": [
+                "1. Silence the narrative of 'us'.",
+                "2. Spend 20 minutes in shared silence with your partner.",
+                "3. Observe the first conflict trigger without reacting."
+            ],
+            "Career": [
+                "1. Clear your desk completely.",
+                "2. Cancel one unnecessary meeting or commitment.",
+                "3. Allow a project to remain in 'draft' or 'conceptual' state longer."
+            ],
+            "Family": [
+                "1. Stop trying to 'fix' a relative's behavior.",
+                "2. Hold space for a difficult family member without offering advice.",
+                "3. Practice radical acceptance of your lineage."
+            ],
+            "Finances": [
+                "1. Cease all non-essential spending for 48 hours.",
+                "2. Audit your automated subscriptions; delete what doesn't resonate.",
+                "3. Observe your fear of lack without attempting to solve it."
+            ],
+            "Health": [
+                "1. Fast from digital inputs for 4 hours.",
+                "2. Practice deep, rhythmic breathing for 10 minutes.",
+                "3. Rest the body before it demands it."
+            ],
+            "Growth": [
+                "1. Meditate on the question: 'Who am I before my name was given?'",
+                "2. Journal on what potentials you are currently afraid to manifest.",
+                "3. Sit in complete darkness for 15 minutes."
+            ]
+        },
+        "1": {
+            "Relationship": [
+                "1. Initiate a new, small gesture of affection.",
+                "2. Share a dream or vision you haven't spoken of yet.",
+                "3. Watch for a 'spark' of new interest in your partner."
+            ],
+            "Career": [
+                "1. Write down the first three steps of a new project idea.",
+                "2. Send one outreach email to a potential collaborator.",
+                "3. Commit to 15 minutes of uninterrupted creative exploration."
+            ],
+            "Family": [
+                "1. Start a new family tradition or mini-ritual.",
+                "2. Reconnect with a family member you haven't spoken to in months.",
+                "3. Acknowledge a 'new leaf' being turned in a family dynamic."
+            ],
+            "Finances": [
+                "1. Put $1 toward a new, specific goal.",
+                "2. Set up a new savings bucket or account.",
+                "3. Research one new investment or income stream."
+            ],
+            "Health": [
+                "1. Perform one new exercise or movement you've never tried.",
+                "2. Change one small part of your morning routine.",
+                "3. Express your physical energy through a vocal or physical 'shout'."
+            ],
+            "Growth": [
+                "1. Act on the first intuitive impulse you have tomorrow morning.",
+                "2. Buy a new book or start a new course.",
+                "3. Commit to a 7-day challenge of a new habit."
+            ]
+        },
+        "2": {
+            "Relationship": [
+                "1. Map out the 'Pro vs Con' list of a current tension.",
+                "2. Identify the boundary between where you end and they begin.",
+                "3. Discuss a disagreement openly without attempting to 'win'."
+            ],
+            "Career": [
+                "1. Analyze the competition with cold objectivity.",
+                "2. Identify a binary choice in your career path (Stay vs Go).",
+                "3. Balance your 'Creative' time with your 'Operational' time."
+            ],
+            "Family": [
+                "1. Recognize the 'Black and White' thinking in a family conflict.",
+                "2. Define clear boundaries with a 'high-tension' relative.",
+                "3. Acknowledge the differences between your values and your parents'."
+            ],
+            "Finances": [
+                "1. Audit your 'Needs' vs 'Wants'.",
+                "2. Compare two different financial strategies or bankers.",
+                "3. Resolve a duality in your spending (e.g. Saving for house vs Investing)."
+            ],
+            "Health": [
+                "1. Balance your workout: Strength vs Flexibility.",
+                "2. Cycle between cold and hot water in the shower.",
+                "3. Observe your mental split between 'Healthy Self' and 'Cravings'."
+            ],
+            "Growth": [
+                "1. Journal on your 'Shadow Side'—what you hide from others.",
+                "2. Contemplate a paradox in your personality.",
+                "3. Seek out a viewpoint that is the direct opposite of your own."
+            ]
+        },
+        "3": {
+            "Relationship": [
+                "1. Execute a surprise date or shared adventure.",
+                "2. Express your deepest feelings through a creative medium.",
+                "3. Practice 'Active Listening' as a kinetic, physical act."
+            ],
+            "Career": [
+                "1. Launch the 'Minimum Viable Product' of your idea.",
+                "2. Create a high-energy presentation or pitch.",
+                "3. Commit to 4 hours of 'Sprint' work on your primary goal."
+            ],
+            "Family": [
+                "1. Organize a large family gathering or project.",
+                "2. Manifest a legacy project (e.g. family photo book).",
+                "3. Actively mentor a younger family member."
+            ],
+            "Finances": [
+                "1. Make a significant investment or purchase linked to growth.",
+                "2. Execute a new marketing or sales strategy.",
+                "3. Transform 'Dead Capital' into an active, moving asset."
+            ],
+            "Health": [
+                "1. Perform a high-intensity workout to break a plateau.",
+                "2. Publicly commit to a fitness goal or race.",
+                "3. Express your health through dance or expressive movement."
+            ],
+            "Growth": [
+                "1. Create something every day for 30 days.",
+                "2. Speak your truth in a challenging social situation.",
+                "3. Transform a thought into a physical object or written book."
+            ]
+        },
+        "4": {
+            "Relationship": [
+                "1. Establish a 'State of the Union' weekly meeting.",
+                "2. Create a shared calendar and budget.",
+                "3. Define the 'House Rules' for your relationship (boundaries)."
+            ],
+            "Career": [
+                "1. Document your business processes (SOPs).",
+                "2. Set up a long-term project management system.",
+                "3. Secure your contracts and legal foundations."
+            ],
+            "Family": [
+                "1. Create a family emergency plan and folder.",
+                "2. Establish a consistent Sunday dinner or weekly call.",
+                "3. Map out your family tree and preserve the stories."
+            ],
+            "Finances": [
+                "1. Set up automated savings and bill payments.",
+                "2. Create a 12-month budget and stick to it.",
+                "3. Diversify your assets into a stable portfolio."
+            ],
+            "Health": [
+                "1. Stick to a fixed sleep/wake schedule for 14 days.",
+                "2. Prepare your meals for the week in advance.",
+                "3. Establish a baseline health screening or routine checkup."
+            ],
+            "Growth": [
+                "1. Commit to a long-term curriculum or degree.",
+                "2. Build a morning routine that you can do for 1 year.",
+                "3. Define your core values and write them on your wall."
+            ]
+        },
+        "5": {
+            "Relationship": [
+                "1. Make the 'Big Ask' or 'Big Conversation' you've been avoiding.",
+                "2. Choose between two incompatible paths in your partnership.",
+                "3. Walk through the 'Fire' of a needed conflict."
+            ],
+            "Career": [
+                "1. Quit the path that is safe but dead. Join the 'Tumble'.",
+                "2. Choose a 'Bifurcation' point: Pivot or Double Down.",
+                "3. Burn the bridge to your backup plan to force success."
+            ],
+            "Family": [
+                "1. Address the 'Elephant in the Room' with a relative.",
+                "2. Leave a toxic family dynamic permanently.",
+                "3. Choose between family tradition and your own destiny."
+            ],
+            "Finances": [
+                "1. Liquidate an asset that is holding you back.",
+                "2. Choose a high-risk/high-reward investment 'Threshold'.",
+                "3. Confront your deepest financial fear head-on."
+            ],
+            "Health": [
+                "1. Commit to a radical life-altering health change.",
+                "2. Undergo a challenging physical 'Rite of Passage'.",
+                "3. Face the mental 'Wall' in your training and push through."
+            ],
+            "Growth": [
+                "1. Take the 'Leap of Faith' on a dream you've delayed.",
+                "2. Deconstruct a belief system that no longer fits.",
+                "3. Move toward the thing that scares you most."
+            ]
+        },
+        "6": {
+            "Relationship": [
+                "1. Practice 'Mutual Resonance'—matching your partner's flow.",
+                "2. Celebrate the effortless harmony of a quiet night.",
+                "3. Express gratitude for the 'unspoken' understanding."
+            ],
+            "Career": [
+                "1. Enter 'Deep Work' flow states daily.",
+                "2. Mentor others from a place of effortless expertise.",
+                "3. Harmonize your personal values with your professional output."
+            ],
+            "Family": [
+                "1. Be the 'Calm Center' during family stress.",
+                "2. Integrate family members with differing viewpoints.",
+                "3. Facilitate a 'Unified' family project or vision."
+            ],
+            "Finances": [
+                "1. Align your spending with your soul's purpose.",
+                "2. Manage wealth from a place of abundance, not lack.",
+                "3. Donate to a cause that creates resonance in the world."
+            ],
+            "Health": [
+                "1. Practice Tai Chi, Yoga, or Flow-based movement.",
+                "2. Listen to your body's signals with perfect sensitivity.",
+                "3. Maintain health as an effortless, integrated joy."
+            ],
+            "Growth": [
+                "1. Live your truth without effort or performative acts.",
+                "2. Integrate your 'Light' and 'Shadow' into a single self.",
+                "3. Experience the world as a unified field of meaning."
+            ]
+        },
+        "7": {
+            "Relationship": [
+                "1. Peel back the layers of a shared illusion.",
+                "2. Ask the 'Hard Questions' about why you are together.",
+                "3. Deconstruct the roles you play in the relationship."
+            ],
+            "Career": [
+                "1. Ruthlessly audit your business for inefficiency.",
+                "2. Ask: 'If I lost everything tomorrow, what would I keep?'",
+                "3. Strip away the 'Ego' titles and focus on the raw value."
+            ],
+            "Family": [
+                "1. Identify the 'Family Myths' that are holding you back.",
+                "2. Forgive an ancestor to break a recursive pattern.",
+                "3. Face the 'Shadow' of your family legacy."
+            ],
+            "Finances": [
+                "1. Conduct a 'Zero-Based Budget' from scratch.",
+                "2. Sell everything that doesn't serve your highest self.",
+                "3. Break your dependency on external financial validation."
+            ],
+            "Health": [
+                "1. Perform a deep detox or 'Cleanse'.",
+                "2. Strip away the supplements; focus on raw nutrition/water.",
+                "3. Use pain or discomfort as a diagnostic tool for truth."
+            ],
+            "Growth": [
+                "1. Spend 24 hours in complete solitude and silence.",
+                "2. Challenge your most 'Certain' belief.",
+                "3. Walk through the 'Dark Night' without turning on the lights."
+            ]
+        },
+        "8": {
+            "Relationship": [
+                "1. Acknowledge that even this peak state is temporary.",
+                "2. Avoid the 'Ownership' trap of your partner.",
+                "3. Release the need to 'Perfect' the other person."
+            ],
+            "Career": [
+                "1. Prepare your succession plan while at the peak.",
+                "2. Give away your best 'Secert' to the next generation.",
+                "3. Watch for the pride that precedes the fall."
+            ],
+            "Family": [
+                "1. Be the 'Wise Elder' without being the 'Patriarch/Matriarch'.",
+                "2. Release control over your children's adult choices.",
+                "3. Celebrate the peak of your family's history without clinging."
+            ],
+            "Finances": [
+                "1. Diversify to protect against total system collapse.",
+                "2. Release the 'More' mentality; find the 'Enough' peak.",
+                "3. Plan your estate for a time when you are not there."
+            ],
+            "Health": [
+                "1. Transition from 'Performance' to 'Sustainability'.",
+                "2. Acknowledge your body's absolute peak and its limits.",
+                "3. Master the art of 'Stillness' as your primary exercise."
+            ],
+            "Growth": [
+                "1. Sit in the 'Silence of Mastery' without seeking more.",
+                "2. Recognize your 'Ultimate Truth' as one perspective.",
+                "3. Prepare of the 'Great Release' of your current identity."
+            ]
+        },
+        "9": {
+            "Relationship": [
+                "1. Love without attachment or requirement.",
+                "2. Serve your partner from a place of pure freedom.",
+                "3. Be the 'Open Space' where the other can grow."
+            ],
+            "Career": [
+                "1. Transition from 'Doer' to 'Teacher/Sower'.",
+                "2. Work as if you are already retired (for the joy of it).",
+                "3. Seed the projects that will bloom after you are gone."
+            ],
+            "Family": [
+                "1. Be the 'Ancestor' you want to be remembered as.",
+                "2. Pass down wisdom, not just assets.",
+                "3. Forgive everything; hold no residue."
+            ],
+            "Finances": [
+                "1. Practice 'Radical Generosity'.",
+                "2. View money as a transparent flow, not a stagnant pool.",
+                "3. Teach others the laws of your prosperity."
+            ],
+            "Health": [
+                "1. Be a 'Light Dweller'—focus on energy over matter.",
+                "2. Maintain the temple for the sake of the Spirit.",
+                "3. Release the fear of physical dissolution/death."
+            ],
+            "Growth": [
+                "1. Be a 'Lamp' for those in the earlier stages.",
+                "2. Live with a 'Beginner's Mind' at the end of the road.",
+                "3. Wait for the silent Pulse of the next great cycle."
+            ]
+        }
+    },
     "sentiment_modulations": {
         "Future": {
             "Hopeful": "Your forward-looking optimism acts as a gravitational pull, accelerating your path toward the next gate.",
