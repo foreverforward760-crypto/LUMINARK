@@ -1,0 +1,716 @@
+{
+    "stages": {
+        "0": {
+            "name": "Plenara",
+            "spiritual": [
+                {
+                    "tradition": "Hebrew Torah/Kabbalah",
+                    "text": "Tohu va-Bohu (Genesis 1:2) - The formless void and empty waste before the first light."
+                },
+                {
+                    "tradition": "Hebrew/Kabbalah",
+                    "text": "Ein Sof (Infinite) - God before self-limitation (Tzimtzum); the source before form."
+                },
+                {
+                    "tradition": "Christian Mysticism",
+                    "text": "Meister Eckhart's 'Desert of the Godhead' - The state beyond God as a concept or persona."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "Śūnyatā (Emptiness) - Not a void of lack, but a pregnant field of infinite potentiality."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Brahman Nirguna - The absolute reality without attributes, qualities, or manifest form."
+                },
+                {
+                    "tradition": "Taoism",
+                    "text": "Wu (無) - Primordial nothingness; the empty receptivity of the Valley Spirit."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "Nun - The primordial waters of chaos that contained all potential creation."
+                },
+                {
+                    "tradition": "Gnosticism",
+                    "text": "Bythos (Depth) - The unfathomable abyss from which all Aeons emerged."
+                },
+                {
+                    "tradition": "Shamanic",
+                    "text": "The Great Mystery (Wakan Tanka) - The silent presence before the spirits took their shapes."
+                },
+                {
+                    "tradition": "Greek Philosophy",
+                    "text": "Apeiron (Anaximander) - The boundless and indefinite source that remains unmoved."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Neoplatonism",
+                    "text": "The One (Plotinus) - That which is beyond being and cannot be conceptualized."
+                },
+                {
+                    "tradition": "Pre-Socratic",
+                    "text": "Chaos (Hesiod) - Not disorder, but the primordial gap or yawning space."
+                },
+                {
+                    "tradition": "Modern Physics",
+                    "text": "Quantum Vacuum - A state of minimum energy where particles wait to surge into being."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Pre-Empire",
+                    "text": "The nomadic state before the first city-state (Uruk) was even a thought."
+                },
+                {
+                    "tradition": "Pre-Renaissance",
+                    "text": "The quiet gathering of Greek texts in monasteries before the light of the 14th century."
+                }
+            ],
+            "comparison": "Stage 0 is the silence before the first note. Unlike Stage 1, which is the ignition, Stage 0 is the breath that makes the note possible."
+        },
+        "1": {
+            "name": "Pulse / Spark",
+            "spiritual": [
+                {
+                    "tradition": "Hebrew Torah",
+                    "text": "'Let there be light' (Genesis 1:3) - The first divine vibration that broke the silence."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "AUM/OM - The primordial vibration that woke the sleeping universe into existence."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "The command 'Kun!' (Be!) - The exact moment intention met existence."
+                },
+                {
+                    "tradition": "Norse Mythology",
+                    "text": "The first sparks of Muspelheim meeting the ice of Niflheim to create life."
+                },
+                {
+                    "tradition": "Vedic Tradition",
+                    "text": "Hiranyagarbha (Golden Embryo) - The cosmic egg at the very moment it starts to vibrate."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "Hu (Divine Utterance) - The first word-power of Ra as he emerged from the Nun."
+                },
+                {
+                    "tradition": "Taoism",
+                    "text": "Qi (氣) - The vital energy and breath moving before any structure is defined."
+                },
+                {
+                    "tradition": "Indigenous",
+                    "text": "Spider Woman's first thread (Hopi) beginning the weaving of the worlds."
+                },
+                {
+                    "tradition": "Christianity",
+                    "text": "The Logos (Word) - The initial movement of the Divine Mind toward manifestation."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "Bodhicitta Arising - The first spontaneous movement of the heart toward Awakening."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Vitalism",
+                    "text": "Élan vital (Bergson) - The original impulse of life that pushes through matter."
+                },
+                {
+                    "tradition": "Logos",
+                    "text": "Heraclitus's Ever-living Fire - The spark that ignites the rational order of the cosmos."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Scientific Revolution",
+                    "text": "Galileo first looking through a telescope - The spark of a new reality."
+                },
+                {
+                    "tradition": "Industrial Age",
+                    "text": "The first steam engine puffing - A kinetic spark that reordered the world."
+                }
+            ],
+            "comparison": "Stage 1 is the ignition. It differs from Stage 0 in its commitment to exist, and from Stage 2 by its lack of defined direction."
+        },
+        "2": {
+            "name": "Polarity",
+            "spiritual": [
+                {
+                    "tradition": "Zoroastrianism",
+                    "text": "The absolute split between Ahura Mazda (Truth) and Angra Mainyu (Lie)."
+                },
+                {
+                    "tradition": "Taoism",
+                    "text": "The emergence of Yin and Yang - The first division of the One into the Two."
+                },
+                {
+                    "tradition": "Manichaeism",
+                    "text": "The cosmic war between the Kingdom of Light and the Kingdom of Darkness."
+                },
+                {
+                    "tradition": "Hebrew Torah",
+                    "text": "The Tree of Knowledge of Good and Evil - The entry into dualistic consciousness."
+                },
+                {
+                    "tradition": "Gnosticism",
+                    "text": "Kenoma (Material) vs. Pleroma (Spirit) - The realization of the material prison."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "Ma'at (Order) vs. Isfet (Chaos) - The fundamental cosmic struggle."
+                },
+                {
+                    "tradition": "Kabbalah",
+                    "text": "Chokhmah (Wisdom) and Binah (Understanding) - The Right and Left pillars of reality."
+                },
+                {
+                    "tradition": "Norse Mythology",
+                    "text": "Asgard (Gods) vs. Jotunheim (Giants) - The eternal tension between realms."
+                },
+                {
+                    "tradition": "Christianity",
+                    "text": "Adam and Eve - The first realization of shame, distinction, and 'Othering'."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Purusha (Consciousness) and Prakriti (Matter) appearing as separate entities."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Dialectics",
+                    "text": "Hegel's Thesis and Antithesis - The necessary conflict that precedes synthesis."
+                },
+                {
+                    "tradition": "Dualism",
+                    "text": "Descartes's split between Res Extensa (Body) and Res Cogitans (Mind)."
+                },
+                {
+                    "tradition": "Greek",
+                    "text": "Heraclitus: 'War is father of all' - Opposites creating the surface of reality."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Cold War",
+                    "text": "The absolute binary between East and West - A perfect historical Polarity."
+                },
+                {
+                    "tradition": "American History",
+                    "text": "The Union vs. the Confederacy - A struggle of internal dualism."
+                }
+            ],
+            "comparison": "Stage 2 is the tension of choice. It is more structured than Stage 1 but lacks the kinetic breakthrough of Stage 3."
+        },
+        "3": {
+            "name": "Expression / Motion",
+            "spiritual": [
+                {
+                    "tradition": "Christianity",
+                    "text": "The Incarnation - The Word becoming flesh and actively walking the earth."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "The descent of the Avatar (Krishna/Rama) to restore Dharma through direct action."
+                },
+                {
+                    "tradition": "Greek Myth",
+                    "text": "Prometheus bringing fire to humanity - A kinetic act of divine disruption."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "The Wajd (Ecstasy) - The soul moving in uncontrolled response to the Beloved."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "Ptah speaking the world into being - The creative word made manifest."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "Turning the Wheel of Dharma - The first sermon where truth was set in motion."
+                },
+                {
+                    "tradition": "Kabbalah",
+                    "text": "Tiferet (Beauty) - The harmonic manifestation resulting from the balance of pillars."
+                },
+                {
+                    "tradition": "Norse Mythology",
+                    "text": "Odin sacrificing himself on Yggdrasil to earn the power of the Runes."
+                },
+                {
+                    "tradition": "Indigenous",
+                    "text": "The first vision quest revelation where a spirit guide takes visible form."
+                },
+                {
+                    "tradition": "Shamanic",
+                    "text": "The successful first healing - The spiritual power finally proven in the physical."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Existentialism",
+                    "text": "Sartre's 'Existence precedes Essence' - We are defined by our active choices and deeds."
+                },
+                {
+                    "tradition": "Will to Power",
+                    "text": "Nietzsche's Dionysian energy - The creative explosion that shatters all conceptual constraints."
+                },
+                {
+                    "tradition": "Aesthetics",
+                    "text": "The movement from a thought to a brushstroke; the breakthrough of the first draft."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Apollo Program",
+                    "text": "The 1960s space race - Pure expression of human momentum toward the heavens."
+                },
+                {
+                    "tradition": "The Renaissance",
+                    "text": "The 15th-century explosion of art and science in Florence."
+                }
+            ],
+            "comparison": "Stage 3 is the breakthrough. It moves past the 'either/or' of Stage 2 into a 'yes' that results in action."
+        },
+        "4": {
+            "name": "Foundation",
+            "spiritual": [
+                {
+                    "tradition": "Judaism",
+                    "text": "Temple of Solomon completed - The stabilization of sacred tradition into stone."
+                },
+                {
+                    "tradition": "Islam",
+                    "text": "The Salat - The stable daily rhythm of five prayers that grounds the community."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "The Vinaya - The code of monastic discipline that stabilized the path of the Sangha."
+                },
+                {
+                    "tradition": "Confucianism",
+                    "text": "Li (Ritual Propriety) - Maintaining social harmony through fixed, repetitive form."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "The ritual of the Nile - Agricultural and spiritual life aligned with a predictable cycle."
+                },
+                {
+                    "tradition": "Pythagoreanism",
+                    "text": "The Tetractys - The number 4 representing the stable earth and complete foundation."
+                },
+                {
+                    "tradition": "Christianity",
+                    "text": "Monastic rules (like St. Benedict's) establishing a sustainable life of prayer."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Grihastha (Householder) - The balanced life of supporting family and maintaining duty."
+                },
+                {
+                    "tradition": "Indigenous",
+                    "text": "The establishment of seasonal ceremonies that repeat to anchor the tribe's identity."
+                },
+                {
+                    "tradition": "Stoicism",
+                    "text": "The daily 'morning and evening reflection' used to anchor the mind to reason."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Rationalism",
+                    "text": "Spinoza's Ethics - A rigid, geometric proof built on an unshakeable foundation."
+                },
+                {
+                    "tradition": "Aristotle",
+                    "text": "The Golden Mean - Virtue as a stable, repeated habit of the center."
+                },
+                {
+                    "tradition": "Structuralism",
+                    "text": "The underlying rules that allow a complex system to remain coherent over time."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Roman Empire",
+                    "text": "The Pax Romana - Two centuries of unprecedented structural stability."
+                },
+                {
+                    "tradition": "U.S. Law",
+                    "text": "The 1787 Constitution - The bedrock document that sustained a new nation's growth."
+                }
+            ],
+            "comparison": "Stage 4 is the floor. It provides the safety that Stage 3 lacks, but risks the boredom that leads to the Stage 5 threshold."
+        },
+        "5": {
+            "name": "Threshold / Crisis",
+            "spiritual": [
+                {
+                    "tradition": "Christianity",
+                    "text": "Gethsemane - 'Thy will be done' - The point of sweat-blood where the path becomes irreversible."
+                },
+                {
+                    "tradition": "Hebrew Torah",
+                    "text": "The Binding of Isaac - The terrifying threshold of absolute trust vs. human logic."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Arjuna on the battlefield - The paralysis and crisis of identity that precedes enlightenment."
+                },
+                {
+                    "tradition": "Islam",
+                    "text": "The Hijra - The moment of leaving everything known behind for an uncertain future."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "Hallaj on the cross - The refusal to deny the internal truth regardless of the cost."
+                },
+                {
+                    "tradition": "Greek Mythology",
+                    "text": "Orpheus looking back - The irreversible moment of trust failing or succeeding."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "The Raft Parable - The crisis of choosing to leave the boat on the shore or drown."
+                },
+                {
+                    "tradition": "Norse Mythology",
+                    "text": "The decision to fight at Ragnarok knowing that defeat is certain, but necessary."
+                },
+                {
+                    "tradition": "Gnosticism",
+                    "text": "Sophia's fall - The tipping point between the Pleroma and the material descent."
+                },
+                {
+                    "tradition": "Indigenous",
+                    "text": "The initiation trial where a child must face their fear alone or remain a child forever."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Kierkegaard",
+                    "text": "The 'Leap of Faith' - The moment when logic fails and the self must jump into the unknown."
+                },
+                {
+                    "tradition": "Chaos Theory",
+                    "text": "Bifurcation - The point where an established system must either evolve or collapse."
+                },
+                {
+                    "tradition": "Existence",
+                    "text": "The 'Point of No Return' - A decision that permanently alters the trajectory of a life."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "The Rubicon",
+                    "text": "Caesar crossing the river - 'Alea iacta est' (The die is cast)."
+                },
+                {
+                    "tradition": "French Revolution",
+                    "text": "The Fall of the Bastille - The irreversible collapse of the old order."
+                }
+            ],
+            "comparison": "Stage 5 is the door. It is the end of Stage 4's safety and the necessary painful labor before Stage 6's harmony."
+        },
+        "6": {
+            "name": "Integration / Resonance",
+            "spiritual": [
+                {
+                    "tradition": "Taoism",
+                    "text": "Wu Wei mastery - Acting without force, in such perfect harmony that the self disappears."
+                },
+                {
+                    "tradition": "Zen",
+                    "text": "The Satori flash - Sudden enlightenment where the wall between knower and known falls away."
+                },
+                {
+                    "tradition": "Christian Mysticism",
+                    "text": "The Spiritual Marriage - The complete integration of the human soul with the Divine will."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Sat-Chit-Ananda - The experience of Being, Consciousness, and Bliss as a single state."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "The Akh - The state where all separate parts of the soul are transfigured as one."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "Samadhi - Meditative absorption where the mind and the object of focus unite effortlessly."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "Baqa - Subsistence in God while still living and serving in the physical world."
+                },
+                {
+                    "tradition": "Kabbalah",
+                    "text": "Yichud (Unification) - The merging of separate divine names into a singular resonance."
+                },
+                {
+                    "tradition": "Vedic Tradition",
+                    "text": "Turiya - The fourth state of consciousness that underlies waking, dreaming, and sleep."
+                },
+                {
+                    "tradition": "Indigenous",
+                    "text": "The hunter becoming the deer - The subject-object boundary dissolving in the forest."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Hegel",
+                    "text": "Synthesis (Aufheben) - Where the conflict is preserved yet transcended in a higher unity."
+                },
+                {
+                    "tradition": "Integral Theory",
+                    "text": "Ken Wilber's AQAL - The integration of all quadrants and levels of reality."
+                },
+                {
+                    "tradition": "Flow State",
+                    "text": "Mastery so smooth that the artist and the instrument become a single circuit."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Post-WWII Europe",
+                    "text": "The creation of a unified economic zone to prevent the recurrence of ancient conflicts."
+                },
+                {
+                    "tradition": "Human Rights",
+                    "text": "The 1948 Universal Declaration - A global integration of moral principles."
+                }
+            ],
+            "comparison": "Stage 6 is the flow state. It is the reward for surviving Stage 5, but it can be too 'comfortable,' leading to Stage 7's analysis."
+        },
+        "7": {
+            "name": "Analysis / Purification",
+            "spiritual": [
+                {
+                    "tradition": "Alchemy",
+                    "text": "Nigredo - The blackening and rot required to find the true gold essence beneath."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "Dukkha nana - The terrifying knowledge of suffering as the final psychological truth."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Shiva's Tandava - The destructive dance that must occur before the next cycle can begin."
+                },
+                {
+                    "tradition": "Christianity",
+                    "text": "Job on the ash heap - Everything stripped to verify the indestructible core of faith."
+                },
+                {
+                    "tradition": "Kabbalah",
+                    "text": "Shevirat HaKelim - The breaking of the vessels that precedes the work of repair (Tikkun)."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "Jalal (Majesty) - God's overwhelming, terrible beauty that shatters the ego."
+                },
+                {
+                    "tradition": "Norse Mythology",
+                    "text": "Ragnarok - The burning of the old world as a necessary purification for the new."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "Osiris dismembered - The total fragmentation that precedes a greater resurrection."
+                },
+                {
+                    "tradition": "Taoism",
+                    "text": "The 'Great Doubt' - The state of intense confusion that must precede the final breakthrough."
+                },
+                {
+                    "tradition": "Judaism",
+                    "text": "The Babylonian Exile - Searching for the core signal of God in a lost and destroyed land."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Deconstruction",
+                    "text": "Derrida's Analysis - Breaking down structures to see the contradictions hidden within."
+                },
+                {
+                    "tradition": "Scientific Method",
+                    "text": "Popper's Falsification - A theory is only 'true' if it survives rigorous attempts to prove it wrong."
+                },
+                {
+                    "tradition": "Skepticism",
+                    "text": "Cartesian Doubt - Stripping away all uncertain knowledge until only the 'cogito' remains."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "The Reformation",
+                    "text": "The 16th-century deconstruction of church authority in favor of individual inquiry."
+                },
+                {
+                    "tradition": "Modernism",
+                    "text": "The early 20th-century stripping away of ornament in favor of raw function."
+                }
+            ],
+            "comparison": "Stage 7 is the crucible. It breaks Stage 6's easy harmony to ensure that what remains is indestructible truth."
+        },
+        "8": {
+            "name": "Unity Peak / Rigidity",
+            "spiritual": [
+                {
+                    "tradition": "Christianity",
+                    "text": "The Transfiguration - The peak glory that the Apostles wanted to build 'tents' inside forever."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "The Arhat - Achievement of the goal, but tempting one to stay on the near shore forever."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "Sat-Chit-Ananda Crystallized - Being and Bliss at their absolute, most unmoving peak."
+                },
+                {
+                    "tradition": "Kabbalah",
+                    "text": "Keter (The Crown) - The highest point that almost touches the Infinite, yet is still form."
+                },
+                {
+                    "tradition": "Islam",
+                    "text": "The Qutb - The Pole or Axis that supports the whole world from a fixed, rigid point."
+                },
+                {
+                    "tradition": "Taoism",
+                    "text": "Becoming an Immortal - Perfect stillness, but claiming a separate state from the flow."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "The Pyramid Completed - Mistaking the mountain of stone for the king's eternal state."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "Insan al-Kamil at Zenith - The perfect human at the peak of their spiritual authority."
+                },
+                {
+                    "tradition": "Gnosticism",
+                    "text": "Pistis Sophia potentially trapped at the very peak of her own knowledge."
+                },
+                {
+                    "tradition": "Confucianism",
+                    "text": "The Mandate of Heaven secured - The righteous crown, but under the risk of pride."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Hegel",
+                    "text": "The Absolute - The end point where Spirit knows itself completely and ceases to move."
+                },
+                {
+                    "tradition": "Dogmatism",
+                    "text": "The belief that one has attained the 'final' truth that requires no further inquiry or change."
+                },
+                {
+                    "tradition": "Totalitarianism",
+                    "text": "A logic so 'perfect' and 'complete' that it ceases to allow the oxygen of new life."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "The Fall of Rome",
+                    "text": "The belief that Rome was the 'Eternal City' just before its inevitable collapse."
+                },
+                {
+                    "tradition": "End of History",
+                    "text": "The 1990s belief that Western democracy was the final, perfect form of government."
+                }
+            ],
+            "comparison": "Stage 8 is the peak. It is the greatest achievement, but its 'Permanence Trap' is the most dangerous risk of all."
+        },
+        "9": {
+            "name": "Renewal / Transparency",
+            "spiritual": [
+                {
+                    "tradition": "Zen",
+                    "text": "The 10th Oxherding Picture - Returning to the marketplace with gift-bestowing hands and muddy feet."
+                },
+                {
+                    "tradition": "Christianity",
+                    "text": "The Resurrection - A new beginning that is entirely, radically different from the old life."
+                },
+                {
+                    "tradition": "Sufism",
+                    "text": "Sobriety after Drunkenness - The quiet return to the world with the secret of the Divine."
+                },
+                {
+                    "tradition": "Hinduism",
+                    "text": "The Jivanmukti - One who is liberated while still living and serving in the marketplace."
+                },
+                {
+                    "tradition": "Buddhism",
+                    "text": "The Bodhisattva returning to help all beings, having no separate identity left to defend."
+                },
+                {
+                    "tradition": "Kabbalah",
+                    "text": "Malkhut - Heaven finally brought all the way down to Earth to dwell in the mundane."
+                },
+                {
+                    "tradition": "Taoism",
+                    "text": "The Empty Boat - No ego left to defend, floating gracefully in the current of the Tao."
+                },
+                {
+                    "tradition": "Ancient Egypt",
+                    "text": "Osiris Risen - The merciful judge of the dead who guides others through the darkness."
+                },
+                {
+                    "tradition": "Indigenous",
+                    "text": "The Death Chant - Teaching others how to release gracefully when the cycle is done."
+                },
+                {
+                    "tradition": "Christian Mysticism",
+                    "text": "Therese of Lisieux's 'Little Way' - Finding the absolute in the most minor service."
+                }
+            ],
+            "philosophical": [
+                {
+                    "tradition": "Nietzsche",
+                    "text": "Amor Fati - To love existence so much you would live the entire cycle again and again."
+                },
+                {
+                    "tradition": "Transparency",
+                    "text": "The soul becoming a window for the primordial light to shine through without distortion."
+                },
+                {
+                    "tradition": "Socrates",
+                    "text": "The ultimate wisdom of knowing nothing; the return to the humility of the start."
+                }
+            ],
+            "historical": [
+                {
+                    "tradition": "Post-Renaissance",
+                    "text": "The quiet emergence of the Enlightenment after the peak of religious art."
+                },
+                {
+                    "tradition": "Personal Renewal",
+                    "text": "Nelson Mandela's walk out of prison - Not as a victim, but as a renewer of a nation."
+                }
+            ],
+            "comparison": "Stage 9 is the circle's end. It looks like Stage 0, but it is a silence filled with the wisdom of the journey."
+        }
+    },
+    "sentiment_modulations": {
+        "Future": {
+            "Hopeful": "Your forward-looking optimism acts as a gravitational pull, accelerating your path toward the next gate.",
+            "Uncertain": "Your uncertainty about the future is the first sign of a threshold crossing. You are detaching from current safety.",
+            "Anxious": "The pressure you feel is the system's way of forcing evolution. High tension is the precursor to breakthrough.",
+            "Excited": "High kinetic energy detected. This 'Future-Spark' is likely to manifest as a Stage 1 ignition soon.",
+            "Determined": "Your will is aligning with Stage 4 architectural principles. You are building what is to come."
+        },
+        "Past": {
+            "Releasing": "You are shedding the weight of the previous cycle. This is a classic Stage 9/0 transition sentiment.",
+            "Regretful": "Regret is a Stage 2 loop. You are stuck in the duality of what 'should' have been vs what was.",
+            "Grateful": "Gratitude stabilizes your foundational vectors. It is the bedrock of a Stage 4/6 residence.",
+            "Nostalgic": "Nostalgia is a 'Stage 8 Trap' in reverse—attempting to give permanence to a phantom peak.",
+            "Traumatized": "High internal tension detected in memory sectors. Use Stage 7 analysis to deconstruct the impact."
+        }
+    }
+}
