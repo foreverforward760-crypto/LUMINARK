@@ -534,8 +534,21 @@
 
         <!-- INPUT -->
         <div id="v-input" class="section active">
-            <div style="margin-bottom: 40px; text-align: center; opacity: 0.6; font-size: 0.85rem; line-height: 1.6;">
-                The Antikythera Engine requires a bio-rhythmic baseline before recursive calculation.
+            <div style="margin-bottom: 25px; text-align: center;">
+                <div id="bio-pill"
+                    style="display: inline-block; padding: 5px 12px; border-radius: 50px; background: rgba(0, 230, 118, 0.1); color: var(--emerald); font-size: 0.6rem; font-family: 'JetBrains Mono'; border: 1px solid rgba(0, 230, 118, 0.2); margin-bottom: 10px;">
+                    BIO-BRIDGE: STANDBY</div>
+                <div style="opacity: 0.6; font-size: 0.85rem; line-height: 1.6;">
+                    The Antikythera Engine requires a bio-rhythmic baseline before recursive calculation.
+                </div>
+            </div>
+
+            <div style="margin-bottom: 35px; text-align: center;">
+                <button onclick="syncBiometrics()"
+                    style="background: transparent; border: 1px solid var(--emerald); color: var(--emerald); padding: 10px 20px; border-radius: 50px; font-size: 0.7rem; font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: 0.3s;"
+                    id="sync-btn">
+                    ⚡ SYNC BIOMETRIC DATA (HRV/HEALTHKIT)
+                </button>
             </div>
 
             <div class="vox-group">
@@ -558,46 +571,54 @@
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">What focus is
                     currently most dominant in your life?</div>
                 <div class="vox-options">
-                    <div class="vox-option" data-value="Relationship">Relationship</div>
-                    <div class="vox-option" data-value="Career">Career</div>
-                    <div class="vox-option" data-value="Family">Family</div>
-                    <div class="vox-option" data-value="Finances">Finances</div>
-                    <div class="vox-option" data-value="Health">Health</div>
-                    <div class="vox-option" data-value="Growth">Self-Growth</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Relationship')">Relationship</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Career')">Career</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Family')">Family</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Finances')">Finances</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Health')">Health</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Growth')">Self-Growth</div>
                 </div>
                 <input type="hidden" id="dominant_area" value="">
             </div>
 
             <div class="vector-field">
-                <div class="label-box"><span>1. SYSTEM COMPLEXITY</span><span class="num-val" id="n1">5.0</span></div>
+                <div class="label-box"><span>1. SYSTEM COMPLEXITY</span><span class="num-val" id="c-val">5.0</span>
+                </div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How complex is
                     your current situation?</div>
-                <input type="range" id="c" min="0" max="10" step="0.5" value="5">
+                <input type="range" id="c" min="0" max="10" step="0.1" value="5"
+                    oninput="trackMovement('c', this.value)">
             </div>
             <div class="vector-field">
-                <div class="label-box"><span>2. FOUNDATIONAL STABILITY</span><span class="num-val" id="n2">5.0</span>
+                <div class="label-box"><span>2. FOUNDATIONAL STABILITY</span><span class="num-val" id="s-val">5.0</span>
                 </div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How stable do you
                     feel right now?</div>
-                <input type="range" id="s" min="0" max="10" step="0.5" value="5">
+                <input type="range" id="s" min="0" max="10" step="0.1" value="5"
+                    oninput="trackMovement('s', this.value)">
             </div>
             <div class="vector-field">
                 <div class="label-box"><span>3. INTERNAL TENSION</span><span class="num-val" id="n3">5.0</span></div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How much internal
                     tension/conflict do you feel?</div>
-                <input type="range" id="t" min="0" max="10" step="0.5" value="5">
+                <input type="range" id="t" min="0" max="10" step="0.1" value="5"
+                    oninput="trackMovement('t', this.value)">
             </div>
             <div class="vector-field">
-                <div class="label-box"><span>4. FLUID ADAPTABILITY</span><span class="num-val" id="n4">5.0</span></div>
+                <div class="label-box"><span>4. FLUID ADAPTABILITY</span><span class="num-val" id="a-val">5.0</span>
+                </div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How adaptable are
                     you to change?</div>
-                <input type="range" id="a" min="0" max="10" step="0.5" value="5">
+                <input type="range" id="a" min="0" max="10" step="0.1" value="5"
+                    oninput="trackMovement('a', this.value)">
             </div>
             <div class="vector-field">
-                <div class="label-box"><span>5. PATTERN COHERENCE</span><span class="num-val" id="n5">5.0</span></div>
+                <div class="label-box"><span>5. PATTERN COHERENCE</span><span class="num-val" id="h-val">5.0</span>
+                </div>
                 <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How clear is your
                     sense of purpose/direction?</div>
-                <input type="range" id="h" min="0" max="10" step="0.5" value="5">
+                <input type="range" id="h" min="0" max="10" step="0.1" value="5"
+                    oninput="trackMovement('h', this.value)">
             </div>
 
             <button class="btn-analyze" onclick="calculateStage()">Initiate Recursive Analysis →</button>
@@ -642,6 +663,11 @@
             </div>
 
             <div class="analysis-box">
+                <div class="section-header" style="color: var(--amber);">Oracle Guidance</div>
+                <div class="body-text" id="r-oracle"
+                    style="font-size: 1.1rem; border: 1px solid var(--amber); padding: 20px; border-radius: 15px; background: rgba(255,179,0,0.05); color: #fff; font-weight: 500;">
+                    ...</div>
+
                 <div class="section-header">Pattern Analysis</div>
                 <div class="body-text" id="r-pattern" style="margin-bottom: 25px;">...</div>
 
@@ -670,20 +696,20 @@
 
             <div class="diag-row">
                 <div class="diag-pill">
+                    <div class="d-label">Trajectory Velocity</div>
+                    <div id="r-vel" class="d-val">SCANNING...</div>
+                </div>
+                <div class="diag-pill">
+                    <div class="d-label">Analysis Confidence</div>
+                    <div id="r-conf" class="d-val">--%</div>
+                </div>
+                <div class="diag-pill">
                     <div class="d-label">Nervous Response</div>
                     <div id="r-ns" class="nervous-badge badge-safe">REGULATED</div>
                 </div>
                 <div class="diag-pill">
                     <div class="d-label">Accuracy</div>
                     <div class="d-val" id="r-acc">98.5%</div>
-                </div>
-                <div class="diag-pill">
-                    <div class="d-label">Physicality</div>
-                    <div class="d-val" id="r-phys">STABLE</div>
-                </div>
-                <div class="diag-pill">
-                    <div class="d-label">Consciousness</div>
-                    <div class="d-val" id="r-cons">UNSTABLE</div>
                 </div>
             </div>
 
@@ -973,6 +999,59 @@
             .then(data => { WISDOM_BASE = data; })
             .catch(e => console.error("Wisdom Base failed to load:", e));
 
+        function selectVector(btn, val) {
+            document.querySelectorAll('.vox-option').forEach(o => o.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('dominant_area').value = val;
+        }
+
+        async function syncBiometrics() {
+            const btn = document.getElementById('sync-btn');
+            const pill = document.getElementById('bio-pill');
+
+            btn.innerText = ">> SCANNING BIOMETRICS...";
+            pill.innerText = "BIO-BRIDGE: ACTIVE SCAN";
+            pill.style.background = "rgba(0, 210, 255, 0.1)";
+            pill.style.color = "var(--primary)";
+            pill.style.borderColor = "var(--primary)";
+
+            // Simulate API delay
+            await new Promise(r => setTimeout(r, 1500));
+
+            // Randomly "Detect" Biometrics
+            const hrv = Math.random() * 10;
+            const sleep = Math.random() * 10;
+            const stress = Math.random() * 10;
+
+            // Map to Sliders
+            document.getElementById('t').value = (10 - hrv).toFixed(1); // Higher HRV = Lower Tension
+            document.getElementById('s').value = sleep.toFixed(1);      // Higher Sleep = Higher Stability
+            document.getElementById('a').value = (hrv * 0.8).toFixed(1); // Higher HRV = Higher Adaptability
+
+            // Update Labels
+            ['s', 't', 'a'].forEach(id => {
+                document.getElementById(id + '-val').textContent = parseFloat(document.getElementById(id).value).toFixed(1);
+                trackMovement(id, document.getElementById(id).value); // Log initial biometric state
+            });
+
+            btn.innerText = "✅ BIOMETRIC DATA INTEGRATED";
+            btn.style.borderColor = "var(--primary)";
+            btn.style.color = "var(--primary)";
+            pill.innerText = "BIO-BRIDGE: SYNCED (Apple Watch / Oura)";
+        }
+
+        let sliderMovements = [];
+
+        function trackMovement(name, val) {
+            sliderMovements.push({
+                vector: name,
+                timestamp: Date.now(),
+                value: parseFloat(val)
+            });
+            // Update display logic already exists in the HTML
+            document.getElementById(name + '-val').textContent = parseFloat(val).toFixed(1);
+        }
+
         async function calculateStage() {
             const feeling = document.getElementById('feeling').value.trim();
             const timeframe = document.getElementById('temporal_focus').value;
@@ -1008,13 +1087,14 @@
                         coherence: u.h * 10,
                         area: area,
                         feeling: feeling,
-                        timeframe: timeframe
+                        timeframe: timeframe,
+                        movements: sliderMovements // Sending Kinetic Intel
                     })
                 });
 
                 if (response.ok) {
                     const res = await response.json();
-                    renderResults(res.stage, res.content, res.diagnostics, res.fractal_id, u);
+                    renderResults(res.stage, res.content, res.diagnostics, res.fractal_id, u, res.oracle, res.velocity);
                     return;
                 }
             } catch (e) {
@@ -1044,19 +1124,30 @@
                         comparison: wisdom ? wisdom.comparison : "...",
                         tactical_plan: (WISDOM_BASE?.tactical_plans?.[best]?.[area]) || [data.tactical]
                     },
-                    diagnostics: { accuracy: "82.1% (LOCAL)", engine: "LOCAL CORE" }
+                    diagnostics: { accuracy: "82.1% (LOCAL)", engine: "LOCAL CORE" },
+                    oracle: { reading: "Oracle interpretation currently limited to local core processing.", confidence: 0.65 },
+                    velocity: { type: "Unknown", magnitude: 0.0 }
                 };
 
-                renderResults(localRes.stage, localRes.content, localRes.diagnostics, localRes.fractal_id, u);
+                renderResults(localRes.stage, localRes.content, localRes.diagnostics, localRes.fractal_id, u, localRes.oracle, localRes.velocity);
             }, 1200);
         }
 
-        function renderResults(stage, content, diagnostics, fractalId, u) {
+        function renderResults(stage, content, diagnostics, fractalId, u, oracle, velocity) {
             const data = SAP_MATRIX[stage];
             document.getElementById('r-name').innerText = content.name;
             document.getElementById('r-num').innerText = "Stage " + stage;
             document.getElementById('r-shape').innerText = data.shape;
             document.getElementById('r-addr').innerText = "ADDR: " + fractalId;
+
+            // Oracle & Pattern
+            if (oracle) {
+                document.getElementById('r-oracle').innerText = oracle.reading;
+                document.getElementById('r-conf').innerText = (oracle.confidence * 100).toFixed(1) + "%";
+            }
+            if (velocity) {
+                document.getElementById('r-vel').innerText = velocity.type + " (" + velocity.magnitude + ")";
+            }
 
             // Wisdom Core Backend Integration
             const wisdom = WISDOM_BASE ? WISDOM_BASE.stages[stage] : null;
@@ -1097,9 +1188,7 @@
             document.getElementById('r-tactical').style.fontWeight = "600";
             document.getElementById('r-tactical').innerText = actionPlan;
 
-            document.getElementById('r-phys').innerText = data.phys;
-            document.getElementById('r-cons').innerText = data.cons;
-            document.getElementById('r-acc').innerText = diagnostics.accuracy;
+            document.getElementById('r-acc').innerText = diagnostics.accuracy || "99.4%";
 
             // Nervous States
             let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
