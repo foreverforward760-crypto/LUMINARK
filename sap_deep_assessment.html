@@ -427,14 +427,20 @@
                 </div>
 
                 <div class="historical-context">
-                    <h3>>> HISTORICAL RESONANCE</h3>
-                    <p id="history-text">...</p>
+                    <h3>>> PATTERN ANALYSIS</h3>
+                    <p id="pattern-analysis">...</p>
                 </div>
 
                 <div class="historical-context"
                     style="background: rgba(0, 255, 65, 0.05); border-color: var(--emerald); margin-top: 15px;">
-                    <h3>>> PHILOSOPHICAL ALIGNMENT</h3>
-                    <p id="philosophy-text">...</p>
+                    <h3>>> NAVIGATION PROTOCOL</h3>
+                    <p id="nav-protocol">...</p>
+                </div>
+
+                <div class="historical-context"
+                    style="background: rgba(255, 255, 255, 0.03); border-color: #555; margin-top: 15px;">
+                    <h3>>> HISTORICAL MIRROR</h3>
+                    <p id="historical-mirror" style="font-size: 0.75rem; color: #888; font-style: italic;"></p>
                 </div>
 
                 <div class="historical-context"
@@ -585,14 +591,13 @@
             personalizedContext += data.history;
             document.getElementById('history-text').innerText = personalizedContext;
 
-            // Randomized Variety Wisdom
+            // Guru-Proof Terminal Logic
             if (wisdom) {
-                const sp = wisdom.spiritual[Math.floor(Math.random() * wisdom.spiritual.length)];
-                const ph = wisdom.philosophical[Math.floor(Math.random() * wisdom.philosophical.length)];
-
-                document.getElementById('history-text').innerText += `\n\n>> RECURSIVE PATTERN recorded in ${sp.tradition}:\n   "${sp.text.toUpperCase()}"`;
-                document.getElementById('philosophy-text').innerText = `>> ALIGNED WITH ${ph.tradition.toUpperCase()}:\n   "${ph.text.toUpperCase()}"`;
-                document.getElementById('comparison-text').innerText = `>> GATE COMPARISON: ${wisdom.comparison.toUpperCase()}`;
+                let pAnalysis = wisdom.pattern_analysis;
+                document.getElementById('pattern-analysis').innerText = `${personalizedContext}\n${pAnalysis.toUpperCase()}`;
+                document.getElementById('nav-protocol').innerText = wisdom.navigation_protocol.toUpperCase();
+                document.getElementById('historical-mirror').innerText = (wisdom.historical_mirror).toUpperCase();
+                document.getElementById('comparison-text').innerText = (wisdom.comparison).toUpperCase();
 
                 const normalizedArea = area.charAt(0).toUpperCase() + area.slice(1).toLowerCase();
                 if (WISDOM_BASE.tactical_plans && WISDOM_BASE.tactical_plans[stage] && WISDOM_BASE.tactical_plans[stage][normalizedArea]) {

@@ -730,15 +730,21 @@
             <div class="stage-badge" id="stage-badge"></div>
             <p id="stage-description"></p>
 
-            <div id="wisdom-container"
+            <div id="pattern-container"
                 style="text-align: left; margin: 25px 0; border-top: 1px solid #eee; padding-top: 20px; display: none;">
-                <h4 style="color: #667eea; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">Recursive
-                    Wisdom</h4>
-                <p id="wisdom-text" style="font-style: italic; color: #444; margin-bottom: 15px;"></p>
+                <h4 style="color: #667eea; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">Pattern
+                    Analysis</h4>
+                <p id="pattern-analysis" style="color: #444; margin-bottom: 20px;"></p>
 
                 <h4 style="color: #764ba2; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">
-                    Historical / Philosophical Pattern</h4>
-                <p id="pattern-text" style="color: #666; font-size: 0.95rem;"></p>
+                    Navigation Protocol</h4>
+                <p id="nav-protocol"
+                    style="color: #333; font-weight: 500; border-left: 2px solid #764ba2; padding-left: 15px; margin-bottom: 20px;">
+                </p>
+
+                <h4 style="color: #333; margin-bottom: 10px; text-transform: uppercase; font-size: 0.8rem;">Historical
+                    Mirror</h4>
+                <p id="historical-mirror" style="font-style: italic; color: #666; font-size: 0.95rem;"></p>
 
                 <div style="background: #f8f9ff; padding: 15px; border-radius: 10px; margin-top: 20px;">
                     <h4 style="color: #333; margin-bottom: 5px; font-size: 0.8rem;">Stage Comparison</h4>
@@ -750,7 +756,7 @@
                 style="text-align: left; margin: 25px 0; background: #e6fffa; border: 1px solid #38b2ac; border-radius: 20px; padding: 25px; display: none;">
                 <h4
                     style="color: #2c7a7b; margin-bottom: 12px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px;">
-                    🚀 Personalized Action Protocol</h4>
+                    🚀 Personalized Tactical Plan</h4>
                 <div id="action-steps"
                     style="font-weight: 600; color: #234e52; line-height: 1.8; white-space: pre-line;"></div>
             </div>
@@ -979,14 +985,12 @@
             personalizedDesc += " " + info.description;
             document.getElementById('stage-description').textContent = personalizedDesc;
 
-            // Handle Recursive Wisdom Variety
+            // Guru-Proof Integration
             if (wisdom) {
-                const sp = wisdom.spiritual[Math.floor(Math.random() * wisdom.spiritual.length)];
-                const ph = wisdom.philosophical[Math.floor(Math.random() * wisdom.philosophical.length)];
-
-                document.getElementById('wisdom-container').style.display = 'block';
-                document.getElementById('wisdom-text').innerText = `"${sp.text}" — (${sp.tradition})`;
-                document.getElementById('pattern-text').innerText = `${ph.text} (Source: ${ph.tradition})`;
+                document.getElementById('pattern-container').style.display = 'block';
+                document.getElementById('pattern-analysis').innerText = wisdom.pattern_analysis;
+                document.getElementById('nav-protocol').innerText = wisdom.navigation_protocol;
+                document.getElementById('historical-mirror').innerText = wisdom.historical_mirror;
                 document.getElementById('comparison-text').innerText = wisdom.comparison;
             }
 
