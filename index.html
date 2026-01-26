@@ -659,18 +659,60 @@
                     <button class="info-btn" onclick="toggleHelp('h-vector')">[?] Info</button>
                 </div>
                 <div id="h-vector" class="help-text">Choose the primary container where your energy is most focused.
-                    This determines the specific tactical protocols you'll receive (e.g., Career-specific vs.
-                    Relationship-specific steps).</div>
+                    This determines the specific tactical protocols you'll receive.</div>
 
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">What focus is
+                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 15px; font-weight: 500;">What focus is
                     currently most dominant in your life?</div>
-                <div class="vox-options">
+
+                <!-- TIER 1: FUNDAMENTALS -->
+                <div style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px;">TIER 1: CORE
+                    FUNDAMENTALS</div>
+                <div class="vox-options" style="margin-bottom: 20px;">
                     <div class="vox-option" onclick="selectVector(this, 'Relationship')">Relationship</div>
                     <div class="vox-option" onclick="selectVector(this, 'Career')">Career</div>
                     <div class="vox-option" onclick="selectVector(this, 'Family')">Family</div>
                     <div class="vox-option" onclick="selectVector(this, 'Finances')">Finances</div>
                     <div class="vox-option" onclick="selectVector(this, 'Health')">Health</div>
                     <div class="vox-option" onclick="selectVector(this, 'Growth')">Self-Growth</div>
+                </div>
+
+                <!-- TIER 2: MEANING -->
+                <div style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px;">TIER 2: MEANING &
+                    PURPOSE</div>
+                <div class="vox-options" style="margin-bottom: 20px;">
+                    <div class="vox-option" onclick="selectVector(this, 'Spirituality')">Spirituality</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Creative Expression')">Creative Expression
+                    </div>
+                    <div class="vox-option" onclick="selectVector(this, 'Purpose/Mission')">Purpose/Mission</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Social Impact')">Social Impact</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Legacy')">Legacy</div>
+                </div>
+
+                <!-- TIER 3: AUTONOMY -->
+                <div style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px;">TIER 3: FREEDOM &
+                    AUTONOMY</div>
+                <div class="vox-options" style="margin-bottom: 20px;">
+                    <div class="vox-option" onclick="selectVector(this, 'Adventure/Freedom')">Adventure/Freedom</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Independence')">Independence</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Power/Influence')">Power/Influence</div>
+                </div>
+
+                <!-- TIER 4: BELONGING -->
+                <div style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px;">TIER 4: BELONGING
+                    & SAFETY</div>
+                <div class="vox-options" style="margin-bottom: 20px;">
+                    <div class="vox-option" onclick="selectVector(this, 'Community')">Community</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Security/Stability')">Security/Stability</div>
+                </div>
+
+                <!-- TIER 5: EXPERIENCE -->
+                <div style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px;">TIER 5:
+                    EXPERIENCE & RECOVERY</div>
+                <div class="vox-options">
+                    <div class="vox-option" onclick="selectVector(this, 'Pleasure/Joy')">Pleasure/Joy</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Education/Learning')">Education/Learning</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Recovery/Healing')">Recovery/Healing</div>
+                    <div class="vox-option" onclick="selectVector(this, 'Survival/Crisis')">Survival/Crisis</div>
                 </div>
                 <input type="hidden" id="dominant_area" value="">
             </div>
