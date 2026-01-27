@@ -1018,12 +1018,12 @@
                     style="font-style:italic; border-left:2px solid var(--danger); padding-left:15px; color: #efefef;">
                     Warning Text.</div>
 
-                <div class="section-header" style="margin-top:25px;">MA'AT PROTOCOL (Ethical Validation)</div>
+                <div class="section-header" style="margin-top:25px;">ETHICAL VALIDATION</div>
                 <div class="body-text" id="r-maat"
                     style="border-left:2px solid #00d2ff; padding-left:15px; color:rgba(255,255,255,0.8); font-size:0.85rem;">
                     Checking alignment...</div>
 
-                <div class="section-header" style="margin-top:25px;">YUNUS PROTOCOL (False Light Detection)</div>
+                <div class="section-header" style="margin-top:25px;">FALSE LIGHT DETECTION</div>
                 <div class="body-text" id="r-yunus"
                     style="border-left:2px solid #ffb300; padding-left:15px; color:rgba(255,255,255,0.8); font-size:0.85rem;">
                     Scanning for permanence traps...</div>
@@ -1875,16 +1875,16 @@
 
                 document.getElementById('r-warn').innerText = wisdom.system_warning;
 
-                // MA'AT PROTOCOL LOGIC (Simulated Integration)
+                // ETHICAL / FALSE LIGHT LOGIC (Simulated Integration)
                 let maatStatus = "✓ PASS: No ethical violations detected. Alignment with Truth is stable.";
                 let yunusStatus = "✓ PASS: No false light detected. System flow is transparent.";
 
                 if (best === 8) {
-                    yunusStatus = "⚠️ ACTIVE MONITORING: High risk of 'God Complex'. Yunus Protocol is enforcing humility checks.";
-                    if (u.a < 0.5) yunusStatus = "🚨 YUNUS ACTIVATED: Permanence Trap detected. False Authority containment initiated.";
+                    yunusStatus = "⚠️ ACTIVE MONITORING: High risk of 'God Complex'. False Light Detection is enforcing humility checks.";
+                    if (u.a < 0.5) yunusStatus = "🚨 FALSE LIGHT DETECTED: Permanence Trap active. False Authority containment initiated.";
                 }
                 if (best === 5 && u.s < 0.4) {
-                    maatStatus = "⚠️ WARNING: Foundation instability detected. Ma'at suggests pausing deeper inquiry until ground is solid.";
+                    maatStatus = "⚠️ WARNING: Foundation instability detected. Ethical Validation suggests pausing deeper inquiry until ground is solid.";
                 }
 
                 document.getElementById('r-maat').innerText = maatStatus;
