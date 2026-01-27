@@ -1,23 +1,18 @@
 version: '3.8'
 
 services:
-  # Main Dashboard
-  luminark-dashboard:
+  luminark-api:
     build: .
-    image: luminark:latest
-    container_name: luminark-dashboard
     ports:
-      - "8501:8501"
-    volumes:
-      - .:/app
+      - "8000:8000"
     environment:
-      - PYTHONUNBUFFERED=1
-
-  # Training Worker (Optional)
-  luminark-train:
-    build: .
-    image: luminark:latest
-    container_name: luminark-train
-    command: python luminark_core.py
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     volumes:
       - .:/app
+    restart: always
+  # Optional: Future Database (Postgres)
+  # db:
+  #   image: postgres:13
+  #   environment:
+  #     POSTGRES_DB: luminark
+  #     POSTGRES_PASSWORD: secretpassword
