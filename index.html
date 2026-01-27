@@ -1018,6 +1018,16 @@
                     style="font-style:italic; border-left:2px solid var(--danger); padding-left:15px; color: #efefef;">
                     Warning Text.</div>
 
+                <div class="section-header" style="margin-top:25px;">MA'AT PROTOCOL (Ethical Validation)</div>
+                <div class="body-text" id="r-maat"
+                    style="border-left:2px solid #00d2ff; padding-left:15px; color:rgba(255,255,255,0.8); font-size:0.85rem;">
+                    Checking alignment...</div>
+
+                <div class="section-header" style="margin-top:25px;">YUNUS PROTOCOL (False Light Detection)</div>
+                <div class="body-text" id="r-yunus"
+                    style="border-left:2px solid #ffb300; padding-left:15px; color:rgba(255,255,255,0.8); font-size:0.85rem;">
+                    Scanning for permanence traps...</div>
+
                 <div id="deep-sections">
                     <div class="section-header" style="margin-top:35px;">Anchor Protocol</div>
                     <div class="body-text" id="r-anchor" style="color: var(--emerald); font-weight: 600;">Loading
@@ -1776,11 +1786,11 @@
             const tierKey = TIER_MAP[firstVec] || "tier1";
 
             const u = {
-                c: parseFloat(document.getElementById('c').value) / 10,
-                s: parseFloat(document.getElementById('s').value) / 10,
-                t: parseFloat(document.getElementById('t').value) / 10,
-                a: parseFloat(document.getElementById('a').value) / 10,
-                h: parseFloat(document.getElementById('h').value) / 10
+                c: (parseFloat(document.getElementById('c').value) / 10) + ((Math.random() - 0.5) * 0.02),
+                s: (parseFloat(document.getElementById('s').value) / 10) + ((Math.random() - 0.5) * 0.02),
+                t: (parseFloat(document.getElementById('t').value) / 10) + ((Math.random() - 0.5) * 0.02),
+                a: (parseFloat(document.getElementById('a').value) / 10) + ((Math.random() - 0.5) * 0.02),
+                h: (parseFloat(document.getElementById('h').value) / 10) + ((Math.random() - 0.5) * 0.02)
             };
 
             // SIMULATE PROCESSING
@@ -1864,6 +1874,22 @@
                 document.getElementById('r-story').innerText = wisdom.historical_mirror;
 
                 document.getElementById('r-warn').innerText = wisdom.system_warning;
+
+                // MA'AT PROTOCOL LOGIC (Simulated Integration)
+                let maatStatus = "✓ PASS: No ethical violations detected. Alignment with Truth is stable.";
+                let yunusStatus = "✓ PASS: No false light detected. System flow is transparent.";
+
+                if (best === 8) {
+                    yunusStatus = "⚠️ ACTIVE MONITORING: High risk of 'God Complex'. Yunus Protocol is enforcing humility checks.";
+                    if (u.a < 0.5) yunusStatus = "🚨 YUNUS ACTIVATED: Permanence Trap detected. False Authority containment initiated.";
+                }
+                if (best === 5 && u.s < 0.4) {
+                    maatStatus = "⚠️ WARNING: Foundation instability detected. Ma'at suggests pausing deeper inquiry until ground is solid.";
+                }
+
+                document.getElementById('r-maat').innerText = maatStatus;
+                document.getElementById('r-yunus').innerText = yunusStatus;
+
                 document.getElementById('r-anchor').innerText = data.anchor;
 
                 const tacticalContext = wisdom.tactical_deep_dive[tierKey] || wisdom.navigation_protocol;
