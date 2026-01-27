@@ -1,8 +1,8 @@
 {
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/api/index.py"
-        }
-    ]
+    "buildCommand": null,
+    "outputDirectory": ".",
+    "devCommand": null,
+    "installCommand": null,
+    "framework": null,
+    "public": true
 }
