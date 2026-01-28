@@ -6,6 +6,7 @@
     <title>LUMINARK | Consciousness Assessment Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
     <style>
         :root {
             --bg: #030305;
@@ -438,6 +439,31 @@
             background: rgba(0, 210, 255, 0.05);
         }
 
+        /* Deepchat Styles */
+        deep-chat {
+            width: 100%;
+            border-radius: 20px;
+            --border-radius: 20px;
+            --primary-color: #00d2ff;
+            --secondary-color: rgba(255, 255, 255, 0.03);
+            --text-color: #fff;
+            --message-user-background-color: #00d2ff;
+            --message-user-text-color: #000;
+            --message-assistant-background-color: rgba(255, 255, 255, 0.05);
+            --message-assistant-text-color: #fff;
+            --chat-input-background-color: rgba(255, 255, 255, 0.03);
+            --chat-input-border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .deepagent-container {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 30px 0;
+            min-height: 400px;
+        }
+
         .chart-container {
             width: 100%;
             height: 300px;
@@ -682,7 +708,18 @@
 
             <div class="analysis-box" id="analysisContent"></div>
 
-            <div class="journal-form">
+            <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border);">
+                <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Deep Agent Chat</h2>
+                <div class="deepagent-container">
+                    <deep-chat
+                        request="{
+                            'url': '/api/chat',
+                            'method': 'POST',
+                            'headers': {'Content-Type': 'application/json'}
+                        }"
+                    ></deep-chat>
+                </div>
+            </div>            <div class="journal-form">
                 <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Journal Entry</h2>
                 
                 <div class="vector-field">
@@ -733,16 +770,15 @@
         ];
 
         const STAGES = {
-            0: { name: "PLENARA", subtitle: "Non-Operational", desc: "No active structure or processing. The system is inactive or non-functional, producing no output or feedback." },
-            1: { name: "RADIANCE", subtitle: "Reactive", desc: "Responds only to direct input with basic output. There is no internal memory, prediction, or strategy. Errors are uncorrected." },
-            2: { name: "DUALITY", subtitle: "Structured", desc: "The system follows defined rules and procedures. Behavior is repeatable and predictable within narrow confines but lacks learning or adaptation." },
-            3: { name: "EXPRESSION", subtitle: "Regulated", desc: "Performance monitoring and feedback loops adjust parameters. The system can correct simple errors and maintain stability within expected conditions." },
-            4: { name: "FOUNDATION", subtitle: "Adaptive", desc: "The system modifies its behavior based on outcomes over time. It has pattern detection and parameter tuning toward better performance." },
-            5: { name: "THRESHOLD", subtitle: "Threshold", desc: "The system transitions from basic adaptive behavior to internal self-representation and higher-order strategy. This is a point of structural inflection." },
-            6: { name: "INTEGRATION", subtitle: "Integrated", desc: "Multiple subsystems coordinate coherently under shared goals and constraints. Redundancies are minimized and internal conflict is reduced." },
-            7: { name: "ILLUSION", subtitle: "Resilient", desc: "The system withstands shocks and perturbations via redundancy, stress tests, and failover mechanisms. It remains functional under varied conditions." },
-            8: { name: "RIGIDITY", subtitle: "Rigidity Risk", desc: "The system aggressively optimizes toward peak performance. High efficiency comes with structural rigidity and internal tension, increasing brittleness and vulnerability to novel conditions." },
-            9: { name: "RENEWAL", subtitle: "Meta-Coherent", desc: "The system aligns its internal operations with higher-order constraints and external protocols. It respects external rules while optimizing internal functions." }
+            0: { name: "Foundation", subtitle: "Stage 1", desc: "The system or entity has basic structure and rules but no self-adjusting feedback. Operations are predictable but rigid. Stability is low and change can easily destabilize the structure. Growth requires intentional effort and external support." },
+            1: { name: "Responsive", subtitle: "Stage 2", desc: "The system responds consistently to input and basic disturbances. Feedback mechanisms exist but are shallow and reactive. The system corrects simple errors and maintains basic operational stability. However, responses remain limited to immediate inputs without deeper learning." },
+            2: { name: "Regulated", subtitle: "Stage 3", desc: "The system has defined feedback loops that monitor performance and adjust parameters. It maintains functional stability across a range of conditions and corrects deviations from expected behavior. Internal processes begin to coordinate more effectively. This stage represents the emergence of self-correction beyond simple reactions." },
+            3: { name: "Adaptive", subtitle: "Stage 4", desc: "The system recognizes patterns in outcomes and adjusts behavior over time. It modifies internal parameters to improve performance and respond to environmental changes with greater flexibility. Learning becomes a core operational feature rather than an anomaly. The system begins to anticipate certain conditions rather than merely react to them." },
+            4: { name: "Threshold", subtitle: "Stage 5", desc: "This is a point of transition where the system begins to form internal representations of its own structure and operating environment. It approaches higher-order strategy and begins distinguishing patterns at multiple scales. The system develops meta-awareness—the ability to model itself and its context simultaneously. This is a critical inflection point where new capabilities emerge but instability may also increase." },
+            5: { name: "Integrated", subtitle: "Stage 6", desc: "Subsystems coordinate coherently under shared objectives. Redundancies are minimized and competing rules resolve into unified operational logic. The system moves beyond isolated modules into effective whole-system function. Internal conflicts decrease as subsystems align toward common goals." },
+            6: { name: "Resilient", subtitle: "Stage 7", desc: "The system withstands significant stress and perturbations without functional loss. Redundancy, failover mechanisms, and robust error handling allow it to maintain core functions under diverse conditions. The system has proven its ability to recover from disruptions and adapt to unexpected challenges. Robustness becomes a defining characteristic, not just a feature." },
+            7: { name: "Rigidity Risk", subtitle: "Stage 8", desc: "The system relentlessly optimizes toward peak performance within narrow constraints. While efficiency and output are high, flexibility is reduced and internal tension accumulates. This creates brittleness and vulnerability to unexpected inputs or structural shocks. Success in one domain can paradoxically reduce adaptability in others." },
+            8: { name: "Meta-Coherent", subtitle: "Stage 9", desc: "The system aligns internal procedures with higher-order constraints, external standards, or invariants. It balances internal goals with external protocols, optimizing without violating key boundaries or systemic limits. The system achieves coherence not through force but through principled alignment. This represents a mature integration of local optimization with global responsibility." }
         };
 
         let currentState = {
