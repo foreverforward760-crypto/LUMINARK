@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LUMINARK | Consciousness Assessment Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <script defer src="/_vercel/insights/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
     <style>
@@ -140,6 +143,7 @@
                 opacity: 0;
                 transform: translateY(40px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -519,8 +523,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .proc-text {
@@ -531,6 +540,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="app-window">
         <!-- Processing Overlay -->
@@ -548,7 +558,8 @@
 
             <div style="text-align: center; margin-bottom: 30px;">
                 <p style="font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7);">
-                    Discover your current consciousness stage through a comprehensive assessment of your life dynamics, emotional state, and personal vectors.
+                    Discover your current consciousness stage through a comprehensive assessment of your life dynamics,
+                    emotional state, and personal vectors.
                 </p>
             </div>
 
@@ -567,11 +578,13 @@
                     <span>How do you see your future?
                         <span class="tooltip">
                             <span class="info-icon">?</span>
-                            <span class="tooltiptext">What do you see coming? Be honest about your hopes and concerns.</span>
+                            <span class="tooltiptext">What do you see coming? Be honest about your hopes and
+                                concerns.</span>
                         </span>
                     </span>
                 </div>
-                <textarea class="textarea" id="futureReflection" placeholder="Describe your vision for the future in detail..."></textarea>
+                <textarea class="textarea" id="futureReflection"
+                    placeholder="Describe your vision for the future in detail..."></textarea>
             </div>
 
             <div class="vector-field">
@@ -579,16 +592,19 @@
                     <span>How do you view your past?
                         <span class="tooltip">
                             <span class="info-icon">?</span>
-                            <span class="tooltiptext">What has your past taught you? What wounds or wisdom do you carry?</span>
+                            <span class="tooltiptext">What has your past taught you? What wounds or wisdom do you
+                                carry?</span>
                         </span>
                     </span>
                 </div>
-                <textarea class="textarea" id="pastReflection" placeholder="Describe what your past means to you..."></textarea>
+                <textarea class="textarea" id="pastReflection"
+                    placeholder="Describe what your past means to you..."></textarea>
             </div>
 
             <div style="display: flex; gap: 10px;">
                 <button class="btn-analyze" onclick="nextSection(2)" style="flex: 1;">Next →</button>
-                <button class="btn-analyze" onclick="prevSection(2)" style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
+                <button class="btn-analyze" onclick="prevSection(2)"
+                    style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
             </div>
         </div>
 
@@ -613,7 +629,8 @@
 
             <div style="display: flex; gap: 10px;">
                 <button class="btn-analyze" onclick="nextSection(3)" style="flex: 1;">Next →</button>
-                <button class="btn-analyze" onclick="prevSection(3)" style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
+                <button class="btn-analyze" onclick="prevSection(3)"
+                    style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
             </div>
         </div>
 
@@ -629,7 +646,8 @@
                     <span>Complexity: How many moving parts?
                         <span class="tooltip">
                             <span class="info-icon">?</span>
-                            <span class="tooltiptext">Is your life simple or complicated right now? How many things are happening at once?</span>
+                            <span class="tooltiptext">Is your life simple or complicated right now? How many things are
+                                happening at once?</span>
                         </span>
                     </span>
                     <span class="num-val" id="val-complexity">5</span>
@@ -691,14 +709,17 @@
 
             <div style="display: flex; gap: 10px;">
                 <button class="btn-analyze" onclick="runAnalysis()" style="flex: 1;">Generate Reading →</button>
-                <button class="btn-analyze" onclick="prevSection(4)" style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
+                <button class="btn-analyze" onclick="prevSection(4)"
+                    style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
             </div>
         </div>
 
         <!-- Section 5: Results -->
         <div class="section" id="section5">
             <div style="text-align: center; margin-bottom: 20px;">
-                <button class="btn-analyze" onclick="openStageIndex()" style="background: rgba(0, 210, 255, 0.1); color: var(--primary); border: 1px solid var(--primary); width: auto; padding: 10px 30px;">📚 View Stage Index</button>
+                <button class="btn-analyze" onclick="openStageIndex()"
+                    style="background: rgba(0, 210, 255, 0.1); color: var(--primary); border: 1px solid var(--primary); width: auto; padding: 10px 30px;">📚
+                    View Stage Index</button>
             </div>
 
             <div class="card-main">
@@ -711,28 +732,30 @@
             <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border);">
                 <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Deep Agent Chat</h2>
                 <div class="deepagent-container">
-                    <deep-chat
-                        request="{
+                    <deep-chat request="{
                             'url': '/api/chat',
                             'method': 'POST',
                             'headers': {'Content-Type': 'application/json'}
-                        }"
-                    ></deep-chat>
+                        }"></deep-chat>
                 </div>
-            </div>            <div class="journal-form">
+            </div>
+            <div class="journal-form">
                 <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Journal Entry</h2>
-                
+
                 <div class="vector-field">
                     <label class="label-box">Entry Type</label>
                     <div class="button-group">
-                        <button class="btn-option" id="journalWeekly" onclick="selectJournalType('weekly')">Weekly</button>
-                        <button class="btn-option" id="journalMonthly" onclick="selectJournalType('monthly')">Monthly</button>
+                        <button class="btn-option" id="journalWeekly"
+                            onclick="selectJournalType('weekly')">Weekly</button>
+                        <button class="btn-option" id="journalMonthly"
+                            onclick="selectJournalType('monthly')">Monthly</button>
                     </div>
                 </div>
 
                 <div class="vector-field">
                     <label class="label-box">Reflection Notes</label>
-                    <textarea class="textarea" id="journalNotes" placeholder="Document your thoughts, progress, and insights..."></textarea>
+                    <textarea class="textarea" id="journalNotes"
+                        placeholder="Document your thoughts, progress, and insights..."></textarea>
                 </div>
 
                 <button class="btn-analyze" onclick="saveJournal()">Save Journal Entry</button>
@@ -745,7 +768,8 @@
                 </div>
             </div>
 
-            <button class="btn-analyze" onclick="startOver()" style="margin-top: 20px; background: rgba(255,255,255,0.1); color: #fff;">← Start Over</button>
+            <button class="btn-analyze" onclick="startOver()"
+                style="margin-top: 20px; background: rgba(255,255,255,0.1); color: #fff;">← Start Over</button>
         </div>
     </div>
 
@@ -847,7 +871,7 @@
         function runAnalysis() {
             const overlay = document.getElementById('processingOverlay');
             overlay.style.display = 'flex';
-            
+
             setTimeout(() => {
                 currentState.stage = calculateStage();
                 displayResults();
@@ -862,7 +886,7 @@
             const stage = STAGES[currentState.stage];
             document.getElementById('stageName').textContent = `${stage.name} — ${stage.subtitle}`;
             document.getElementById('stageNumber').textContent = currentState.stage;
-            
+
             let content = `
                 <div class="section-header">Your Current Stage</div>
                 <div class="body-text">${stage.desc}</div>
@@ -916,7 +940,7 @@
             }
 
             const ctx = document.getElementById('progressChart').getContext('2d');
-            
+
             if (chartInstance) {
                 chartInstance.destroy();
             }
@@ -973,7 +997,7 @@
                     <div class="stage-index-desc">${stage.desc}</div>
                 </div>
             `).join('');
-            
+
             document.getElementById('stageIndexContent').innerHTML = content;
             document.getElementById('stageModal').style.display = 'flex';
         }
@@ -995,9 +1019,10 @@
         });
 
         // Close modal when clicking outside
-        document.getElementById('stageModal').onclick = function(e) {
+        document.getElementById('stageModal').onclick = function (e) {
             if (e.target === this) closeStageIndex();
         };
     </script>
 </body>
+
 </html>

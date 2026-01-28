@@ -996,13 +996,14 @@ def run_dashboard():
     with tab3:
         st.markdown("""
         ### 🗺️ Stage Description Index
-        **Stage 1: Navigation** - High energy, low structure.
-        **Stage 2: Foundation** - Building stability/roots.
-        **Stage 3: Expression** - Breaking free, testing limits.
-        **Stage 4: Stability** - Peak order/routine.
-        **Stage 5: Threshold** - The pivot/crisis point.
-        **Stage 6: Integration** - Flow state.
-        **Stage 7: Analysis** - Deep understanding/isolation.
-        **Stage 8: Mastery** - Completeness (risk of rigidity).
-        **Stage 9: Release** - Letting go, transcendence.
-        """)
+            **Stage 0: The Void** - Pure Potential. *Ex: Rock Bottom Clarity.*
+            **Stage 1: Emergence** - The Spark. *Ex: The Novice starting out.*
+            **Stage 2: Duality** - Defining Choices. *Ex: Gathering Resources.*
+            **Stage 3: Breakthrough** - Action/Chaos. *Ex: The Warrior/Artist.*
+            **Stage 4: Structure** - Stability/Roots. *Ex: Empire Building.*
+            **Stage 5: The Pivot** - Crossroads. *Ex: Mid-Life Crisis / Dark Night.*
+            **Stage 6: Flow** - High Performance. *Ex: Pre-enlightenment Buddha ("Rich but Empty").*
+            **Stage 7: The Deep Clean** - Analysis. *Ex: The Hermit / Solitude.*
+            **Stage 8: The Trap** - False Summit. *Ex: Howard Hughes (Isolation).*
+            **Stage 9: Resolution** - Transcendence. *Ex: Buddha, Jesus, Tesla, Van Gogh.*
+            """)
