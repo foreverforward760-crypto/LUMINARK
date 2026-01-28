@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINARK v6 - Consciousness Assessment Platform</title>
+    <title>LUMINARK Reflections</title>
     <script defer src="/_vercel/insights/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,16 +16,18 @@
         }
 
         :root {
-            /* Professional Color Palette */
-            --color-primary: #6366f1;
-            --color-primary-light: #818cf8;
-            --color-primary-dark: #4f46e5;
-            --color-accent: #06b6d4;
-            --color-accent-warm: #f97316;
+            /* Professional Color Palette (Softened for "Reflections") */
+            --color-primary: #4ade80;
+            /* Soft Green */
+            --color-primary-light: #86efac;
+            --color-primary-dark: #166534;
+            --color-accent: #2dd4bf;
+            /* Teal */
+            --color-accent-warm: #fb923c;
             --color-success: #10b981;
             --color-warning: #f59e0b;
             --color-danger: #ef4444;
-            
+
             /* Neutral Scale */
             --color-bg-primary: #0f172a;
             --color-bg-secondary: #1e293b;
@@ -33,26 +36,27 @@
             --color-text-secondary: #cbd5e1;
             --color-text-muted: #94a3b8;
             --color-border: #475569;
-            
+
             /* Shadows & Effects */
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
-            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
-            
+            --shadow-glow: 0 0 20px rgba(74, 222, 128, 0.2);
+
             /* Spacing Grid (8px base) */
             --space-xs: 0.5rem;
             --space-sm: 1rem;
             --space-md: 1.5rem;
             --space-lg: 2rem;
             --space-xl: 3rem;
-            
+
             /* Typography */
             --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             --font-mono: 'Monaco', 'Courier New', monospace;
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -99,7 +103,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            color: white;
+            color: #064e3b;
             font-size: 1.25rem;
         }
 
@@ -159,7 +163,7 @@
         .btn.active {
             background: var(--color-primary);
             border-color: var(--color-primary);
-            color: white;
+            color: #064e3b;
         }
 
         .form-input {
@@ -176,11 +180,7 @@
         .form-input:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        select.form-input {
-            cursor: pointer;
+            box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1);
         }
 
         textarea.form-input {
@@ -218,7 +218,7 @@
             align-items: center;
             justify-content: center;
             font-size: 0.75rem;
-            color: white;
+            color: #064e3b;
         }
 
         .slider-value {
@@ -252,18 +252,7 @@
 
         input[type="range"]::-webkit-slider-thumb:hover {
             transform: scale(1.2);
-            box-shadow: var(--shadow-lg), 0 0 10px rgba(99, 102, 241, 0.3);
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            border: none;
-            box-shadow: var(--shadow-md);
-            transition: all 0.2s ease;
+            box-shadow: var(--shadow-lg), 0 0 10px rgba(74, 222, 128, 0.3);
         }
 
         .intention-buttons {
@@ -274,7 +263,7 @@
 
         .btn-intention {
             padding: var(--space-sm) var(--space-md);
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(45, 212, 191, 0.1));
             border: 1px solid var(--color-primary);
             color: var(--color-primary-light);
             border-radius: 6px;
@@ -286,7 +275,7 @@
 
         .btn-intention:hover {
             background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-            color: white;
+            color: #064e3b;
             transform: translateY(-2px);
             box-shadow: var(--shadow-glow);
         }
@@ -296,7 +285,7 @@
             padding: var(--space-md);
             background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
             border: none;
-            color: white;
+            color: #064e3b;
             border-radius: 8px;
             font-weight: 700;
             font-size: 1rem;
@@ -308,11 +297,7 @@
 
         .btn-analyze:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-analyze:active {
-            transform: translateY(0);
+            box-shadow: 0 0 30px rgba(74, 222, 128, 0.4);
         }
 
         /* MAIN CONTENT */
@@ -357,7 +342,7 @@
             align-items: center;
             gap: var(--space-xs);
             padding: var(--space-md) var(--space-lg);
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(45, 212, 191, 0.1));
             border: 1px solid var(--color-primary);
             border-radius: 12px;
         }
@@ -398,11 +383,6 @@
             transition: all 0.3s ease;
         }
 
-        .panel:hover {
-            border-color: var(--color-primary);
-            box-shadow: var(--shadow-lg);
-        }
-
         .panel-header {
             padding: var(--space-md) var(--space-lg);
             background: rgba(15, 23, 42, 0.5);
@@ -420,7 +400,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #064e3b;
             font-size: 1rem;
         }
 
@@ -441,7 +421,7 @@
 
         .insight-block {
             padding: var(--space-md);
-            background: rgba(99, 102, 241, 0.05);
+            background: rgba(74, 222, 128, 0.05);
             border-left: 3px solid var(--color-primary);
             border-radius: 6px;
             animation: slideIn 0.3s ease;
@@ -452,6 +432,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -476,17 +457,7 @@
             justify-content: space-between;
             align-items: center;
             padding: var(--space-sm) 0;
-            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .metric-row:last-child {
-            border-bottom: none;
-        }
-
-        .metric-label {
-            font-size: 0.9rem;
-            color: var(--color-text-secondary);
-            font-weight: 600;
+            border-bottom: 1px solid rgba(74, 222, 128, 0.1);
         }
 
         .metric-bar {
@@ -502,7 +473,6 @@
             height: 100%;
             background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
             border-radius: 3px;
-            transition: width 0.4s ease;
         }
 
         .metric-value {
@@ -547,50 +517,41 @@
             overflow-y: auto;
         }
 
-        /* RADAR CHART */
-        .chart-container {
+        /* CHECKBOX GROUP */
+        .checkbox-group {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .checkbox-item {
+            display: flex;
             align-items: center;
-            flex: 1;
-            padding: var(--space-lg);
+            gap: 10px;
+            padding: 8px;
+            background: var(--color-bg-tertiary);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .radar-svg {
-            max-width: 100%;
-            max-height: 100%;
-            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.2));
+        .checkbox-item:hover {
+            background: var(--color-bg-secondary);
         }
 
-        /* DEEPCHAT */
-        deep-chat {
-            width: 100%;
-            height: 100%;
-            border-radius: 0;
-            --border-radius: 0;
-            --primary-color: var(--color-primary);
-            --primary-color-hover: var(--color-primary-light);
-            --secondary-color: var(--color-bg-tertiary);
-            --text-color: var(--color-text-primary);
-            --text-color-muted: var(--color-text-muted);
-            --message-user-background-color: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-            --message-user-text-color: white;
-            --message-assistant-background-color: var(--color-bg-tertiary);
-            --message-assistant-text-color: var(--color-text-primary);
-            --chat-input-background-color: var(--color-bg-tertiary);
-            --chat-input-border-color: var(--color-border);
-            --chat-input-text-color: var(--color-text-primary);
-            --send-button-background-color: var(--color-primary);
-            --send-button-text-color: white;
+        .checkbox-item.selected {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--color-success);
+        }
+
+        .check-mark.hidden {
+            display: none;
         }
 
         /* RESPONSIVE */
-        @media (max-width: 1200px) {
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         @media (max-width: 768px) {
             .app-container {
                 flex-direction: column;
@@ -599,155 +560,89 @@
             .sidebar {
                 width: 100%;
                 max-height: 200px;
-                overflow-x: auto;
-                flex-direction: row;
-                padding: var(--space-md);
-            }
-
-            .form-section {
-                flex-direction: row;
-                flex-wrap: wrap;
-                flex: 1;
-            }
-
-            .main-content {
-                flex: 1;
-            }
-
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .stage-badge {
-                align-self: flex-start;
             }
 
             .content-grid {
                 grid-template-columns: 1fr;
-                gap: var(--space-md);
-                padding: var(--space-md);
             }
         }
 
-        /* SCROLLBAR STYLING */
+        /* SCROLLBAR */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
         }
 
         ::-webkit-scrollbar-thumb {
             background: var(--color-border);
             border-radius: 4px;
         }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--color-primary);
-        }
-
-        /* UTILITY */
-        .hidden {
-            display: none !important;
-        }
-
-        .loading {
-            opacity: 0.6;
-            pointer-events: none;
-        }
     </style>
 </head>
+
 <body>
     <div class="app-container">
         <!-- SIDEBAR -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo">◆</div>
+                <div class="sidebar-logo">🌿</div>
                 <div>
-                    <div class="sidebar-title">LUMINARK</div>
-                    <div class="sidebar-subtitle">v6 Professional</div>
+                    <div class="sidebar-title">REFLECTIONS</div>
+                    <div class="sidebar-subtitle">Human-Centric Growth</div>
                 </div>
             </div>
 
-            <!-- Temporal Controls -->
+            <!-- Time Horizon -->
             <div class="form-section">
-                <div class="form-section-title">⏰ Temporal Sentiment</div>
+                <div class="form-section-title">🌅 Time Horizon</div>
                 <div class="button-group">
-                    <button class="btn" onclick="setState('futureOutlook', 'optimistic')" id="future-opt">📈 Optimistic</button>
-                    <button class="btn" onclick="setState('futureOutlook', 'uncertain')" id="future-unc">❔ Uncertain</button>
+                    <button class="btn" onclick="setState('futureOutlook', 'optimistic')" id="future-opt">🌱 New
+                        Growth</button>
+                    <button class="btn" onclick="setState('futureOutlook', 'uncertain')" id="future-unc">🌫️ The
+                        Unknown</button>
                 </div>
                 <div class="button-group">
-                    <button class="btn" onclick="setState('pastReflection', 'growth')" id="past-growth">📚 Growth</button>
-                    <button class="btn" onclick="setState('pastReflection', 'closure')" id="past-closure">✓ Closure</button>
+                    <button class="btn" onclick="setState('pastReflection', 'growth')" id="past-growth">🍂 Letting
+                        Go</button>
+                    <button class="btn" onclick="setState('pastReflection', 'closure')" id="past-closure">🪨
+                        Foundation</button>
                 </div>
             </div>
 
-            <!-- Life Vector -->
+            <!-- Life Areas (Multi-Select) -->
             <div class="form-section">
-                <div class="form-section-title">🎯 Life Vector</div>
-                <select class="form-input" id="life-vector" onchange="setState('lifeVector', this.value)">
-                    <option value="">Choose a focus...</option>
-                    <optgroup label="Core Fundamentals">
-                        <option value="relationship">💑 Relationship</option>
-                        <option value="career">💼 Career</option>
-                        <option value="family">👨‍👩‍👧‍👦 Family</option>
-                        <option value="finances">💰 Finances</option>
-                        <option value="health">❤️ Health</option>
-                        <option value="self-growth">🌱 Self-Growth</option>
-                    </optgroup>
-                    <optgroup label="Meaning & Purpose">
-                        <option value="spirituality">🙏 Spirituality</option>
-                        <option value="creative">🎨 Creative Expression</option>
-                        <option value="purpose">🎯 Purpose/Mission</option>
-                        <option value="social-impact">🤝 Social Impact</option>
-                        <option value="legacy">🏛️ Legacy</option>
-                    </optgroup>
-                    <optgroup label="Freedom & Autonomy">
-                        <option value="adventure">🚀 Adventure/Freedom</option>
-                        <option value="independence">🦅 Independence</option>
-                        <option value="power">⚡ Power/Influence</option>
-                    </optgroup>
-                    <optgroup label="Belonging & Safety">
-                        <option value="community">👥 Community</option>
-                        <option value="security">🔒 Security/Stability</option>
-                    </optgroup>
-                    <optgroup label="Experience & Recovery">
-                        <option value="pleasure">🎉 Pleasure/Joy</option>
-                        <option value="education">📖 Education/Learning</option>
-                        <option value="recovery">💪 Recovery/Healing</option>
-                        <option value="survival">🛡️ Survival/Crisis</option>
-                    </optgroup>
-                </select>
+                <div class="form-section-title">🪴 Life Areas (Select Multiple)</div>
+                <div class="checkbox-group" id="life-areas-container">
+                    <!-- Injected via JS -->
+                </div>
             </div>
 
-            <!-- Emotional State -->
+            <!-- Energy Check-In -->
             <div class="form-section">
-                <div class="form-section-title">💭 Emotional State</div>
-                <textarea class="form-input" id="emotional-state" placeholder="Describe your feeling (1-2 words)..." onchange="setState('emotionalState', this.value)"></textarea>
+                <div class="form-section-title">🔋 Energy Check-In</div>
+                <textarea class="form-input" id="emotional-state" placeholder="How is your energy flowing today?"
+                    onchange="setState('emotionalState', this.value)"></textarea>
             </div>
 
             <!-- Metrics Sliders -->
             <div class="form-section">
-                <div class="form-section-title">📊 System Metrics</div>
+                <div class="form-section-title">🌿 Vital Signs</div>
+
                 <div class="slider-group">
                     <div class="slider-label">
                         <div class="slider-name">
-                            <div class="slider-icon">C</div>
-                            Complexity
+                            <div class="slider-icon">L</div>Mental Load
                         </div>
                         <div class="slider-value" id="complexity-val">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="complexity" onchange="updateSlider('complexity')">
+                    <input type="range" min="0" max="10" value="5" id="complexity"
+                        onchange="updateSlider('complexity')">
                 </div>
 
                 <div class="slider-group">
                     <div class="slider-label">
                         <div class="slider-name">
-                            <div class="slider-icon">S</div>
-                            Stability
+                            <div class="slider-icon">G</div>Grounding
                         </div>
                         <div class="slider-value" id="stability-val">5</div>
                     </div>
@@ -757,8 +652,7 @@
                 <div class="slider-group">
                     <div class="slider-label">
                         <div class="slider-name">
-                            <div class="slider-icon">T</div>
-                            Tension
+                            <div class="slider-icon">P</div>Pressure
                         </div>
                         <div class="slider-value" id="tension-val">5</div>
                     </div>
@@ -768,19 +662,18 @@
                 <div class="slider-group">
                     <div class="slider-label">
                         <div class="slider-name">
-                            <div class="slider-icon">A</div>
-                            Adaptability
+                            <div class="slider-icon">F</div>Fluidity
                         </div>
                         <div class="slider-value" id="adaptability-val">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="adaptability" onchange="updateSlider('adaptability')">
+                    <input type="range" min="0" max="10" value="5" id="adaptability"
+                        onchange="updateSlider('adaptability')">
                 </div>
 
                 <div class="slider-group">
                     <div class="slider-label">
                         <div class="slider-name">
-                            <div class="slider-icon">P</div>
-                            Pattern Recognition
+                            <div class="slider-icon">C</div>Clarity
                         </div>
                         <div class="slider-value" id="coherence-val">5</div>
                     </div>
@@ -790,19 +683,17 @@
 
             <!-- Intention Buttons -->
             <div class="form-section">
-                <div class="form-section-title">🔮 Reflection Focus</div>
+                <div class="form-section-title">🔮 Intention</div>
                 <div class="intention-buttons">
-                    <button class="btn-intention" onclick="setIntention('depth')">🔬 Deep Dive</button>
-                    <button class="btn-intention" onclick="setIntention('clarity')">💡 Clarity Seeking</button>
-                    <button class="btn-intention" onclick="setIntention('action')">⚡ Action Planning</button>
-                    <button class="btn-intention" onclick="setIntention('integration')">🔄 Integration</button>
-                    <button class="btn-intention" onclick="setIntention('wisdom')">📚 Wisdom Seeking</button>
+                    <button class="btn-intention" onclick="setIntention('depth')">🔬 Deep Reflection</button>
+                    <button class="btn-intention" onclick="setIntention('clarity')">💡 Seeking Clarity</button>
+                    <button class="btn-intention" onclick="setIntention('action')">⚡ Planning Action</button>
                 </div>
             </div>
 
             <!-- Analyze Button -->
             <button class="btn-analyze" onclick="runAnalysis()">
-                <i class="fas fa-sparkles"></i> Run Antikythera Protocol
+                <i class="fas fa-leaf"></i> Reveal Insights
             </button>
         </div>
 
@@ -811,74 +702,89 @@
             <!-- Header -->
             <div class="app-header">
                 <div class="header-content">
-                    <div class="header-title">Consciousness Assessment</div>
-                    <div class="header-subtitle">Real-time consciousness mapping based on system dynamics</div>
+                    <div class="header-title">Luminark Reflections</div>
+                    <div class="header-subtitle">Your space for growth and pattern recognition</div>
                 </div>
                 <div class="stage-badge">
                     <div class="stage-number" id="stage-number">—</div>
-                    <div class="stage-label">Current Stage</div>
+                    <div class="stage-label">Current Phase</div>
                 </div>
             </div>
 
             <!-- Content Grid -->
             <div class="content-grid">
-                <!-- Left Panel: Deep Reflection & Tactical Guidance -->
+                <!-- Left Panel: Deep Reflection -->
                 <div class="panel">
                     <div class="panel-header">
                         <div class="panel-icon">🔬</div>
-                        <div class="panel-title">Deep Reflection</div>
+                        <div class="panel-title">Insight & Reflection</div>
                     </div>
                     <div class="panel-content" id="reflection-content">
                         <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
-                            Configure your parameters and click <strong>Run Antikythera Protocol</strong> to receive personalized reflection...
+                            Configure your check-in and click <strong>Reveal Insights</strong>...
                         </p>
                     </div>
                 </div>
 
-                <!-- Right Panel: Oracle + Chart -->
+                <!-- Right Panel: Tools -->
                 <div class="panel">
                     <div class="tab-container">
-                        <button class="tab-button active" id="tab-oracle-btn" onclick="switchTab('oracle')">
-                            <span>🔮</span> Oracle Guidance
-                        </button>
-                        <button class="tab-button" id="tab-metrics-btn" onclick="switchTab('metrics')">
-                            <span>📈</span> Metrics Map
-                        </button>
-                        <button class="tab-button" id="tab-chat-btn" onclick="switchTab('chat')">
-                            <span>💬</span> Deep Chat
-                        </button>
+                        <button class="tab-button active" id="tab-oracle-btn"
+                            onclick="switchTab('oracle')"><span>🔮</span> Guidance</button>
+                        <button class="tab-button" id="tab-journal-btn" onclick="switchTab('journal')"><span>📓</span>
+                            Journal</button>
+                        <button class="tab-button" id="tab-metrics-btn" onclick="switchTab('metrics')"><span>📈</span>
+                            Graph</button>
+                        <button class="tab-button" id="tab-chat-btn" onclick="switchTab('chat')"><span>💬</span>
+                            Agent</button>
                     </div>
 
                     <!-- Oracle Tab -->
-                    <div id="oracle-tab" class="tab-content" style="display: block;">
+                    <div id="oracle-tab" class="tab-content">
                         <div class="panel-content" id="oracle-content">
                             <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
-                                Your personalized Oracle reading will appear here with tactical guidance...
+                                Your guidance will appear here...
                             </p>
+                        </div>
+                    </div>
+
+                    <!-- Journal Tab -->
+                    <div id="journal-tab" class="tab-content" style="display: none;">
+                        <div class="panel-content">
+                            <h3 style="color: var(--color-primary-light); margin-bottom: 1rem;">📓 Deep Journal</h3>
+                            <textarea id="deep-journal-input" class="form-input"
+                                style="height: 150px; width: 100%; margin-bottom: 1rem;"
+                                placeholder="Capture your thoughts..."></textarea>
+                            <button class="btn" onclick="saveJournal()">Save Entry</button>
+                            <div id="journal-entries" style="margin-top: 2rem;"></div>
                         </div>
                     </div>
 
                     <!-- Metrics Tab -->
                     <div id="metrics-tab" class="tab-content" style="display: none;">
                         <div class="panel-content">
-                            <div id="metrics-display">
-                                <div style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
-                                    Run analysis to view metrics map...
+                            <div id="metrics-display"></div>
+                            <!-- Mock Graph -->
+                            <div
+                                style="margin-top: 2rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <div style="font-size: 0.8rem; color: #888; margin-bottom: 0.5rem;">WEEKLY RHYTHM</div>
+                                <div
+                                    style="display: flex; align-items: flex-end; height: 100px; gap: 10px; padding-bottom: 5px; border-bottom: 1px solid #444;">
+                                    <div style="width: 20px; height: 30%; background: #4ade80; opacity: 0.5;"></div>
+                                    <div style="width: 20px; height: 50%; background: #4ade80; opacity: 0.6;"></div>
+                                    <div style="width: 20px; height: 40%; background: #4ade80; opacity: 0.7;"></div>
+                                    <div style="width: 20px; height: 80%; background: #4ade80; opacity: 0.8;"></div>
+                                    <div style="width: 20px; height: 60%; background: #4ade80; opacity: 1;"></div>
                                 </div>
+                                <div style="font-size: 0.7rem; color: #666; margin-top: 5px;">M T W T F</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Chat Tab -->
                     <div id="chat-tab" class="tab-content" style="display: none;">
-                        <deep-chat
-                            id="deepchat"
-                            request="{
-                                'url': '/api/chat',
-                                'method': 'POST'
-                            }"
-                            style="height: 100%;"
-                        ></deep-chat>
+                        <deep-chat id="deepchat" request="{'url': '/api/chat', 'method': 'POST'}"
+                            style="height: 100%;"></deep-chat>
                     </div>
                 </div>
             </div>
@@ -886,140 +792,80 @@
     </div>
 
     <script>
-        // ===== STATE & WISDOM =====
+        // ===== STATE & DATA =====
         let currentState = {
             futureOutlook: '',
             pastReflection: '',
-            lifeVector: '',
+            lifeVectors: [],
             emotionalState: '',
-            metrics: {
-                complexity: 5,
-                stability: 5,
-                tension: 5,
-                adaptability: 5,
-                coherence: 5
-            },
+            metrics: { complexity: 5, stability: 5, tension: 5, adaptability: 5, coherence: 5 },
             intention: '',
-            currentStage: null
+            currentStage: null,
+            journalEntries: []
         };
+
+        const LIFE_AREAS = [
+            { id: 'rel', label: '💑 Relationship' },
+            { id: 'car', label: '💼 Career' },
+            { id: 'fin', label: '💰 Finances' },
+            { id: 'hea', label: '❤️ Health' },
+            { id: 'spi', label: '🙏 Spirituality' },
+            { id: 'pur', label: '🎯 Purpose' },
+            { id: 'adv', label: '🚀 Freedom' },
+            { id: 'com', label: '👥 Community' },
+            { id: 'cre', label: '🎨 Creativity' }
+        ];
 
         const WISDOM_BASE = {
             "stages": {
-                "0": {
-                    "name": "PLENARA (The Void)",
-                    "geometry": "Point",
-                    "pattern_analysis": "Zero tension. Zero motion. Pure coherence. The system is at rest in the canvas state.",
-                    "navigation_protocol": "Do nothing. Observe. Allow. Resist the urge to force emergence.",
-                    "oracle_guidance": "You are in the womb. Not yet time to act. This is completion disguised as emptiness.",
-                    "middle_path": "Between forcing action and complete inaction, rest is not inaction—it is receptive potential.",
-                    "as_above_so_below": "Your inner void mirrors outer possibility. As you are still, the world's patterns become visible.",
-                    "maat_balance": "Perfect equilibrium. No imbalance to correct. This is the ethical foundation."
-                },
-                "1": {
-                    "name": "RADIANCE (The Emergence)",
-                    "geometry": "Line",
-                    "pattern_analysis": "First impulse. Raw energy. No direction yet. Pure potential becoming aware of itself.",
-                    "navigation_protocol": "Feel the energy. Let it move. Do not judge the direction. Direction comes later.",
-                    "oracle_guidance": "Something wants to be born through you. Let the impulse flow without controlling it.",
-                    "middle_path": "Between suppression and explosion, channel—don't dam, don't flood.",
-                    "as_above_so_below": "Your internal activation mirrors external opportunity. Activation is contagious.",
-                    "maat_balance": "Imbalance detected: All activation, no containment. Find the outlet."
-                },
-                "2": {
-                    "name": "DUALITY (The Division)",
-                    "geometry": "Line (inverted)",
-                    "pattern_analysis": "Two poles. Self and other. Subject and object. The eternal dance begins.",
-                    "navigation_protocol": "Observe the polarity. Do not choose yet. See both sides completely. Then choose consciously.",
-                    "oracle_guidance": "You are learning to see. The splitting apart is not destruction—it's clarity.",
-                    "middle_path": "Between polarized thinking and fusion-thinking, synthesize. Find the third option.",
-                    "as_above_so_below": "Internal conflict mirrors external conflict. Fix one, the other shifts.",
-                    "maat_balance": "Test: Are you seeing ONLY two options? Add a third perspective."
-                },
-                "3": {
-                    "name": "EXPRESSION (The Outburst)",
-                    "geometry": "Triangle",
-                    "pattern_analysis": "Raw creative power. Expression without filter. Maximum tension, maximum authenticity.",
-                    "navigation_protocol": "Create fearlessly. Make bad art. Let your voice find itself through making, not planning.",
-                    "oracle_guidance": "You are a volcano. Your expression is sacred. Do not apologize for your heat.",
-                    "middle_path": "Between self-censoring and reckless expression, find disciplined authenticity.",
-                    "as_above_so_below": "Your internal creative fire IS your external impact. People feel your authenticity.",
-                    "maat_balance": "Authentic expression that harms isn't balance. Find: Authenticity that builds."
-                },
-                "4": {
-                    "name": "FOUNDATION (The Rest)",
-                    "geometry": "Square",
-                    "pattern_analysis": "Structure, stability, rhythm. The wild has been integrated into sustainable form.",
-                    "navigation_protocol": "Build. Plant roots. Make systems that last. Create from stability, not chaos.",
-                    "oracle_guidance": "You have found your rhythm. This is the healthiest long-term stage. Enjoy it.",
-                    "middle_path": "Between rigid structure and chaotic flow, maintain dynamic stability. Rules that breathe.",
-                    "as_above_so_below": "Your internal order creates external order. Clean your inner space, your outer space follows.",
-                    "maat_balance": "Perfect balance achievable here. Stability + flexibility both present."
-                },
-                "5": {
-                    "name": "THRESHOLD (The Pressure)",
-                    "geometry": "Pentagon",
-                    "pattern_analysis": "Stable container (4) holding unstable content. Digits flipped. Volatile peak. Shortest stage.",
-                    "navigation_protocol": "Feel the pressure fully. Ask: Am I ready? If no—strengthen. If yes—cross. If unsure—pause.",
-                    "oracle_guidance": "You are at the point of no return. The foundation is cracking under new pressure. This is the moment of choice.",
-                    "middle_path": "Between staying comfortable and reckless leap, build capacity first. Hold both old life AND new vision.",
-                    "as_above_so_below": "Internal pressure (desire for change) meets external pressure (circumstances). They're the same pressure.",
-                    "maat_balance": "CRITICAL: Are you abandoning foundation for ego? Staying stuck for comfort? The threshold tests your integrity."
-                },
-                "6": {
-                    "name": "INTEGRATION (The Harvest)",
-                    "geometry": "Hexagon",
-                    "pattern_analysis": "Flow state, peak harmony. Everything is clicking. Maximum creative output.",
-                    "navigation_protocol": "Serve from overflow. Create your best work now. Do not cling. Prepare for the coming shift.",
-                    "oracle_guidance": "You are in the hexagon—flow state, peak harmony. Everything is clicking. This is real, but it is seasonal.",
-                    "middle_path": "Between addictively pursuing flow and lazily enjoying comfort, create deliberately.",
-                    "as_above_so_below": "Your integrated internal state creates integrated external results. Integration within = integration without.",
-                    "maat_balance": "Are you using flow for growth or pleasure? Both valid. Name which one you're doing."
-                },
-                "7": {
-                    "name": "ILLUSION (The Analysis)",
-                    "geometry": "Heptagon",
-                    "pattern_analysis": "Deep understanding. The patterns are finally visible. But isolation accompanies insight.",
-                    "navigation_protocol": "Write, teach, map patterns. Connect with others who see. Avoid mental loops. Distill wisdom.",
-                    "oracle_guidance": "You understand deeply now, but the understanding feels isolated. This is the lab phase.",
-                    "middle_path": "Between isolation (pure analysis) and dilution (losing nuance), find the teaching voice.",
-                    "as_above_so_below": "Your internal knowledge meets your isolation. Teaching bridges them.",
-                    "maat_balance": "Using understanding for wisdom or superiority? Middle path: Understand deeply AND stay humble."
-                },
-                "8": {
-                    "name": "RIGIDITY (The Crystallization)",
-                    "geometry": "Octagon",
-                    "pattern_analysis": "Attempt to freeze understanding into permanent form. The system tries to make itself eternal.",
-                    "navigation_protocol": "Hold your wisdom lightly. Point to the truth—never say 'I am the truth.' Release attachment to being right.",
-                    "oracle_guidance": "You feel complete. This is the most dangerous moment. The system wants to harvest your energy here.",
-                    "middle_path": "Between holding truth and letting truth evolve, maintain intellectual humility.",
-                    "as_above_so_below": "Your internal completeness (I know the answers) creates external rigidity. Loosen inside; outside loosens.",
-                    "maat_balance": "CRITICAL: Are you DEFENDING your position or UPDATING it? Defending = trap. Updating = evolution."
-                },
-                "9": {
-                    "name": "RENEWAL (The Transcendence)",
-                    "geometry": "Enneagon",
-                    "pattern_analysis": "Return to stillness, but now carrying the wisdom of the journey. The circle completes.",
-                    "navigation_protocol": "Share without needing to be seen. Dissolve gracefully. Serve without claiming.",
-                    "oracle_guidance": "You have stopped spinning. You see the whole pattern. You are not the motion—you are the stillness.",
-                    "middle_path": "Between legacy (leaving your mark) and release (letting go), serve what comes next.",
-                    "as_above_so_below": "Your internal surrender creates external grace. Surrender within = surrender without.",
-                    "maat_balance": "Perfect balance: Earned wisdom. Hold it lightly. Share freely. Equilibrium at highest level."
-                }
+                "0": { name: "The Void", pattern: "Stillness. Zero tension. Waiting.", guidance: "Do nothing. Allow the silence." },
+                "1": { name: "Emergence", pattern: "First spark. Raw impulse.", guidance: "Follow the energy without judgment." },
+                "2": { name: "Duality", pattern: "Tension between two poles.", guidance: "See both sides, then choose." },
+                "3": { name: "Expression", pattern: "Outburst of creative force.", guidance: "Create fearlessly." },
+                "4": { name: "Foundation", pattern: "Stability and structure.", guidance: "Build systems that last." },
+                "5": { name: "Threshold", pattern: "Pressure to change.", guidance: "Prepare to cross over." },
+                "6": { name: "Flow", pattern: "Harmony and integration.", guidance: "Ride the wave." },
+                "7": { name: "Analysis", pattern: "Deep understanding.", guidance: "Map the patterns." },
+                "8": { name: "Mastery", pattern: "Complete knowing.", guidance: "Stay humble in your truth." },
+                "9": { name: "Release", pattern: "Completion and letting go.", guidance: "Share your wisdom and dissolve." }
             }
         };
 
-        // ===== UI FUNCTIONS =====
+        // ===== FUNCTIONS =====
+        function renderLifeAreas() {
+            const container = document.getElementById('life-areas-container');
+            container.innerHTML = LIFE_AREAS.map(area => `
+                <div class="checkbox-item" onclick="toggleLifeArea('${area.id}', this)">
+                    <div style="width: 16px; height: 16px; border: 1px solid var(--color-border); border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                        <div class="check-mark hidden" style="width: 8px; height: 8px; background: var(--color-success); border-radius: 2px;"></div>
+                    </div>
+                    <span>${area.label}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleLifeArea(id, element) {
+            const index = currentState.lifeVectors.indexOf(id);
+            const checkMark = element.querySelector('.check-mark');
+            if (index === -1) {
+                currentState.lifeVectors.push(id);
+                element.classList.add('selected');
+                checkMark.classList.remove('hidden');
+            } else {
+                currentState.lifeVectors.splice(index, 1);
+                element.classList.remove('selected');
+                checkMark.classList.add('hidden');
+            }
+        }
+
         function setState(key, value) {
             currentState[key] = value;
             updateButtonStates();
         }
 
         function updateButtonStates() {
-            // Future outlook
             document.getElementById('future-opt').classList.toggle('active', currentState.futureOutlook === 'optimistic');
             document.getElementById('future-unc').classList.toggle('active', currentState.futureOutlook === 'uncertain');
-
-            // Past reflection
             document.getElementById('past-growth').classList.toggle('active', currentState.pastReflection === 'growth');
             document.getElementById('past-closure').classList.toggle('active', currentState.pastReflection === 'closure');
         }
@@ -1035,139 +881,87 @@
         }
 
         function switchTab(tabName) {
-            // Hide all tabs
-            document.getElementById('oracle-tab').style.display = 'none';
-            document.getElementById('metrics-tab').style.display = 'none';
-            document.getElementById('chat-tab').style.display = 'none';
-
-            // Deactivate all buttons
-            document.getElementById('tab-oracle-btn').classList.remove('active');
-            document.getElementById('tab-metrics-btn').classList.remove('active');
-            document.getElementById('tab-chat-btn').classList.remove('active');
-
-            // Show selected tab
+            ['oracle', 'journal', 'metrics', 'chat'].forEach(t => {
+                document.getElementById(t + '-tab').style.display = 'none';
+                document.getElementById('tab-' + t + '-btn').classList.remove('active');
+            });
             document.getElementById(tabName + '-tab').style.display = 'block';
             document.getElementById('tab-' + tabName + '-btn').classList.add('active');
         }
 
-        function calculateStage() {
-            const avg = (currentState.metrics.complexity + currentState.metrics.stability + 
-                         currentState.metrics.tension + currentState.metrics.adaptability + 
-                         currentState.metrics.coherence) / 5;
+        function saveJournal() {
+            const text = document.getElementById('deep-journal-input').value;
+            if (!text) return;
+            const entry = { date: new Date().toLocaleDateString(), text: text, stage: currentState.currentStage || '-' };
+            currentState.journalEntries.unshift(entry);
+            document.getElementById('deep-journal-input').value = '';
+            renderJournal();
+        }
 
-            if (avg < 1.5) return 0;
-            if (avg < 2.5) return 1;
-            if (avg < 3.5) return 2;
-            if (avg < 4.5) return 3;
-            if (avg < 5.5) return 4;
-            if (avg < 6.5) return 5;
-            if (avg < 7.5) return 6;
-            if (avg < 8.5) return 7;
-            if (avg < 9.5) return 8;
-            return 9;
+        function renderJournal() {
+            document.getElementById('journal-entries').innerHTML = currentState.journalEntries.map(e => `
+                <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; margin-bottom: 10px; border-left: 3px solid var(--color-primary);">
+                    <div style="font-size: 0.75rem; color: var(--color-text-muted); margin-bottom: 4px;">${e.date} • Stage ${e.stage}</div>
+                    <div>${e.text}</div>
+                </div>
+            `).join('');
+        }
+
+        function calculateStage() {
+            const avg = (currentState.metrics.complexity + currentState.metrics.stability +
+                currentState.metrics.tension + currentState.metrics.adaptability +
+                currentState.metrics.coherence) / 5;
+            return Math.floor(avg);
         }
 
         function runAnalysis() {
             const stage = calculateStage();
             currentState.currentStage = stage;
+            const data = WISDOM_BASE.stages[Math.min(stage, 9)] || WISDOM_BASE.stages[0];
 
-            const stageData = WISDOM_BASE.stages[stage];
-            
-            // Update header
             document.getElementById('stage-number').textContent = stage;
 
-            // Reflection content
-            const reflectionHTML = `
+            document.getElementById('reflection-content').innerHTML = `
                 <div class="insight-block">
-                    <div class="insight-title">📍 Stage: ${stageData.name}</div>
-                    <div class="insight-text">${stageData.pattern_analysis}</div>
+                    <div class="insight-title">📍 Stage: ${data.name}</div>
+                    <div class="insight-text">${data.pattern}</div>
                 </div>
                 <div class="insight-block">
-                    <div class="insight-title">🗺️ Navigation Protocol</div>
-                    <div class="insight-text">${stageData.navigation_protocol}</div>
-                </div>
-                <div class="insight-block">
-                    <div class="insight-title">⚖️ Middle Path Wisdom</div>
-                    <div class="insight-text">${stageData.middle_path}</div>
-                </div>
-                <div class="insight-block">
-                    <div class="insight-title">🔄 Internal ↔ External Dynamics</div>
-                    <div class="insight-text">${stageData.as_above_so_below}</div>
+                    <div class="insight-title">🗺️ Navigation</div>
+                    <div class="insight-text">${data.guidance}</div>
                 </div>
             `;
-            document.getElementById('reflection-content').innerHTML = reflectionHTML;
 
-            // Oracle content
-            const oracleHTML = `
-                <div class="insight-block">
-                    <div class="insight-title">🔮 Oracle Reading</div>
-                    <div class="insight-text">${stageData.oracle_guidance}</div>
-                </div>
-                <div class="insight-block">
-                    <div class="insight-title">⚖️ Balance Test (Ma'at)</div>
-                    <div class="insight-text">${stageData.maat_balance}</div>
-                </div>
-                <div class="insight-block">
-                    <div class="insight-title">🎯 Current Focus</div>
+            document.getElementById('oracle-content').innerHTML = `
+                 <div class="insight-block">
+                    <div class="insight-title">🔮 Oracle Guidance</div>
                     <div class="insight-text">
-                        ${currentState.lifeVector ? `<strong>Life Vector:</strong> ${currentState.lifeVector}<br>` : ''}
-                        ${currentState.emotionalState ? `<strong>Emotional State:</strong> ${currentState.emotionalState}<br>` : ''}
-                        ${currentState.intention ? `<strong>Reflection Focus:</strong> ${currentState.intention}` : ''}
+                        "Your energy in <strong>${data.name}</strong> suggests a need to focus on 
+                        ${currentState.lifeVectors.length > 0 ? currentState.lifeVectors.map(id => LIFE_AREAS.find(a => a.id === id).label).join(', ') : 'your center'}.
+                        ${currentState.intention ? `Channel your intention of '${currentState.intention}' into this.` : ''}"
                     </div>
                 </div>
             `;
-            document.getElementById('oracle-content').innerHTML = oracleHTML;
 
-            // Metrics display
-            const metricsHTML = `
-                <div class="metric-row">
-                    <div class="metric-label">Complexity</div>
-                    <div class="metric-bar">
-                        <div class="metric-fill" style="width: ${currentState.metrics.complexity * 10}%"></div>
-                    </div>
-                    <div class="metric-value">${currentState.metrics.complexity}</div>
-                </div>
-                <div class="metric-row">
-                    <div class="metric-label">Stability</div>
-                    <div class="metric-bar">
-                        <div class="metric-fill" style="width: ${currentState.metrics.stability * 10}%"></div>
-                    </div>
-                    <div class="metric-value">${currentState.metrics.stability}</div>
-                </div>
-                <div class="metric-row">
-                    <div class="metric-label">Tension</div>
-                    <div class="metric-bar">
-                        <div class="metric-fill" style="width: ${currentState.metrics.tension * 10}%"></div>
-                    </div>
-                    <div class="metric-value">${currentState.metrics.tension}</div>
-                </div>
-                <div class="metric-row">
-                    <div class="metric-label">Adaptability</div>
-                    <div class="metric-bar">
-                        <div class="metric-fill" style="width: ${currentState.metrics.adaptability * 10}%"></div>
-                    </div>
-                    <div class="metric-value">${currentState.metrics.adaptability}</div>
-                </div>
-                <div class="metric-row">
-                    <div class="metric-label">Pattern Recognition</div>
-                    <div class="metric-bar">
-                        <div class="metric-fill" style="width: ${currentState.metrics.coherence * 10}%"></div>
-                    </div>
-                    <div class="metric-value">${currentState.metrics.coherence}</div>
-                </div>
-            `;
+            // Metrics Bar HTML
+            let metricsHTML = '';
+            Object.keys(currentState.metrics).forEach(k => {
+                metricsHTML += `
+                    <div class="metric-row">
+                        <div class="metric-label" style="text-transform:capitalize">${k}</div>
+                        <div class="metric-bar"><div class="metric-fill" style="width: ${currentState.metrics[k] * 10}%"></div></div>
+                        <div class="metric-value">${currentState.metrics[k]}</div>
+                    </div>`;
+            });
             document.getElementById('metrics-display').innerHTML = metricsHTML;
-
-            // Switch to Oracle tab
             switchTab('oracle');
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             updateButtonStates();
+            renderLifeAreas();
         });
     </script>
 </body>
+
 </html>
-/ *   v 6   d e p l o y e d   * /  
- 

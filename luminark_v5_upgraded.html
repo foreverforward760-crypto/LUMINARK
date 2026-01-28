@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARK Antikythera Protocol v5 - Advanced Assessment</title>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1f3a;
+            --secondary: #2d3561;
+            --accent: #00d4ff;
+            --accent-warm: #ff6b35;
+            --success: #00ff88;
+            --text: #e8eef7;
+            --text-muted: #a8b5d1;
+            --border: #3d4575;
+            --shadow: rgba(0, 212, 255, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 300px;
+            background: rgba(13, 17, 42, 0.8);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            opacity: 0.9;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* Temporal Sentiment Controls */
+        .temporal-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .temporal-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-temporal {
+            flex: 1;
+            min-width: 60px;
+            padding: 8px 10px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-temporal:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-temporal.active {
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--shadow);
+        }
+
+        /* Life Vectors Dropdown */
+        .vector-select {
+            width: 100%;
+            padding: 10px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vector-select:hover,
+        .vector-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--shadow);
+            outline: none;
+        }
+
+        /* Emotional State Input */
+        .emotional-input {
+            width: 100%;
+            padding: 10px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .emotional-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--shadow);
+            outline: none;
+        }
+
+        /* System Metrics Sliders */
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .slider-label {
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .slider-label-name {
+            flex: 1;
+        }
+
+        .slider-label-value {
+            color: var(--accent);
+            font-weight: 700;
+            min-width: 30px;
+            text-align: right;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 8px var(--shadow);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 8px var(--shadow);
+        }
+
+        /* Intention Buttons */
+        .intention-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-intention {
+            padding: 10px;
+            background: linear-gradient(135deg, var(--accent), #0099cc);
+            border: none;
+            color: #000;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-intention:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+            background: linear-gradient(135deg, #00ff88, var(--accent));
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent-warm), var(--accent));
+            border: none;
+            color: #000;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px var(--shadow);
+        }
+
+        /* ===== DEEPCHAT STYLING ===== */
+        deep-chat {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            --border-radius: 8px;
+            --primary-color: var(--accent);
+            --primary-color-hover: var(--accent-warm);
+            --secondary-color: var(--secondary);
+            --text-color: var(--text);
+            --text-color-muted: var(--text-muted);
+            --message-user-background-color: var(--accent);
+            --message-user-text-color: #000;
+            --message-assistant-background-color: var(--secondary);
+            --message-assistant-text-color: var(--text);
+            --chat-input-background-color: var(--secondary);
+            --chat-input-border-color: var(--border);
+            --chat-input-text-color: var(--text);
+            --send-button-background-color: var(--accent);
+            --send-button-text-color: #000;
+            background: transparent;
+        }
+        }
+
+        .btn-analyze:active {
+            transform: translateY(-1px);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .stage-display {
+            padding: 20px;
+            background: rgba(255, 107, 53, 0.05);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stage-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .stage-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+            min-width: 80px;
+        }
+
+        .stage-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stage-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stage-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 300px;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .share-button:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+
+        /* Deep Analysis & Oracle Output */
+        .output-section {
+            flex: 1;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .output-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(45, 53, 97, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .panel-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .panel-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Radar Chart Container */
+        .radar-container {
+            width: 100%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 14, 39, 0.5);
+            border-radius: 8px;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            max-width: 400px;
+            max-height: 400px;
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .spinner {
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--accent);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .output-section {
+                flex-direction: column;
+            }
+
+            .output-panel {
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 40vh;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .main-content {
+                overflow-y: auto;
+            }
+
+            .stage-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .output-section {
+                padding: 12px;
+                gap: 12px;
+            }
+        }
+
+        /* Loading Message Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Highlight Special Values */
+        .stage-metric {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .warning-text {
+            color: var(--accent-warm);
+        }
+
+        .insight-text {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== SIDEBAR ===== -->
+        <div class="sidebar">
+            <div style="text-align: center; margin-bottom: 10px;">
+                <h1 style="font-size: 1.3rem; color: var(--accent); margin-bottom: 4px;">LUMINARK</h1>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Antikythera Protocol v5</p>
+            </div>
+
+            <!-- Temporal Sentiment Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">⏰ Temporal Focus</div>
+                
+                <div class="temporal-controls">
+                    <div class="temporal-label">Future Outlook:</div>
+                    <div class="button-group">
+                        <button class="btn-temporal" onclick="setTemporal('future', 'Optimistic')">Optimistic</button>
+                        <button class="btn-temporal" onclick="setTemporal('future', 'Anxious')">Anxious</button>
+                        <button class="btn-temporal" onclick="setTemporal('future', 'Uncertain')">Uncertain</button>
+                    </div>
+
+                    <div class="temporal-label" style="margin-top: 8px;">Past Reflection:</div>
+                    <div class="button-group">
+                        <button class="btn-temporal" onclick="setTemporal('past', 'Grateful')">Grateful</button>
+                        <button class="btn-temporal" onclick="setTemporal('past', 'Regretful')">Regretful</button>
+                        <button class="btn-temporal" onclick="setTemporal('past', 'Neutral')">Neutral</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Life Vectors Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">🎯 Life Vector</div>
+                <select id="life-vector" class="vector-select">
+                    <option value="">Select your focus area...</option>
+                    <option value="Career & Purpose">Career & Purpose</option>
+                    <option value="Relationships & Love">Relationships & Love</option>
+                    <option value="Health & Vitality">Health & Vitality</option>
+                    <option value="Creativity & Expression">Creativity & Expression</option>
+                    <option value="Spiritual Growth">Spiritual Growth</option>
+                    <option value="Financial Freedom">Financial Freedom</option>
+                    <option value="Personal Transformation">Personal Transformation</option>
+                    <option value="Community & Belonging">Community & Belonging</option>
+                </select>
+            </div>
+
+            <!-- Emotional State Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">💭 Emotional State</div>
+                <textarea id="emotional-state" class="emotional-input" placeholder="Describe your current feeling and state..."></textarea>
+            </div>
+
+            <!-- System Metrics Sliders -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">📊 System Metrics</div>
+                <div class="slider-container">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Complexity</span>
+                            <span class="slider-label-value" id="val-complexity">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-complexity" 
+                               oninput="updateSlider('complexity', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Stability</span>
+                            <span class="slider-label-value" id="val-stability">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-stability" 
+                               oninput="updateSlider('stability', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Tension</span>
+                            <span class="slider-label-value" id="val-tension">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-tension" 
+                               oninput="updateSlider('tension', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Adaptability</span>
+                            <span class="slider-label-value" id="val-adaptability">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-adaptability" 
+                               oninput="updateSlider('adaptability', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Coherence</span>
+                            <span class="slider-label-value" id="val-coherence">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-coherence" 
+                               oninput="updateSlider('coherence', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intention Buttons -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">🔮 Intention</div>
+                <div class="intention-buttons">
+                    <button class="btn-intention" onclick="setIntention('Reflection')">Reflection</button>
+                    <button class="btn-intention" onclick="setIntention('Clarity')">Clarity</button>
+                    <button class="btn-intention" onclick="setIntention('Direction')">Direction</button>
+                    <button class="btn-intention" onclick="setIntention('Release')">Release</button>
+                    <button class="btn-intention" onclick="setIntention('Exploration')">Exploration</button>
+                </div>
+            </div>
+
+            <!-- Analyze Button -->
+            <button class="btn-analyze" onclick="runAnalysis()">
+                ⚡ RUN ANTIKYTHERA PROTOCOL
+            </button>
+        </div>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="main-content">
+            <!-- Stage Display -->
+            <div class="stage-display">
+                <div class="stage-info">
+                    <div class="stage-number" id="stage-number">—</div>
+                    <div class="stage-details">
+                        <div class="stage-name" id="stage-name">Ready for Analysis</div>
+                        <div class="stage-description" id="stage-desc">Configure your parameters in the sidebar and click RUN ANTIKYTHERA PROTOCOL to begin</div>
+                    </div>
+                </div>
+                <button class="share-button" onclick="shareReading()">Share Reading</button>
+            </div>
+
+            <!-- Output Section: Deep Reflection + Oracle + Radar -->
+            <div class="output-section">
+                <!-- Left: Deep Reflection -->
+                <div class="output-panel">
+                    <div class="panel-title">🔬 Deep Reflection</div>
+                    <div class="panel-content" id="deep-reflection">
+                        <p style="color: var(--text-muted);">Configure your parameters and run analysis to receive personalized reflection...</p>
+                    </div>
+                </div>
+
+                <!-- Right: Oracle Output + Chat -->
+                <div class="output-panel">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                        <button id="tab-oracle" class="tab-button active" onclick="switchTab('oracle')" style="padding: 8px 15px; background: var(--secondary); border: 1px solid var(--border); color: var(--text); border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">🔮 Oracle</button>
+                        <button id="tab-chat" class="tab-button" onclick="switchTab('chat')" style="padding: 8px 15px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">💬 Deep Chat</button>
+                    </div>
+                    <div id="oracle-panel" style="display: block; height: calc(100% - 50px); overflow-y: auto;">
+                        <div class="panel-content" id="oracle-output">
+                            <p style="color: var(--text-muted);">Your personalized Oracle reading will appear here with tactical guidance...</p>
+                        </div>
+                    </div>
+                    <div id="chat-panel" style="display: none; height: calc(100% - 50px);">
+                        <deep-chat
+                            id="deepchat"
+                            request="{
+                                'url': '/api/chat',
+                                'method': 'POST',
+                                'headers': {'Content-Type': 'application/json'},
+                                'bodyFormat': 'json'
+                            }"
+                            style="height: 100%; border-radius: 8px;"
+                        ></deep-chat>
+                    </div>
+                </div>
+
+                <!-- Bottom: Radar Chart -->
+                <div class="output-panel" style="width: 100%; max-width: 350px;">
+                    <div class="panel-title">📈 Recursive Feedback Loop</div>
+                    <div class="radar-container">
+                        <svg id="radar-chart" viewBox="0 0 400 400">
+                            <!-- Background hexagon -->
+                            <polygon id="bg-hex" points="200,50 350,125 350,275 200,350 50,275 50,125" 
+                                     fill="none" stroke="rgba(0, 212, 255, 0.1)" stroke-width="1"/>
+                            <!-- Grid circles -->
+                            <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(0, 212, 255, 0.05)" stroke-width="1"/>
+                            <circle cx="200" cy="200" r="100" fill="none" stroke="rgba(0, 212, 255, 0.05)" stroke-width="1"/>
+                            <circle cx="200" cy="200" r="50" fill="none" stroke="rgba(0, 212, 255, 0.05)" stroke-width="1"/>
+                            <!-- Axis labels -->
+                            <text x="200" y="30" text-anchor="middle" fill="rgba(168, 181, 209, 0.6)" font-size="12">Complexity</text>
+                            <text x="340" y="145" fill="rgba(168, 181, 209, 0.6)" font-size="12">Stability</text>
+                            <text x="310" y="320" fill="rgba(168, 181, 209, 0.6)" font-size="12">Tension</text>
+                            <text x="90" y="320" fill="rgba(168, 181, 209, 0.6)" font-size="12">Adaptability</text>
+                            <text x="60" y="145" fill="rgba(168, 181, 209, 0.6)" font-size="12">Coherence</text>
+                            <!-- Data polygon -->
+                            <polygon id="data-polygon" points="200,200 200,200 200,200 200,200 200,200" 
+                                     fill="rgba(0, 212, 255, 0.2)" stroke="rgba(0, 212, 255, 0.8)" stroke-width="2"/>
+                            <!-- Data points -->
+                            <circle id="point-complexity" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-stability" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-tension" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-adaptability" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-coherence" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== STATE MANAGEMENT =====
+        let currentState = {
+            futureOutlook: '',
+            pastReflection: '',
+            lifeVector: '',
+            emotionalState: '',
+            metrics: {
+                complexity: 5,
+                stability: 5,
+                tension: 5,
+                adaptability: 5,
+                coherence: 5
+            },
+            intention: '',
+            currentStage: null
+        };
+
+        // ===== LUMINARK WISDOM BASE (from index.html) =====
+        const WISDOM_BASE = {
+            "stages": {
+                "0": {
+                    "name": "PLENARA (The Void)",
+                    "geometry": "Point",
+                    "pattern_analysis": "Zero tension. Zero motion. Pure coherence. The system is at rest in the canvas state.",
+                    "navigation_protocol": "Do nothing. Observe. Allow. Resist the urge to force emergence.",
+                    "oracle_guidance": "You are in the womb. Not yet time to act. This is completion disguised as emptiness.",
+                    "middle_path": "Between forcing action and complete inaction, rest is not inaction—it is receptive potential.",
+                    "as_above_so_below": "Your inner void mirrors outer possibility. As you are still, the world's patterns become visible.",
+                    "maat_balance": "Perfect equilibrium. No imbalance to correct. This is the ethical foundation."
+                },
+                "1": {
+                    "name": "RADIANCE (The Emergence)",
+                    "geometry": "Line",
+                    "pattern_analysis": "First impulse. Raw energy. No direction yet. Pure potential becoming aware of itself.",
+                    "navigation_protocol": "Feel the energy. Let it move. Do not judge the direction. Direction comes later.",
+                    "oracle_guidance": "Something wants to be born through you. Let the impulse flow without controlling it.",
+                    "middle_path": "Between suppression and explosion, channel—don't dam, don't flood.",
+                    "as_above_so_below": "Your internal activation mirrors external opportunity. Activation is contagious.",
+                    "maat_balance": "Imbalance detected: All activation, no containment. Find the outlet."
+                },
+                "2": {
+                    "name": "DUALITY (The Division)",
+                    "geometry": "Line (inverted)",
+                    "pattern_analysis": "Two poles. Self and other. Subject and object. The eternal dance begins.",
+                    "navigation_protocol": "Observe the polarity. Do not choose yet. See both sides completely. Then choose consciously.",
+                    "oracle_guidance": "You are learning to see. The splitting apart is not destruction—it's clarity.",
+                    "middle_path": "Between polarized thinking and fusion-thinking, synthesize. Find the third option.",
+                    "as_above_so_below": "Internal conflict mirrors external conflict. Fix one, the other shifts.",
+                    "maat_balance": "Test: Are you seeing ONLY two options? Add a third perspective."
+                },
+                "3": {
+                    "name": "EXPRESSION (The Outburst)",
+                    "geometry": "Triangle",
+                    "pattern_analysis": "Raw creative power. Expression without filter. Maximum tension, maximum authenticity.",
+                    "navigation_protocol": "Create fearlessly. Make bad art. Let your voice find itself through making, not planning.",
+                    "oracle_guidance": "You are a volcano. Your expression is sacred. Do not apologize for your heat.",
+                    "middle_path": "Between self-censoring and reckless expression, find disciplined authenticity.",
+                    "as_above_so_below": "Your internal creative fire IS your external impact. People feel your authenticity.",
+                    "maat_balance": "Authentic expression that harms isn't balance. Find: Authenticity that builds."
+                },
+                "4": {
+                    "name": "FOUNDATION (The Rest)",
+                    "geometry": "Square",
+                    "pattern_analysis": "Structure, stability, rhythm. The wild has been integrated into sustainable form.",
+                    "navigation_protocol": "Build. Plant roots. Make systems that last. Create from stability, not chaos.",
+                    "oracle_guidance": "You have found your rhythm. This is the healthiest long-term stage. Enjoy it.",
+                    "middle_path": "Between rigid structure and chaotic flow, maintain dynamic stability. Rules that breathe.",
+                    "as_above_so_below": "Your internal order creates external order. Clean your inner space, your outer space follows.",
+                    "maat_balance": "Perfect balance achievable here. Stability + flexibility both present."
+                },
+                "5": {
+                    "name": "THRESHOLD (The Pressure)",
+                    "geometry": "Pentagon",
+                    "pattern_analysis": "Stable container (4) holding unstable content (5). Digits flipped. Volatile peak. Shortest stage.",
+                    "navigation_protocol": "Feel the pressure fully. Ask: Am I ready? If no—strengthen. If yes—cross. If unsure—pause.",
+                    "oracle_guidance": "You are at the point of no return. The foundation is cracking under new pressure. This is the moment of choice.",
+                    "middle_path": "Between staying comfortable and reckless leap, build capacity first. Hold both old life AND new vision.",
+                    "as_above_so_below": "Internal pressure (desire for change) meets external pressure (circumstances). They're the same pressure. Don't blame circumstances; don't claim you're choosing if forced.",
+                    "maat_balance": "CRITICAL: Are you abandoning foundation for ego? Staying stuck for comfort? The threshold tests your integrity.",
+                    "threshold_mechanics": "What breaks: Your old identity, your old life structure. What remains: Core values + foundation work (sleep, health, relationships).",
+                    "critical_understanding": "Pressure strengthens you for what comes next. Resistance creates adaptation. Don't bypass pressure; don't get crushed by it.",
+                    "failure_modes": "Premature crossing (leap before strengthening = trauma). Indefinite pausing (stay at threshold for years = calcification). False crossing (change externally, not internally).",
+                    "readiness_test": "Can you hold paradox? Can you work Stage 4 (build) AND Stage 5 (prepare to break) simultaneously?"
+                },
+                "6": {
+                    "name": "INTEGRATION (The Harvest)",
+                    "geometry": "Hexagon",
+                    "pattern_analysis": "Flow state, peak harmony. Everything is clicking. Maximum creative output.",
+                    "navigation_protocol": "Serve from overflow. Create your best work now. Do not cling. Prepare for the coming shift.",
+                    "oracle_guidance": "You are in the hexagon—flow state, peak harmony. Everything is clicking. This is real, but it is seasonal.",
+                    "middle_path": "Between addictively pursuing flow and lazily enjoying comfort, create deliberately.",
+                    "as_above_so_below": "Your integrated internal state creates integrated external results. Integration within = integration without.",
+                    "maat_balance": "Are you using flow for growth or pleasure? Both valid. Name which one you're doing."
+                },
+                "7": {
+                    "name": "ILLUSION (The Analysis)",
+                    "geometry": "Heptagon",
+                    "pattern_analysis": "Deep understanding. The patterns are finally visible. But isolation accompanies insight.",
+                    "navigation_protocol": "Write, teach, map patterns. Connect with others who see. Avoid mental loops. Distill wisdom.",
+                    "oracle_guidance": "You understand deeply now, but the understanding feels isolated. This is the lab phase.",
+                    "middle_path": "Between isolation (pure analysis) and dilution (losing nuance), find the teaching voice.",
+                    "as_above_so_below": "Your internal knowledge meets your isolation. Teaching bridges them.",
+                    "maat_balance": "Using understanding for wisdom or superiority? Middle path: Understand deeply AND stay humble."
+                },
+                "8": {
+                    "name": "RIGIDITY (The Crystallization)",
+                    "geometry": "Octagon",
+                    "pattern_analysis": "Attempt to freeze understanding into permanent form. The system tries to make itself eternal.",
+                    "navigation_protocol": "Hold your wisdom lightly. Point to the truth—never say 'I am the truth.' Release attachment to being right.",
+                    "oracle_guidance": "You feel complete. This is the most dangerous moment. The system wants to harvest your energy here.",
+                    "middle_path": "Between holding truth and letting truth evolve, maintain intellectual humility. Right at Stage 7. At Stage 8, if you insist you're still right, you've crystallized into dogma.",
+                    "as_above_so_below": "Your internal completeness (I know the answers) creates external rigidity. Loosen inside; outside loosens.",
+                    "maat_balance": "CRITICAL: Permanence trap test. Are you DEFENDING your position or UPDATING it? Defending = trap. Updating = evolution.",
+                    "permanence_trap": "You achieved understanding. You feel complete. You identify with being complete. Identity = trap entry. Defending completeness blocks growth.",
+                    "false_infinity_warning": "Mistaking completion for infinity. Believing you've reached TRUTH. But truth evolves. Your arrival is a death point, not a summit.",
+                    "warning_signs": "Can't remember last time you changed mind. Defend positions more than test them. Surrounded by people who agree. Feel tired (defending exhausts). Measure success by adoption rate.",
+                    "escape_path": "Radical vulnerability: I don't know. I was right, AND I was incomplete. I'm updating, always.",
+                    "stage8_vs_stage7": "Stage 7: I understand deeply. I'm still learning. | Stage 8: I understand completely. Case closed."
+                },
+                "9": {
+                    "name": "RENEWAL (The Transcendence)",
+                    "geometry": "Enneagon",
+                    "pattern_analysis": "Return to stillness, but now carrying the wisdom of the journey. The circle completes.",
+                    "navigation_protocol": "Share without needing to be seen. Dissolve gracefully. Serve without claiming.",
+                    "oracle_guidance": "You have stopped spinning. You see the whole pattern. You are not the motion—you are the stillness.",
+                    "middle_path": "Between legacy (leaving your mark) and release (letting go), serve what comes next.",
+                    "as_above_so_below": "Your internal surrender creates external grace. Surrender within = surrender without.",
+                    "maat_balance": "Perfect balance: Earned wisdom. Hold it lightly. Share freely. Equilibrium at highest level."
+                }
+            }
+        };
+
+        // ===== SLIDER MANAGEMENT =====
+        function updateSlider(metric, value) {
+            currentState.metrics[metric] = parseFloat(value);
+            document.getElementById(`val-${metric}`).textContent = value;
+            updateRadarChart();
+        }
+
+        // ===== TEMPORAL & INTENTION =====
+        function setTemporal(type, value) {
+            if (type === 'future') {
+                currentState.futureOutlook = value;
+                document.querySelectorAll('.btn-temporal').forEach(btn => {
+                    if (btn.textContent === value && btn.onclick.toString().includes('future')) {
+                        btn.classList.add('active');
+                    } else if (btn.onclick.toString().includes('future')) {
+                        btn.classList.remove('active');
+                    }
+                });
+            } else {
+                currentState.pastReflection = value;
+                document.querySelectorAll('.btn-temporal').forEach(btn => {
+                    if (btn.textContent === value && btn.onclick.toString().includes('past')) {
+                        btn.classList.add('active');
+                    } else if (btn.onclick.toString().includes('past')) {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        function setIntention(intention) {
+            currentState.intention = intention;
+            document.querySelectorAll('.btn-intention').forEach(btn => {
+                btn.style.opacity = btn.textContent.includes(intention) ? '1' : '0.6';
+            });
+        }
+
+        // ===== STAGE CALCULATION =====
+        function calculateStage() {
+            const m = currentState.metrics;
+            
+            // Simplified stage calculation based on metrics
+            const complexity = m.complexity / 10;
+            const stability = m.stability / 10;
+            const tension = m.tension / 10;
+            const adaptability = m.adaptability / 10;
+            const coherence = m.coherence / 10;
+
+            let stage = 0;
+
+            // Logic for stage determination
+            if (tension < 0.3 && coherence > 0.7) stage = 0;  // Plenara
+            else if (tension > 0.7) stage = 3;                // Expression
+            else if (stability > 0.8) stage = 4;              // Foundation
+            else if (tension > 0.6 && stability < 0.5) stage = 5;  // Threshold
+            else if (coherence > 0.8) stage = 6;              // Integration
+            else if (complexity > 0.8) stage = 7;             // Illusion
+            else if (adaptability < 0.3) stage = 8;           // Rigidity
+            else if (adaptability > 0.9 && coherence > 0.9) stage = 9;  // Renewal
+            else stage = 2;                                   // Duality
+
+            return Math.min(9, Math.max(0, stage));
+        }
+
+        // ===== RADAR CHART UPDATE =====
+        function updateRadarChart() {
+            const m = currentState.metrics;
+            const center = { x: 200, y: 200 };
+            const radius = 150;
+            const angles = [-Math.PI / 2, -Math.PI / 2 + (2 * Math.PI / 5), -Math.PI / 2 + (4 * Math.PI / 5), 
+                           -Math.PI / 2 + (6 * Math.PI / 5), -Math.PI / 2 + (8 * Math.PI / 5)];
+
+            const points = [
+                { value: m.complexity, angle: angles[0], id: 'complexity' },
+                { value: m.stability, angle: angles[1], id: 'stability' },
+                { value: m.tension, angle: angles[2], id: 'tension' },
+                { value: m.adaptability, angle: angles[3], id: 'adaptability' },
+                { value: m.coherence, angle: angles[4], id: 'coherence' }
+            ];
+
+            const polygonPoints = points.map(p => {
+                const x = center.x + (radius * (p.value / 10)) * Math.cos(p.angle);
+                const y = center.y + (radius * (p.value / 10)) * Math.sin(p.angle);
+                return `${x},${y}`;
+            }).join(' ');
+
+            document.getElementById('data-polygon').setAttribute('points', polygonPoints);
+
+            points.forEach((p, idx) => {
+                const x = center.x + (radius * (p.value / 10)) * Math.cos(p.angle);
+                const y = center.y + (radius * (p.value / 10)) * Math.sin(p.angle);
+                document.getElementById(`point-${p.id}`).setAttribute('cx', x);
+                document.getElementById(`point-${p.id}`).setAttribute('cy', y);
+            });
+        }
+
+        // ===== MAIN ANALYSIS =====
+        async function runAnalysis() {
+            const vector = document.getElementById('life-vector').value || 'General';
+            const emotion = document.getElementById('emotional-state').value || 'Centered';
+
+            // Update state
+            currentState.lifeVector = vector;
+            currentState.emotionalState = emotion;
+
+            // Calculate stage
+            const stage = calculateStage();
+            currentState.currentStage = stage;
+
+            // Get wisdom
+            const stageWisdom = WISDOM_BASE.stages[stage];
+
+            // Update display
+            document.getElementById('stage-number').textContent = stage;
+            document.getElementById('stage-name').textContent = stageWisdom.name;
+            document.getElementById('stage-desc').textContent = stageWisdom.pattern_analysis;
+
+            // Update deep reflection
+            let reflection = `<strong>Stage ${stage}: ${stageWisdom.name}</strong><br><br>`;
+            reflection += `Your Life Vector: <span class="stage-metric">${vector}</span><br>`;
+            reflection += `Emotional State: <span class="stage-metric">${emotion}</span><br><br>`;
+            reflection += `<span class="insight-text">${stageWisdom.pattern_analysis}</span><br><br>`;
+            reflection += `Temporal Sentiment:<br>`;
+            reflection += `• Future: ${currentState.futureOutlook || 'Unset'}<br>`;
+            reflection += `• Past: ${currentState.pastReflection || 'Unset'}<br><br>`;
+            reflection += `System Metrics:<br>`;
+            reflection += `• Complexity: ${currentState.metrics.complexity}/10<br>`;
+            reflection += `• Stability: ${currentState.metrics.stability}/10<br>`;
+            reflection += `• Tension: ${currentState.metrics.tension}/10<br>`;
+            reflection += `• Adaptability: ${currentState.metrics.adaptability}/10<br>`;
+            reflection += `• Coherence: ${currentState.metrics.coherence}/10`;
+
+            document.getElementById('deep-reflection').innerHTML = reflection;
+
+            // Generate Oracle Output
+            let oracleText = `<strong>Oracle Guidance: ${stageWisdom.name}</strong><br><br>`;
+            oracleText += `<span class="insight-text">${stageWisdom.oracle_guidance}</span><br><br>`;
+            oracleText += `<strong>Navigation Protocol:</strong><br>${stageWisdom.navigation_protocol}<br><br>`;
+            oracleText += `<strong>Intent for This Session:</strong><br>`;
+            oracleText += `Your intention is <span class="stage-metric">${currentState.intention || 'Exploration'}</span>, which guides your journey through this stage.`;
+
+            document.getElementById('oracle-output').innerHTML = oracleText;
+
+            // Update radar
+            updateRadarChart();
+        }
+
+        // ===== SHARE FUNCTIONALITY =====
+        function shareReading() {
+            if (currentState.currentStage === null) {
+                alert('Please run an analysis first');
+                return;
+            }
+
+            const stage = currentState.currentStage;
+            const stageName = WISDOM_BASE.stages[stage].name;
+            const text = `I am currently navigating Stage ${stage}: ${stageName} on the LUMINARK Antikythera Protocol.\n\nVector: ${currentState.lifeVector}\nIntention: ${currentState.intention || 'Exploration'}\n\nDiscover your stage: https://luminark-six.vercel.app/`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'LUMINARK Antikythera Protocol',
+                    text: text
+                });
+            } else {
+                alert(text);
+            }
+        }
+
+        // ===== TAB SWITCHING FOR ORACLE + CHAT =====
+        function switchTab(tabName) {
+            const oraclePanel = document.getElementById('oracle-panel');
+            const chatPanel = document.getElementById('chat-panel');
+            const oracleBtn = document.getElementById('tab-oracle');
+            const chatBtn = document.getElementById('tab-chat');
+
+            if (tabName === 'oracle') {
+                oraclePanel.style.display = 'block';
+                chatPanel.style.display = 'none';
+                oracleBtn.style.background = 'var(--secondary)';
+                oracleBtn.style.color = 'var(--text)';
+                chatBtn.style.background = 'transparent';
+                chatBtn.style.color = 'var(--text-muted)';
+            } else if (tabName === 'chat') {
+                oraclePanel.style.display = 'none';
+                chatPanel.style.display = 'block';
+                oracleBtn.style.background = 'transparent';
+                oracleBtn.style.color = 'var(--text-muted)';
+                chatBtn.style.background = 'var(--secondary)';
+                chatBtn.style.color = 'var(--text)';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateRadarChart();
+        });
+    </script>
+</body>
+</html>

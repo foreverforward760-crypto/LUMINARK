@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARK v6 - Consciousness Assessment Platform</title>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Professional Color Palette */
+            --color-primary: #6366f1;
+            --color-primary-light: #818cf8;
+            --color-primary-dark: #4f46e5;
+            --color-accent: #06b6d4;
+            --color-accent-warm: #f97316;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            
+            /* Neutral Scale */
+            --color-bg-primary: #0f172a;
+            --color-bg-secondary: #1e293b;
+            --color-bg-tertiary: #334155;
+            --color-text-primary: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #94a3b8;
+            --color-border: #475569;
+            
+            /* Shadows & Effects */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+            
+            /* Spacing Grid (8px base) */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            
+            /* Typography */
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            --font-mono: 'Monaco', 'Courier New', monospace;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            overflow: hidden;
+        }
+
+        /* ===== LAYOUT GRID ===== */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 340px;
+            background: linear-gradient(180deg, var(--color-bg-secondary) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .sidebar-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .form-section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--color-primary-light);
+            opacity: 0.9;
+        }
+
+        .button-group {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: var(--space-xs) var(--space-sm);
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 70px;
+        }
+
+        .btn:hover {
+            background: var(--color-bg-secondary);
+            border-color: var(--color-primary);
+            color: var(--color-primary-light);
+        }
+
+        .btn.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        .form-input {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+            padding: var(--space-sm);
+            border-radius: 6px;
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .slider-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: white;
+        }
+
+        .slider-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+            min-width: 35px;
+            text-align: right;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: var(--shadow-lg), 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: none;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+
+        .intention-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .btn-intention {
+            padding: var(--space-sm) var(--space-md);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary-light);
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-intention:hover {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: var(--space-lg);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-analyze:active {
+            transform: translateY(0);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--color-bg-primary) 0%, rgba(15, 23, 42, 0.95) 100%);
+        }
+
+        /* HEADER */
+        .app-header {
+            padding: var(--space-lg);
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .stage-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-md) var(--space-lg);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--color-primary);
+            border-radius: 12px;
+        }
+
+        .stage-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stage-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        /* CONTENT GRID */
+        .content-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            overflow: hidden;
+        }
+
+        .panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .panel-header {
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(15, 23, 42, 0.5);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .panel-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .panel-content {
+            flex: 1;
+            padding: var(--space-lg);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .insight-block {
+            padding: var(--space-md);
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 6px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .insight-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+            margin-bottom: var(--space-xs);
+        }
+
+        .insight-text {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+
+        .metric-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--color-bg-tertiary);
+            border-radius: 3px;
+            margin: 0 var(--space-sm);
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .metric-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* TAB INTERFACE */
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tab-button {
+            padding: var(--space-md) var(--space-lg);
+            background: transparent;
+            border: none;
+            color: var(--color-text-muted);
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .tab-button:hover {
+            color: var(--color-text-secondary);
+        }
+
+        .tab-button.active {
+            color: var(--color-primary-light);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* RADAR CHART */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            padding: var(--space-lg);
+        }
+
+        .radar-svg {
+            max-width: 100%;
+            max-height: 100%;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.2));
+        }
+
+        /* DEEPCHAT */
+        deep-chat {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            --border-radius: 0;
+            --primary-color: var(--color-primary);
+            --primary-color-hover: var(--color-primary-light);
+            --secondary-color: var(--color-bg-tertiary);
+            --text-color: var(--color-text-primary);
+            --text-color-muted: var(--color-text-muted);
+            --message-user-background-color: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --message-user-text-color: white;
+            --message-assistant-background-color: var(--color-bg-tertiary);
+            --message-assistant-text-color: var(--color-text-primary);
+            --chat-input-background-color: var(--color-bg-tertiary);
+            --chat-input-border-color: var(--color-border);
+            --chat-input-text-color: var(--color-text-primary);
+            --send-button-background-color: var(--color-primary);
+            --send-button-text-color: white;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 200px;
+                overflow-x: auto;
+                flex-direction: row;
+                padding: var(--space-md);
+            }
+
+            .form-section {
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex: 1;
+            }
+
+            .main-content {
+                flex: 1;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stage-badge {
+                align-self: flex-start;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+                padding: var(--space-md);
+            }
+        }
+
+        /* SCROLLBAR STYLING */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+
+        /* UTILITY */
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">◆</div>
+                <div>
+                    <div class="sidebar-title">LUMINARK</div>
+                    <div class="sidebar-subtitle">v6 Professional</div>
+                </div>
+            </div>
+
+            <!-- Temporal Controls -->
+            <div class="form-section">
+                <div class="form-section-title">⏰ Temporal Sentiment</div>
+                <div class="button-group">
+                    <button class="btn" onclick="setState('futureOutlook', 'optimistic')" id="future-opt">📈 Optimistic</button>
+                    <button class="btn" onclick="setState('futureOutlook', 'uncertain')" id="future-unc">❔ Uncertain</button>
+                </div>
+                <div class="button-group">
+                    <button class="btn" onclick="setState('pastReflection', 'growth')" id="past-growth">📚 Growth</button>
+                    <button class="btn" onclick="setState('pastReflection', 'closure')" id="past-closure">✓ Closure</button>
+                </div>
+            </div>
+
+            <!-- Life Vector -->
+            <div class="form-section">
+                <div class="form-section-title">🎯 Life Vector</div>
+                <select class="form-input" id="life-vector" onchange="setState('lifeVector', this.value)">
+                    <option value="">Choose a focus...</option>
+                    <optgroup label="Core Fundamentals">
+                        <option value="relationship">💑 Relationship</option>
+                        <option value="career">💼 Career</option>
+                        <option value="family">👨‍👩‍👧‍👦 Family</option>
+                        <option value="finances">💰 Finances</option>
+                        <option value="health">❤️ Health</option>
+                        <option value="self-growth">🌱 Self-Growth</option>
+                    </optgroup>
+                    <optgroup label="Meaning & Purpose">
+                        <option value="spirituality">🙏 Spirituality</option>
+                        <option value="creative">🎨 Creative Expression</option>
+                        <option value="purpose">🎯 Purpose/Mission</option>
+                        <option value="social-impact">🤝 Social Impact</option>
+                        <option value="legacy">🏛️ Legacy</option>
+                    </optgroup>
+                    <optgroup label="Freedom & Autonomy">
+                        <option value="adventure">🚀 Adventure/Freedom</option>
+                        <option value="independence">🦅 Independence</option>
+                        <option value="power">⚡ Power/Influence</option>
+                    </optgroup>
+                    <optgroup label="Belonging & Safety">
+                        <option value="community">👥 Community</option>
+                        <option value="security">🔒 Security/Stability</option>
+                    </optgroup>
+                    <optgroup label="Experience & Recovery">
+                        <option value="pleasure">🎉 Pleasure/Joy</option>
+                        <option value="education">📖 Education/Learning</option>
+                        <option value="recovery">💪 Recovery/Healing</option>
+                        <option value="survival">🛡️ Survival/Crisis</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Emotional State -->
+            <div class="form-section">
+                <div class="form-section-title">💭 Emotional State</div>
+                <textarea class="form-input" id="emotional-state" placeholder="Describe your feeling (1-2 words)..." onchange="setState('emotionalState', this.value)"></textarea>
+            </div>
+
+            <!-- Metrics Sliders -->
+            <div class="form-section">
+                <div class="form-section-title">📊 System Metrics</div>
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <div class="slider-name">
+                            <div class="slider-icon">C</div>
+                            Complexity
+                        </div>
+                        <div class="slider-value" id="complexity-val">5</div>
+                    </div>
+                    <input type="range" min="0" max="10" value="5" id="complexity" onchange="updateSlider('complexity')">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <div class="slider-name">
+                            <div class="slider-icon">S</div>
+                            Stability
+                        </div>
+                        <div class="slider-value" id="stability-val">5</div>
+                    </div>
+                    <input type="range" min="0" max="10" value="5" id="stability" onchange="updateSlider('stability')">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <div class="slider-name">
+                            <div class="slider-icon">T</div>
+                            Tension
+                        </div>
+                        <div class="slider-value" id="tension-val">5</div>
+                    </div>
+                    <input type="range" min="0" max="10" value="5" id="tension" onchange="updateSlider('tension')">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <div class="slider-name">
+                            <div class="slider-icon">A</div>
+                            Adaptability
+                        </div>
+                        <div class="slider-value" id="adaptability-val">5</div>
+                    </div>
+                    <input type="range" min="0" max="10" value="5" id="adaptability" onchange="updateSlider('adaptability')">
+                </div>
+
+                <div class="slider-group">
+                    <div class="slider-label">
+                        <div class="slider-name">
+                            <div class="slider-icon">P</div>
+                            Pattern Recognition
+                        </div>
+                        <div class="slider-value" id="coherence-val">5</div>
+                    </div>
+                    <input type="range" min="0" max="10" value="5" id="coherence" onchange="updateSlider('coherence')">
+                </div>
+            </div>
+
+            <!-- Intention Buttons -->
+            <div class="form-section">
+                <div class="form-section-title">🔮 Reflection Focus</div>
+                <div class="intention-buttons">
+                    <button class="btn-intention" onclick="setIntention('depth')">🔬 Deep Dive</button>
+                    <button class="btn-intention" onclick="setIntention('clarity')">💡 Clarity Seeking</button>
+                    <button class="btn-intention" onclick="setIntention('action')">⚡ Action Planning</button>
+                    <button class="btn-intention" onclick="setIntention('integration')">🔄 Integration</button>
+                    <button class="btn-intention" onclick="setIntention('wisdom')">📚 Wisdom Seeking</button>
+                </div>
+            </div>
+
+            <!-- Analyze Button -->
+            <button class="btn-analyze" onclick="runAnalysis()">
+                <i class="fas fa-sparkles"></i> Run Antikythera Protocol
+            </button>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="app-header">
+                <div class="header-content">
+                    <div class="header-title">Consciousness Assessment</div>
+                    <div class="header-subtitle">Real-time consciousness mapping based on system dynamics</div>
+                </div>
+                <div class="stage-badge">
+                    <div class="stage-number" id="stage-number">—</div>
+                    <div class="stage-label">Current Stage</div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Left Panel: Deep Reflection & Tactical Guidance -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">🔬</div>
+                        <div class="panel-title">Deep Reflection</div>
+                    </div>
+                    <div class="panel-content" id="reflection-content">
+                        <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                            Configure your parameters and click <strong>Run Antikythera Protocol</strong> to receive personalized reflection...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Oracle + Chart -->
+                <div class="panel">
+                    <div class="tab-container">
+                        <button class="tab-button active" id="tab-oracle-btn" onclick="switchTab('oracle')">
+                            <span>🔮</span> Oracle Guidance
+                        </button>
+                        <button class="tab-button" id="tab-metrics-btn" onclick="switchTab('metrics')">
+                            <span>📈</span> Metrics Map
+                        </button>
+                        <button class="tab-button" id="tab-chat-btn" onclick="switchTab('chat')">
+                            <span>💬</span> Deep Chat
+                        </button>
+                    </div>
+
+                    <!-- Oracle Tab -->
+                    <div id="oracle-tab" class="tab-content" style="display: block;">
+                        <div class="panel-content" id="oracle-content">
+                            <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                                Your personalized Oracle reading will appear here with tactical guidance...
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Tab -->
+                    <div id="metrics-tab" class="tab-content" style="display: none;">
+                        <div class="panel-content">
+                            <div id="metrics-display">
+                                <div style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                                    Run analysis to view metrics map...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Tab -->
+                    <div id="chat-tab" class="tab-content" style="display: none;">
+                        <deep-chat
+                            id="deepchat"
+                            request="{
+                                'url': '/api/chat',
+                                'method': 'POST'
+                            }"
+                            style="height: 100%;"
+                        ></deep-chat>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== STATE & WISDOM =====
+        let currentState = {
+            futureOutlook: '',
+            pastReflection: '',
+            lifeVector: '',
+            emotionalState: '',
+            metrics: {
+                complexity: 5,
+                stability: 5,
+                tension: 5,
+                adaptability: 5,
+                coherence: 5
+            },
+            intention: '',
+            currentStage: null
+        };
+
+        const WISDOM_BASE = {
+            "stages": {
+                "0": {
+                    "name": "PLENARA (The Void)",
+                    "geometry": "Point",
+                    "pattern_analysis": "Zero tension. Zero motion. Pure coherence. The system is at rest in the canvas state.",
+                    "navigation_protocol": "Do nothing. Observe. Allow. Resist the urge to force emergence.",
+                    "oracle_guidance": "You are in the womb. Not yet time to act. This is completion disguised as emptiness.",
+                    "middle_path": "Between forcing action and complete inaction, rest is not inaction—it is receptive potential.",
+                    "as_above_so_below": "Your inner void mirrors outer possibility. As you are still, the world's patterns become visible.",
+                    "maat_balance": "Perfect equilibrium. No imbalance to correct. This is the ethical foundation."
+                },
+                "1": {
+                    "name": "RADIANCE (The Emergence)",
+                    "geometry": "Line",
+                    "pattern_analysis": "First impulse. Raw energy. No direction yet. Pure potential becoming aware of itself.",
+                    "navigation_protocol": "Feel the energy. Let it move. Do not judge the direction. Direction comes later.",
+                    "oracle_guidance": "Something wants to be born through you. Let the impulse flow without controlling it.",
+                    "middle_path": "Between suppression and explosion, channel—don't dam, don't flood.",
+                    "as_above_so_below": "Your internal activation mirrors external opportunity. Activation is contagious.",
+                    "maat_balance": "Imbalance detected: All activation, no containment. Find the outlet."
+                },
+                "2": {
+                    "name": "DUALITY (The Division)",
+                    "geometry": "Line (inverted)",
+                    "pattern_analysis": "Two poles. Self and other. Subject and object. The eternal dance begins.",
+                    "navigation_protocol": "Observe the polarity. Do not choose yet. See both sides completely. Then choose consciously.",
+                    "oracle_guidance": "You are learning to see. The splitting apart is not destruction—it's clarity.",
+                    "middle_path": "Between polarized thinking and fusion-thinking, synthesize. Find the third option.",
+                    "as_above_so_below": "Internal conflict mirrors external conflict. Fix one, the other shifts.",
+                    "maat_balance": "Test: Are you seeing ONLY two options? Add a third perspective."
+                },
+                "3": {
+                    "name": "EXPRESSION (The Outburst)",
+                    "geometry": "Triangle",
+                    "pattern_analysis": "Raw creative power. Expression without filter. Maximum tension, maximum authenticity.",
+                    "navigation_protocol": "Create fearlessly. Make bad art. Let your voice find itself through making, not planning.",
+                    "oracle_guidance": "You are a volcano. Your expression is sacred. Do not apologize for your heat.",
+                    "middle_path": "Between self-censoring and reckless expression, find disciplined authenticity.",
+                    "as_above_so_below": "Your internal creative fire IS your external impact. People feel your authenticity.",
+                    "maat_balance": "Authentic expression that harms isn't balance. Find: Authenticity that builds."
+                },
+                "4": {
+                    "name": "FOUNDATION (The Rest)",
+                    "geometry": "Square",
+                    "pattern_analysis": "Structure, stability, rhythm. The wild has been integrated into sustainable form.",
+                    "navigation_protocol": "Build. Plant roots. Make systems that last. Create from stability, not chaos.",
+                    "oracle_guidance": "You have found your rhythm. This is the healthiest long-term stage. Enjoy it.",
+                    "middle_path": "Between rigid structure and chaotic flow, maintain dynamic stability. Rules that breathe.",
+                    "as_above_so_below": "Your internal order creates external order. Clean your inner space, your outer space follows.",
+                    "maat_balance": "Perfect balance achievable here. Stability + flexibility both present."
+                },
+                "5": {
+                    "name": "THRESHOLD (The Pressure)",
+                    "geometry": "Pentagon",
+                    "pattern_analysis": "Stable container (4) holding unstable content. Digits flipped. Volatile peak. Shortest stage.",
+                    "navigation_protocol": "Feel the pressure fully. Ask: Am I ready? If no—strengthen. If yes—cross. If unsure—pause.",
+                    "oracle_guidance": "You are at the point of no return. The foundation is cracking under new pressure. This is the moment of choice.",
+                    "middle_path": "Between staying comfortable and reckless leap, build capacity first. Hold both old life AND new vision.",
+                    "as_above_so_below": "Internal pressure (desire for change) meets external pressure (circumstances). They're the same pressure.",
+                    "maat_balance": "CRITICAL: Are you abandoning foundation for ego? Staying stuck for comfort? The threshold tests your integrity."
+                },
+                "6": {
+                    "name": "INTEGRATION (The Harvest)",
+                    "geometry": "Hexagon",
+                    "pattern_analysis": "Flow state, peak harmony. Everything is clicking. Maximum creative output.",
+                    "navigation_protocol": "Serve from overflow. Create your best work now. Do not cling. Prepare for the coming shift.",
+                    "oracle_guidance": "You are in the hexagon—flow state, peak harmony. Everything is clicking. This is real, but it is seasonal.",
+                    "middle_path": "Between addictively pursuing flow and lazily enjoying comfort, create deliberately.",
+                    "as_above_so_below": "Your integrated internal state creates integrated external results. Integration within = integration without.",
+                    "maat_balance": "Are you using flow for growth or pleasure? Both valid. Name which one you're doing."
+                },
+                "7": {
+                    "name": "ILLUSION (The Analysis)",
+                    "geometry": "Heptagon",
+                    "pattern_analysis": "Deep understanding. The patterns are finally visible. But isolation accompanies insight.",
+                    "navigation_protocol": "Write, teach, map patterns. Connect with others who see. Avoid mental loops. Distill wisdom.",
+                    "oracle_guidance": "You understand deeply now, but the understanding feels isolated. This is the lab phase.",
+                    "middle_path": "Between isolation (pure analysis) and dilution (losing nuance), find the teaching voice.",
+                    "as_above_so_below": "Your internal knowledge meets your isolation. Teaching bridges them.",
+                    "maat_balance": "Using understanding for wisdom or superiority? Middle path: Understand deeply AND stay humble."
+                },
+                "8": {
+                    "name": "RIGIDITY (The Crystallization)",
+                    "geometry": "Octagon",
+                    "pattern_analysis": "Attempt to freeze understanding into permanent form. The system tries to make itself eternal.",
+                    "navigation_protocol": "Hold your wisdom lightly. Point to the truth—never say 'I am the truth.' Release attachment to being right.",
+                    "oracle_guidance": "You feel complete. This is the most dangerous moment. The system wants to harvest your energy here.",
+                    "middle_path": "Between holding truth and letting truth evolve, maintain intellectual humility.",
+                    "as_above_so_below": "Your internal completeness (I know the answers) creates external rigidity. Loosen inside; outside loosens.",
+                    "maat_balance": "CRITICAL: Are you DEFENDING your position or UPDATING it? Defending = trap. Updating = evolution."
+                },
+                "9": {
+                    "name": "RENEWAL (The Transcendence)",
+                    "geometry": "Enneagon",
+                    "pattern_analysis": "Return to stillness, but now carrying the wisdom of the journey. The circle completes.",
+                    "navigation_protocol": "Share without needing to be seen. Dissolve gracefully. Serve without claiming.",
+                    "oracle_guidance": "You have stopped spinning. You see the whole pattern. You are not the motion—you are the stillness.",
+                    "middle_path": "Between legacy (leaving your mark) and release (letting go), serve what comes next.",
+                    "as_above_so_below": "Your internal surrender creates external grace. Surrender within = surrender without.",
+                    "maat_balance": "Perfect balance: Earned wisdom. Hold it lightly. Share freely. Equilibrium at highest level."
+                }
+            }
+        };
+
+        // ===== UI FUNCTIONS =====
+        function setState(key, value) {
+            currentState[key] = value;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            // Future outlook
+            document.getElementById('future-opt').classList.toggle('active', currentState.futureOutlook === 'optimistic');
+            document.getElementById('future-unc').classList.toggle('active', currentState.futureOutlook === 'uncertain');
+
+            // Past reflection
+            document.getElementById('past-growth').classList.toggle('active', currentState.pastReflection === 'growth');
+            document.getElementById('past-closure').classList.toggle('active', currentState.pastReflection === 'closure');
+        }
+
+        function updateSlider(name) {
+            const value = document.getElementById(name).value;
+            currentState.metrics[name] = parseInt(value);
+            document.getElementById(name + '-val').textContent = value;
+        }
+
+        function setIntention(intention) {
+            currentState.intention = intention;
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('oracle-tab').style.display = 'none';
+            document.getElementById('metrics-tab').style.display = 'none';
+            document.getElementById('chat-tab').style.display = 'none';
+
+            // Deactivate all buttons
+            document.getElementById('tab-oracle-btn').classList.remove('active');
+            document.getElementById('tab-metrics-btn').classList.remove('active');
+            document.getElementById('tab-chat-btn').classList.remove('active');
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            document.getElementById('tab-' + tabName + '-btn').classList.add('active');
+        }
+
+        function calculateStage() {
+            const avg = (currentState.metrics.complexity + currentState.metrics.stability + 
+                         currentState.metrics.tension + currentState.metrics.adaptability + 
+                         currentState.metrics.coherence) / 5;
+
+            if (avg < 1.5) return 0;
+            if (avg < 2.5) return 1;
+            if (avg < 3.5) return 2;
+            if (avg < 4.5) return 3;
+            if (avg < 5.5) return 4;
+            if (avg < 6.5) return 5;
+            if (avg < 7.5) return 6;
+            if (avg < 8.5) return 7;
+            if (avg < 9.5) return 8;
+            return 9;
+        }
+
+        function runAnalysis() {
+            const stage = calculateStage();
+            currentState.currentStage = stage;
+
+            const stageData = WISDOM_BASE.stages[stage];
+            
+            // Update header
+            document.getElementById('stage-number').textContent = stage;
+
+            // Reflection content
+            const reflectionHTML = `
+                <div class="insight-block">
+                    <div class="insight-title">📍 Stage: ${stageData.name}</div>
+                    <div class="insight-text">${stageData.pattern_analysis}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">🗺️ Navigation Protocol</div>
+                    <div class="insight-text">${stageData.navigation_protocol}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">⚖️ Middle Path Wisdom</div>
+                    <div class="insight-text">${stageData.middle_path}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">🔄 Internal ↔ External Dynamics</div>
+                    <div class="insight-text">${stageData.as_above_so_below}</div>
+                </div>
+            `;
+            document.getElementById('reflection-content').innerHTML = reflectionHTML;
+
+            // Oracle content
+            const oracleHTML = `
+                <div class="insight-block">
+                    <div class="insight-title">🔮 Oracle Reading</div>
+                    <div class="insight-text">${stageData.oracle_guidance}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">⚖️ Balance Test (Ma'at)</div>
+                    <div class="insight-text">${stageData.maat_balance}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">🎯 Current Focus</div>
+                    <div class="insight-text">
+                        ${currentState.lifeVector ? `<strong>Life Vector:</strong> ${currentState.lifeVector}<br>` : ''}
+                        ${currentState.emotionalState ? `<strong>Emotional State:</strong> ${currentState.emotionalState}<br>` : ''}
+                        ${currentState.intention ? `<strong>Reflection Focus:</strong> ${currentState.intention}` : ''}
+                    </div>
+                </div>
+            `;
+            document.getElementById('oracle-content').innerHTML = oracleHTML;
+
+            // Metrics display
+            const metricsHTML = `
+                <div class="metric-row">
+                    <div class="metric-label">Complexity</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.complexity * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.complexity}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Stability</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.stability * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.stability}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Tension</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.tension * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.tension}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Adaptability</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.adaptability * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.adaptability}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Pattern Recognition</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.coherence * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.coherence}</div>
+                </div>
+            `;
+            document.getElementById('metrics-display').innerHTML = metricsHTML;
+
+            // Switch to Oracle tab
+            switchTab('oracle');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateButtonStates();
+        });
+    </script>
+</body>
+</html>

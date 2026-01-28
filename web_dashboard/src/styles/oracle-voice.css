@@ -1,0 +1,200 @@
+/* LUMINARK ORACLE VOICE INTERFACE - Waveform Animation */
+
+@keyframes wave {
+    0% {
+        transform: scaleY(0.3);
+    }
+
+    50% {
+        transform: scaleY(1);
+    }
+
+    100% {
+        transform: scaleY(0.3);
+    }
+}
+
+.waveform {
+    display: flex;
+    gap: 4px;
+    height: 32px;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.bar {
+    width: 6px;
+    background: linear-gradient(180deg, #60a5fa 0%, #3b82f6 100%);
+    border-radius: 2px;
+    animation: wave 1s infinite;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+.delay-0 {
+    animation-delay: 0s;
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}
+
+/* Oracle Voice Controls */
+.oracle-controls {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+.oracle-controls label {
+    display: block;
+    margin: 10px 0;
+    color: #e0e0e0;
+    font-size: 14px;
+}
+
+.oracle-controls select,
+.oracle-controls input[type="range"] {
+    width: 100%;
+    margin-top: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: white;
+    padding: 8px;
+}
+
+.oracle-controls input[type="range"] {
+    -webkit-appearance: none;
+    height: 6px;
+    background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+    border-radius: 3px;
+}
+
+.oracle-controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #60a5fa;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+}
+
+.oracle-button {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin: 5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.oracle-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+.oracle-button.stop {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.oracle-button.listen {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.transcript-display {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 6px;
+    color: #10b981;
+    font-family: monospace;
+}
+
+.status-text {
+    font-style: italic;
+    color: #60a5fa;
+    font-size: 13px;
+    margin: 10px 0;
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Ambient Sound Toggle */
+.ambient-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.ambient-toggle input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Stage-specific voice indicators */
+.voice-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 10px;
+    animation: blink 1.5s infinite;
+}
+
+.voice-indicator.speaking {
+    background: #10b981;
+}
+
+.voice-indicator.idle {
+    background: #6b7280;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}

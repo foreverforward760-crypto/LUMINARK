@@ -1,0 +1,67 @@
+The Antikythera Engine requires a bio-rhythmic baseline before recursive calculation.
+
+Temporal Sentiment
+Future Focus
+Past Focus
+Describe your feeling (1-2 words):
+e.g. Hopeful, Uncertain, Releasing...
+Dominant Life Vectors
+[?] Info
+What focus is currently most dominant in your life?
+
+TIER 1: CORE FUNDAMENTALS
+Relationship
+Career
+Family
+Finances
+Health
+Self-Growth
+
+TIER 2: MEANING & PURPOSE
+Spirituality
+Creative Expression
+Purpose/Mission
+Social Impact
+Legacy
+
+TIER 3: FREEDOM & AUTONOMY
+Adventure/Freedom
+Independence
+Power/Influence
+
+TIER 4: BELONGING & SAFETY
+Community
+Security/Stability
+
+TIER 5: EXPERIENCE & RECOVERY
+Pleasure/Joy
+Education/Learning
+Recovery/Healing
+Survival/Crisis
+
+1. SYSTEM COMPLEXITY
+5.0
+[?] Info
+How complex is your current situation?
+
+2. FOUNDATIONAL STABILITY
+5.0
+[?] Info
+How stable do you feel right now?
+
+3. INTERNAL TENSION
+5.0
+[?] Info
+How much internal tension/conflict do you feel?
+
+4. FLUID ADAPTABILITY
+5.0
+[?] Info
+How adaptable are you to change?
+
+5. PATTERN COHERENCE
+5.0
+[?] Info
+How clear is your sense of purpose/direction?
+
+Initiate Recursive Analysis →

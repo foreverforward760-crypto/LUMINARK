@@ -1,0 +1,276 @@
+/* LUMINARK ENTROPY CONTROL STYLES */
+
+.entropy-control-container {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+}
+
+/* Entropy Slider Section */
+.entropy-slider-section {
+    margin-bottom: 30px;
+}
+
+.entropy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.entropy-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #e0e0e0;
+}
+
+.entropy-value {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 10px currentColor;
+}
+
+.entropy-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.entropy-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.8);
+    transition: all 0.2s ease;
+}
+
+.entropy-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(96, 165, 250, 1);
+}
+
+.entropy-description {
+    text-align: center;
+    font-size: 14px;
+    color: #60a5fa;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.entropy-info {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 3px solid #3b82f6;
+    border-radius: 4px;
+}
+
+.info-text {
+    margin: 0;
+    font-size: 13px;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+/* Fractal Address Section */
+.fractal-address-section {
+    margin-bottom: 30px;
+}
+
+.fractal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.fractal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #e0e0e0;
+}
+
+.recalculate-btn {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.recalculate-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+}
+
+.recalculate-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.fractal-address-display {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin: 15px 0;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.fractal-address-display code {
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    color: #60a5fa;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(96, 165, 250, 0.8);
+}
+
+/* Fractal Legend */
+.fractal-legend {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(59, 130, 246, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.fractal-legend h4 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+}
+
+.legend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+.legend-label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.legend-value {
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #60a5fa;
+    font-weight: 700;
+}
+
+/* Quantum Noise Visualization */
+.noise-visualization {
+    position: relative;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+.noise-particles {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #60a5fa;
+    border-radius: 50%;
+    bottom: 0;
+    animation: float-particle linear infinite;
+    box-shadow: 0 0 8px rgba(96, 165, 250, 0.8);
+}
+
+@keyframes float-particle {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-60px) translateX(calc(var(--random-x, 0) * 20px));
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .entropy-control-container {
+        padding: 16px;
+    }
+
+    .entropy-header,
+    .fractal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .fractal-address-display code {
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .legend-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pulsing effect for recalculation */
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+    }
+}
+
+.fractal-address-display.recalculating {
+    animation: pulse-glow 1s infinite;
+}
