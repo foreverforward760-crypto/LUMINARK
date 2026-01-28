@@ -758,7 +758,7 @@ def run_demo():
 # ============================================================================
 
 # ============================================================================
-# LUMINARK DASHBOARD (Hybrid: Quantum Visuals + Earth Logic)
+# LUMINARK DASHBOARD (QUANTUM-PROFESSIONAL RESTORATION)
 # ============================================================================
 
 def render_header():
@@ -767,7 +767,7 @@ def render_header():
         <style>
         /* SCROLLBAR & GENERAL */
         ::-webkit-scrollbar {width: 10px; background: #0e1117;}
-        ::-webkit-scrollbar-thumb {background: #4ade80; border-radius: 5px;}
+        ::-webkit-scrollbar-thumb {background: #00ff9d; border-radius: 5px;}
         
         /* ANIMATED QUANTUM CORE (THE SHAPE) */
         @keyframes rotate {
@@ -775,9 +775,9 @@ def render_header():
             100% { transform: rotate(360deg); }
         }
         @keyframes pulse {
-            0% { box-shadow: 0 0 10px #4ade80, 0 0 20px #4ade80; }
-            50% { box-shadow: 0 0 20px #4ade80, 0 0 40px #4ade80; }
-            100% { box-shadow: 0 0 10px #4ade80, 0 0 20px #4ade80; }
+            0% { box-shadow: 0 0 10px #00ff9d, 0 0 20px #00ff9d; }
+            50% { box-shadow: 0 0 20px #00ff9d, 0 0 40px #00ff9d; }
+            100% { box-shadow: 0 0 10px #00ff9d, 0 0 20px #00ff9d; }
         }
         
         .quantum-container {
@@ -786,14 +786,14 @@ def render_header():
             align-items: center;
             padding: 2rem 0;
             background: radial-gradient(circle at center, #1a1e24 0%, #0e1117 70%);
-            border-bottom: 1px solid #4ade80;
+            border-bottom: 1px solid #00ff9d;
             margin-bottom: 2rem;
         }
         
         .core-shape {
             width: 100px;
             height: 100px;
-            border: 2px solid #4ade80;
+            border: 2px solid #00ff9d;
             border-radius: 50%;
             position: relative;
             animation: pulse 3s infinite ease-in-out;
@@ -805,7 +805,7 @@ def render_header():
         .core-inner {
             width: 60px;
             height: 60px;
-            border: 2px solid #4ade80;
+            border: 2px solid #00ff9d;
             transform: rotate(45deg);
             animation: rotate 10s infinite linear;
             position: absolute;
@@ -814,9 +814,9 @@ def render_header():
         .core-center {
             width: 20px;
             height: 20px;
-            background-color: #4ade80;
+            background-color: #00ff9d;
             border-radius: 50%;
-            box-shadow: 0 0 15px #4ade80;
+            box-shadow: 0 0 15px #00ff9d;
         }
         
         /* TITLE TYPOGRAPHY */
@@ -828,7 +828,7 @@ def render_header():
             font-size: 2.5rem;
             color: white;
             margin-top: 1rem;
-            text-shadow: 0 0 10px #4ade80;
+            text-shadow: 0 0 10px #00ff9d;
         }
         
         /* SCANLINE EFFECT */
@@ -853,13 +853,13 @@ def render_header():
                         <div class="core-center"></div>
                     </div>
                 </div>
-                <div class="app-title">LUMINARK <span style="color:#4ade80; font-weight:bold;">REFLECTIONS</span></div>
+                <div class="app-title">LUMINARK <span style="color:#00ff9d; font-weight:bold;">Ω-CLASS</span></div>
             </div>
         </div>
     """, unsafe_allow_html=True)
 
 def run_dashboard():
-    st.set_page_config(layout="wide", page_title="LUMINARK Reflections", page_icon="🌿")
+    st.set_page_config(layout="wide", page_title="LUMINARK Ω-Class", page_icon="🌌")
     render_header()
     
     # Init Session State
@@ -871,136 +871,138 @@ def run_dashboard():
         
     trainer = st.session_state.trainer
 
-    # --- SIDEBAR: SETTINGS & GRAPH ---
+    # --- SIDEBAR: ANTIKYTHERA ENGINE (CONTROLS) ---
     with st.sidebar:
-        st.title("⚙️ Weekly Check-In")
-        st.caption("Track your growth over time")
-        
-        # Growth Graph
-        if st.session_state.journal_history:
-            st.markdown("### 📈 Your Movement")
-            stages = [entry['stage'] for entry in st.session_state.journal_history]
-            dates = [f"Entry {i+1}" for i in range(len(stages))]
-            
-            fig, ax = plt.subplots(figsize=(4, 2))
-            ax.plot(dates, stages, marker='o', linestyle='-', color='#4ade80')
-            ax.set_yticks(range(10))
-            ax.set_ylabel("Stage (0-9)")
-            ax.grid(True, alpha=0.3)
-            ax.set_facecolor('#0e1117')
-            fig.patch.set_facecolor('#0e1117')
-            ax.tick_params(colors='white')
-            ax.spines['bottom'].set_color('white')
-            ax.spines['left'].set_color('white')
-            st.pyplot(fig)
-        else:
-            st.info("Complete your first assessment to see your growth graph.")
-
+        st.title("⚙️ Antikythera Engine")
+        st.caption("Bio-Rhythmic State Configuration")
         st.markdown("---")
-        st.info("💡 **Tip:** Use the 'Deep Agent' tab to get AI-powered insights on your current state.")
-
-    # --- MAIN LAYOUT ---
-    col_input, col_output = st.columns([1, 1])
-
-    with col_input:
-        st.subheader("1. Your Current State")
         
-        # MULTI-SELECT DOMAINS
-        st.markdown("**Which areas of life are in focus?** (Select multiple)")
-        focus_areas = st.multiselect(
-            "Life Domains",
+        # 1. Life Vectors (UPDATED: Multi-Select + Earth Terms)
+        st.subheader("1. Life Domains")
+        st.caption("Select your current focus areas:")
+        domains = st.multiselect(
+            "Select Domains",
             [
                 "Fundamentals (Health, Money, Home)",
-                "Connection (Relationships, Family)",
-                "Purpose (Career, Mission)",
+                "Connection (Family, Love, Friends)",
+                "Purpose (Career, Mission, Legacy)",
                 "Freedom (Adventure, Autonomy)",
-                "Inner World (Spirituality, Growth)"
+                "Inner World (Spirit, Mind, Growth)"
             ],
+            default=["Fundamentals (Health, Money, Home)"],
             label_visibility="collapsed"
         )
-        
+
         st.markdown("---")
         
-        # SLIDERS (Renamed)
-        st.markdown("**How does it feel right now?**")
+        # 2. System Metrics (Sliders - Earth Terms)
+        st.subheader("2. System Metrics")
         complex_score = st.slider("Mental Load / Complexity", 0.0, 10.0, 5.0)
         stability_score = st.slider("Feeling Grounded / Stable", 0.0, 10.0, 5.0)
         tension_score = st.slider("Internal Pressure / Tension", 0.0, 10.0, 5.0)
-        adapt_score = st.slider("Openness to Change / Flow", 0.0, 10.0, 5.0)
-        coherence_score = st.slider("Clarity / Alignment", 0.0, 10.0, 5.0)
+        adapt_score = st.slider("Openness / Adaptability", 0.0, 10.0, 5.0)
+        coherence_score = st.slider("Clarity / Coherence", 0.0, 10.0, 5.0)
         
-        # Calculate Stage
-        c_stage, c_name, c_inv = calculate_sap_stage(complex_score, stability_score)
-        
+        # Radar Chart
         st.markdown("---")
-        st.markdown("**Deep Reflection**")
-        st.caption("Describe your feelings about the past or future in detail.")
-        user_reflection = st.text_area("Your thoughts...", height=150)
-
-    with col_output:
-        st.subheader("2. System Analysis")
+        st.caption("Current State Topology")
+        angles = np.linspace(0, 2*np.pi, 5, endpoint=False).tolist()
+        stats = [complex_score, stability_score, tension_score, adapt_score, coherence_score]
+        stats += stats[:1]
+        angles += angles[:1]
         
-        # TABS: INSIGHTS | DEEP AGENT | JOURNAL
-        tab1, tab2, tab3, tab4 = st.tabs(["💠 PHASE REVEAL", "💬 DEEP AGENT", "📖 JOURNAL", "ℹ️ STAGE INDEX"])
+        fig, ax = plt.subplots(figsize=(4, 4), subplot_kw=dict(polar=True))
+        ax.fill(angles, stats, color='#00ff9d', alpha=0.3)
+        ax.plot(angles, stats, color='#00ff9d', linewidth=2)
+        ax.set_yticklabels([])
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(['Cpx', 'Stb', 'Ten', 'Adp', 'Coh'], fontsize=8)
+        ax.grid(True, color='#333333', alpha=0.5)
+        ax.set_facecolor('none')
+        fig.patch.set_alpha(0.0)
+        ax.tick_params(colors='white')
+        ax.spines['polar'].set_visible(False)
+        st.pyplot(fig)
+
+    # --- MAIN STAGE ---
+    st.title("🌌 LUMINARK Ω-Class")
+    st.markdown("### Recursive Intelligence Interface")
+    
+    # Calculate Logic
+    c_stage, c_name, c_inv = calculate_sap_stage(complex_score, stability_score)
+    
+    # --- DEEP REFLECTION ---
+    st.markdown("#### 1. Define Intention & Reflection")
+    col_int, col_ref = st.columns([1, 2])
+    
+    with col_int:
+         intention = st.select_slider(
+            "Temporal Focus",
+            options=["Processing the Past", "Present Clarity", "Future Vision"],
+            value="Present Clarity"
+        )
+    
+    with col_ref:
+        user_reflection = st.text_area(
+            "Deep Journal Entry", 
+            height=150,
+            placeholder="Describe your feelings in detail. What does it mean to be at this stage?",
+            label_visibility="collapsed"
+        )
         
-        with tab1:
-            st.markdown(f"### You are in: **Stage {c_stage} - {c_name}**")
-            st.info(f"*{c_inv}*")
-            
-            st.markdown("""
-            **What this means:**
-            This stage represents a specific configuration of your bio-rhythmic energy.
-            You are currently balancing your need for stability with your need for growth.
-            """)
-            
-            if st.button("🔮 SAVE TO JOURNAL"):
-                entry = {
-                    "stage": c_stage,
-                    "name": c_name,
-                    "focus": focus_areas,
-                    "note": user_reflection
-                }
-                st.session_state.journal_history.append(entry)
-                st.success("Entry saved to your history graph!")
+    if st.button("INITIATE DEEP AGENT ANALYSIS"):
+        with st.spinner("Deep Agent analyzing patterns..."):
+             prompt = (
+                f"USER REFLECTION: {user_reflection}\n"
+                f"DOMAINS: {domains}\n"
+                f"STAGE: {c_stage} ({c_name})\n"
+                f"Provide deep, tactical guidance."
+             )
+             insight = trainer.generate(prompt, max_new=300)
+             
+             # Save to History
+             entry = {"stage": c_stage, "focus": domains, "note": user_reflection, "insight": insight}
+             st.session_state.journal_history.append(entry)
+             st.success("Analysis Complete & Saved to Journal.")
+             
+             st.markdown("### 💠 Deep Agent Insight")
+             st.info(f"**Detected Phase:** Stage {c_stage} ({c_name})\n\n*{c_inv}*")
+             st.write(insight)
 
-        with tab2:
-            st.markdown("### 🤖 Deep Agent Analysis")
-            st.caption("Ask the system to analyze your specific situation.")
+    # --- TABS (Journal, Graph, Info) ---
+    st.markdown("---")
+    tab1, tab2, tab3 = st.tabs(["📖 JOURNAL HISTORY", "📈 GROWTH GRAPH", "ℹ️ STAGE GUIDE"])
+    
+    with tab1:
+        if st.session_state.journal_history:
+             for i, entry in enumerate(reversed(st.session_state.journal_history)):
+                 with st.expander(f"Entry {len(st.session_state.journal_history)-i} (Stage {entry['stage']})"):
+                     st.write(f"**Focus:** {entry['focus']}")
+                     st.write(f"**Note:** {entry['note']}")
+                     st.markdown(f"**Insight:** *{entry.get('insight','')}*")
+        else:
+             st.caption("No entries yet.")
+             
+    with tab2:
+        if st.session_state.journal_history:
+            stages = [e['stage'] for e in st.session_state.journal_history]
+            fig2, ax2 = plt.subplots(figsize=(10, 3))
+            ax2.plot(stages, marker='o', color='#00ff9d')
+            ax2.set_title("Stage Progression")
+            st.pyplot(fig2)
+        else:
+            st.caption("Chart will appear after first entry.")
             
-            if st.button("RUN DEEP ANALYSIS"):
-                with st.spinner("Deep Agent is processing your reflection..."):
-                    prompt = (
-                        f"USER REFLECTION: {user_reflection}\n"
-                        f"FOCUS AREAS: {focus_areas}\n"
-                        f"DETECTED STAGE: {c_stage} ({c_name})\n"
-                        f"METRICS: C:{complex_score} S:{stability_score}\n"
-                        f"Provide deep, human-centric guidance for the user:"
-                    )
-                    # Generate
-                    insight = trainer.generate(prompt, max_new=300)
-                    st.write(insight)
-                    
-        with tab3:
-            st.markdown("### 📖 Recent Entries")
-            if st.session_state.journal_history:
-                for i, entry in enumerate(reversed(st.session_state.journal_history)):
-                    st.markdown(f"**Entry {len(st.session_state.journal_history)-i}** | Stage {entry['stage']}")
-                    st.caption(f"Focus: {entry['focus']}")
-                    st.write(entry['note'])
-                    st.markdown("---")
-            else:
-                st.caption("No entries yet.")
-
-        with tab4:
-            st.markdown("### 🗺️ Stage Description Index")
-            st.markdown("""
-            **Stage 1: Navigation** - High energy, low structure. Seeking direction.
-            **Stage 2: Foundation** - Building stability and security. Grounding.
-            **Stage 3: Expression** - Breaking free, creative outburst, testing limits.
-            **Stage 4: Stability** - Peak order, routine, and solid structures.
-            **Stage 5: Threshold** - The pivot point. Crisis or major decision.
-            **Stage 6: Integration** - Flow state. Merging intuition with structure.
-            **Stage 7: Analysis** - Deep understanding, stepping back to see patterns.
-            **Stage 8: Mastery** - Completeness, but risk of rigidity.
-            **Stage 9: Release** - Letting go, teaching others, moving to the next level.
-            """)
+    with tab3:
+        st.markdown("""
+        ### 🗺️ Stage Description Index
+        **Stage 1: Navigation** - High energy, low structure.
+        **Stage 2: Foundation** - Building stability/roots.
+        **Stage 3: Expression** - Breaking free, testing limits.
+        **Stage 4: Stability** - Peak order/routine.
+        **Stage 5: Threshold** - The pivot/crisis point.
+        **Stage 6: Integration** - Flow state.
+        **Stage 7: Analysis** - Deep understanding/isolation.
+        **Stage 8: Mastery** - Completeness (risk of rigidity).
+        **Stage 9: Release** - Letting go, transcendence.
+        """)
