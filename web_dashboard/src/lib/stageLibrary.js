@@ -5,10 +5,10 @@
 
 export const stageLibrary = {
     0: {
-        name: "Plenara",
-        title: "The Void Before Form",
-        oracleGuidance: "You stand at the threshold of potential. All possibilities exist here, yet none have taken shape. This is not emptiness—it is the fullness before creation. Listen to the silence. What wants to emerge?",
-        shortGuidance: "Pure potential. Listen for what wants to emerge.",
+        name: "The Void",
+        title: "Stillness Before Action",
+        oracleGuidance: "You are in a period of deep rest and potential. It might feel like nothing is happening, but this silence is necessary. Don't force action yet. Just listen. What is life asking of you?",
+        shortGuidance: "Rest. Listen. Don't force it.",
         voiceProfile: {
             pitch: 1.0,
             rate: 0.8,
@@ -18,20 +18,20 @@ export const stageLibrary = {
         interventions: [
             "Meditation: 20 minutes daily in silence",
             "Free writing: Let thoughts flow without judgment",
-            "Nature immersion: Observe without naming"
+            "Nature walks: Just observe"
         ],
         warnings: [
-            "Paralysis by infinite choice",
-            "Fear of commitment to any path",
-            "Spiritual bypassing of action"
+            "Overthinking the silence",
+            "Fear of laziness",
+            "Rushing to 'fix' the stillness"
         ]
     },
 
     1: {
-        name: "Pulse",
-        title: "First Movement",
-        oracleGuidance: "The void trembles. Something stirs. You feel the pull toward action, but direction remains unclear. This is the pulse of creation—chaotic, energetic, searching. Move. Experiment. The path reveals itself through motion, not contemplation.",
-        shortGuidance: "Move. Experiment. Direction emerges through action.",
+        name: "Emergence",
+        title: "The First Spark",
+        oracleGuidance: "You feel something shifting. An idea, an impulse, a desire to move. It's messy and unformed, but it's alive. Follow the energy. Try things out. Don't worry about the perfect plan.",
+        shortGuidance: "Follow the spark. Try new things.",
         voiceProfile: {
             pitch: 1.1,
             rate: 1.0,
@@ -39,22 +39,22 @@ export const stageLibrary = {
             ambientSound: "heartbeat_rhythm"
         },
         interventions: [
-            "Daily journaling: 15 minutes (Pennebaker method)",
-            "Weekly experiments: Try 3 new approaches",
-            "Energy tracking: Notice what gives you aliveness"
+            "Journaling: What excites you today?",
+            "Small Experiments: Try 3 new things",
+            "Follow the energy"
         ],
         warnings: [
-            "Burnout from scattered energy",
-            "Analysis paralysis (too much thinking)",
-            "Giving up before signal emerges"
+            "Burnout from doing too much",
+            "Thinking too much, not doing enough",
+            "Giving up too soon"
         ]
     },
 
     2: {
-        name: "Polarity",
-        title: "The Great Divide",
-        oracleGuidance: "The world splits. You see clearly now: this versus that, self versus other, yes versus no. Boundaries crystallize. This clarity is power—use it. Define yourself by what you are NOT. The split is necessary. Do not fear it.",
-        shortGuidance: "Define yourself. Draw boundaries. The split is necessary.",
+        name: "Duality",
+        title: "Defining Choices",
+        oracleGuidance: "Things are becoming clear. You see what you want, and definitely what you DON'T want. Boundaries are important now. It's okay to say no. Define who you are by stepping away from what isn't you.",
+        shortGuidance: "Set boundaries. Say no. Define yourself.",
         voiceProfile: {
             pitch: 1.0,
             rate: 1.1,
@@ -62,22 +62,22 @@ export const stageLibrary = {
             ambientSound: "crystal_tones"
         },
         interventions: [
-            "Values clarification: List your non-negotiables",
-            "Boundary practice: Say 'no' to misalignments",
-            "Identity work: 'I am this, not that'"
+            "List your non-negotiables",
+            "Practice saying 'No'",
+            "Clarify your values"
         ],
         warnings: [
-            "Rigid thinking (black/white only)",
-            "Demonizing the 'other'",
-            "Losing nuance and complexity"
+            "Being too rigid or black-and-white",
+            "Blaming others",
+            "Ignoring nuance"
         ]
     },
 
     3: {
-        name: "Expression",
-        title: "The Breakthrough",
-        oracleGuidance: "You are the lightning bolt. Pure expression flows through you. This is your moment of power, creativity, impact. The world bends to your vision. Ride this wave—but know it will not last forever. Enjoy the peak, but do not mistake it for permanence.",
-        shortGuidance: "Ride the wave. Express fully. But prepare for what comes next.",
+        name: "Breakthrough",
+        title: "Creative Flow",
+        oracleGuidance: "You are on fire. Ideas and energy are flowing through you. This is a time of high impact and creativity. Ride the wave! But remember, this high intensity won't last forever, so build something real with it.",
+        shortGuidance: "create freely. Ride the wave.",
         voiceProfile: {
             pitch: 1.2,
             rate: 1.2,
@@ -85,22 +85,22 @@ export const stageLibrary = {
             ambientSound: "thunder_storm"
         },
         interventions: [
-            "Creative flow: 2-hour deep work blocks",
-            "Document the process: You'll want to remember this",
-            "Build foundation: 20% of time on Stage 4 prep"
+            "Deep Work blocks (2 hours)",
+            "Document your ideas",
+            "Prepare for stability"
         ],
         warnings: [
-            "Confusing peak state with permanent identity",
-            "Skipping foundation-building (80% do this)",
-            "Burnout from unsustainable intensity"
+            "Thinking this high will last forever",
+            "Forgetting to build a foundation",
+            "Burnout"
         ]
     },
 
     4: {
         name: "Foundation",
-        title: "The Sustainable Structure",
-        oracleGuidance: "You have built something that lasts. Stability, coherence, alignment—these are your gifts now. The chaos has settled. The structure holds. This is rare. Most never reach this. Maintain it with discipline, but stay alert: comfort breeds rigidity.",
-        shortGuidance: "Maintain balance. Avoid complacency. This is rare—protect it.",
+        title: "Building Stability",
+        oracleGuidance: "The storm has passed and you are building something detailed and lasting. Routine, structure, and order are your friends now. This brings peace and stability. Protect this new normal.",
+        shortGuidance: "Build roots. Create routine. Stabilize.",
         voiceProfile: {
             pitch: 0.95,
             rate: 0.9,
@@ -108,22 +108,22 @@ export const stageLibrary = {
             ambientSound: "forest_ambience"
         },
         interventions: [
-            "Quarterly life audit (Covey's 7 Habits)",
-            "Deliberate discomfort: Weekly challenges",
-            "Container check: Can structure hold complexity?"
+            "Life Audit: What's working?",
+            "Challenge yourself weekly",
+            "Check your systems"
         ],
         warnings: [
-            "Boredom (sign of readiness for Stage 5)",
-            "Excessive comfort (adaptability dropping)",
-            "Ignoring small cracks (container strain)"
+            "Getting bored (a sign of change coming)",
+            "Getting too comfortable",
+            "Ignoring small cracks"
         ]
     },
 
     5: {
-        name: "Threshold",
-        title: "The Impossible Choice",
-        oracleGuidance: "Two paths diverge. Both are valid. Both are terrifying. You cannot have both. This is the threshold—the moment that defines the next chapter. Your adaptability will determine the outcome. Choose wisely, but choose. Paralysis leads to Stage 7.",
-        shortGuidance: "Choose. Decide within 30 days. Paralysis leads to crisis.",
+        name: "The Pivot",
+        title: "The Crossroads",
+        oracleGuidance: "You are at a fork in the road. You can't stay where you are, but the future is uncertain. You have to make a choice. It's scary, but necessary. Trust your ability to adapt.",
+        shortGuidance: "Make a choice. Don't freeze.",
         voiceProfile: {
             pitch: 1.0,
             rate: 0.85,
@@ -131,22 +131,22 @@ export const stageLibrary = {
             ambientSound: "wind_chimes"
         },
         interventions: [
-            "Threshold decision protocol (see documentation)",
-            "Mentor consultation: 3-5 conversations",
-            "Adaptability assessment: Can you handle change?"
+            "Decision making framework",
+            "Talk to a mentor",
+            "Test your adaptability"
         ],
         warnings: [
-            "Decision paralysis >6 months = forced Stage 7",
-            "Denial of the threshold (refusing to see it)",
-            "Premature decision (avoiding discomfort)"
+            "Waiting too long to decide",
+            "Pretending nothing is changing",
+            "Rushing to escape discomfort"
         ]
     },
 
     6: {
-        name: "Integration",
-        title: "The Harmonious Peak",
-        oracleGuidance: "Everything works. Multiple systems dance in harmony. You have integrated the contradictions. This is mastery—but it is temporary. Stage 6 lasts 2-5 years at most. Enjoy it. Learn from it. But do not claim it as permanent. That path leads to Stage 8.",
-        shortGuidance: "Enjoy mastery. But know it's temporary. Don't claim permanence.",
+        name: "Flow",
+        title: "Harmony",
+        oracleGuidance: "Everything is clicking. Work, life, self—it's all in sync. You've found the sweet spot. Enjoy this flow state. It's the reward for your hard work. Stay humble and keep growing.",
+        shortGuidance: "Enjoy the rhythm. Everything is working.",
         voiceProfile: {
             pitch: 1.05,
             rate: 1.0,
@@ -154,22 +154,22 @@ export const stageLibrary = {
             ambientSound: "singing_bowls"
         },
         interventions: [
-            "Gratitude practice: Acknowledge the gift",
-            "Humility check: Monthly permanence audit",
-            "Prepare for transition: Stage 6 doesn't last"
+            "Gratitude practice",
+            "Stay humble",
+            "Prepare for the next cycle"
         ],
         warnings: [
-            "Confusing Stage 6 with Stage 8 (fatal error)",
-            "Claiming permanent mastery",
-            "Stopping growth (adaptability must stay high)"
+            "Thinking you have 'arrived' forever",
+            "Arrogance",
+            "Stop learning"
         ]
     },
 
     7: {
-        name: "Analysis",
-        title: "The Purification Crisis",
-        oracleGuidance: "Everything falls apart. The structure collapses. The identity dissolves. This is not punishment—it is purification. What was false burns away. What remains is true. You will survive this. On the other side: transformation or death. Choose transformation.",
-        shortGuidance: "Survive. Seek help. This is purification, not punishment.",
+        name: "The Deep Clean",
+        title: "Analysing Patterns",
+        oracleGuidance: "Things are falling apart to come back together better. It feels heavy, perhaps confusing. This isn't a failure; it's a deep cleaning. What isn't true is being washed away. Let it go. You will come out stronger.",
+        shortGuidance: "Let go. trust the process. Seek understanding.",
         voiceProfile: {
             pitch: 0.9,
             rate: 0.75,
@@ -177,24 +177,22 @@ export const stageLibrary = {
             ambientSound: "rain_storm"
         },
         interventions: [
-            "ACT therapy: 12-16 weeks with professional",
-            "Meaning reconstruction: Narrative therapy",
-            "Somatic practices: Trauma-informed yoga (3x/week)",
-            "EMERGENCY: 988 Suicide & Crisis Lifeline"
+            "Therapy or coaching",
+            "Journaling connection",
+            "Gentle movement (Yoga/Walking)"
         ],
         warnings: [
-            "Suicidal ideation (CALL 988 IMMEDIATELY)",
-            "Substance abuse escalation",
-            "Complete isolation",
-            "Denial of crisis severity"
+            "Isolating yourself",
+            "Numbing the feelings",
+            "Thinking it's the end"
         ]
     },
 
     8: {
-        name: "Unity Peak",
-        title: "The Permanence Trap",
-        oracleGuidance: "You believe you have arrived. The struggle is over. You are untouchable, permanent, special. This is the trap. Adaptability drops. Hubris rises. Critics are dismissed. Rules don't apply to you. You have 3-10 years before collapse. Wake up. Now.",
-        shortGuidance: "DANGER. You're not special. Adaptability is dropping. Course correct NOW.",
+        name: "The Trap",
+        title: "False Summit",
+        oracleGuidance: "You feel like you've won. You feel untouchable. Be careful. This is the 'Mastery Trap'. If you stop listening to feedback, you will fall. Stay curious. Stay beginner.",
+        shortGuidance: "Warning: Stay humble. Watch out for ego.",
         voiceProfile: {
             pitch: 0.8,
             rate: 0.9,
@@ -202,24 +200,22 @@ export const stageLibrary = {
             ambientSound: "deep_drone"
         },
         interventions: [
-            "Permanence trap audit: Monthly (see protocol)",
-            "Beginner's mind practice: Daily meditation",
-            "Seek critics: Fire yes-men, hire truth-tellers",
-            "Humility work: Volunteer, serve others"
+            "Reality check",
+            " Beginner's Mind practice",
+            "Volunteer / Service"
         ],
         warnings: [
-            "Believing you're 'different' or 'special'",
-            "Surrounding yourself with yes-men",
-            "Ignoring warning signs",
-            "Claiming permanent advantage (3-10 years to collapse)"
+            "Thinking you are special",
+            "Ignoring advice",
+            "Believing you are permanent"
         ]
     },
 
     9: {
-        name: "Release",
-        title: "The Transparent Return",
-        oracleGuidance: "You have completed the cycle. Ego dissolves. Attachment releases. You serve without needing credit. You teach without needing students. You exist without needing validation. This is wisdom. This is grace. This is rare. Share it freely.",
-        shortGuidance: "Serve. Release. Share wisdom freely. You are complete.",
+        name: "Resolution",
+        title: "Letting Go",
+        oracleGuidance: "You have come full circle. You don't need to prove anything anymore. It's time to share what you know and move on. Let go of the outcome. Your work here is done.",
+        shortGuidance: "Share wisdom. Release. Move on.",
         voiceProfile: {
             pitch: 1.1,
             rate: 0.85,
@@ -227,16 +223,14 @@ export const stageLibrary = {
             ambientSound: "temple_bells"
         },
         interventions: [
-            "Mentoring: Pass wisdom to next generation",
-            "Service: Give without expectation",
-            "Preparation: Graceful exit planning",
-            "Letting go: Release attachment to outcomes"
+            "Mentoring others",
+            "Giving back",
+            "Graceful exit"
         ],
         warnings: [
-            "Stage 9 is rare (most go 8→7→0)",
-            "Requires sustained adaptability >9.0",
-            "Cannot be forced or faked",
-            "Ego can masquerade as transcendence"
+            "Faking wisdom",
+            "Refusing to let go",
+            "Ego disguise"
         ]
     }
 };
