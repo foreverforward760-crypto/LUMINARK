@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip install:*)",
+      "Bash(powershell -c \"irm https://astral.sh/uv/install.ps1 | iex\")",
+      "Bash(powershell:*)",
+      "Bash(C:UsersForev.localbinuv.exe --version)"
+    ]
+  }
+}
