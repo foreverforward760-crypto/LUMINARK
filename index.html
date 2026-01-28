@@ -1,1815 +1,1054 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINARK V6.2 | THE ANTIKYTHERA ENGINE</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <title>LUMINARK Antikythera Protocol v5 - Advanced Assessment</title>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
     <style>
-        :root {
-            --bg: #030305;
-            --primary: #00d2ff;
-            --accent: #3a7bd5;
-            --emerald: #00e676;
-            --amber: #ffb300;
-            --danger: #ff5252;
-            --violet: #8e24aa;
-            --glass: rgba(15, 15, 25, 0.75);
-            --border: rgba(255, 255, 255, 0.08);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #1a1f3a;
+            --secondary: #2d3561;
+            --accent: #00d4ff;
+            --accent-warm: #ff6b35;
+            --success: #00ff88;
+            --text: #e8eef7;
+            --text-muted: #a8b5d1;
+            --border: #3d4575;
+            --shadow: rgba(0, 212, 255, 0.15);
+        }
+
         body {
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(142, 36, 170, 0.05) 0%, transparent 40%);
-            color: #fff;
-            font-family: 'Inter', -apple-system, sans-serif;
-            min-height: 100vh;
+            font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .container {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 300px;
+            background: rgba(13, 17, 42, 0.8);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
             padding: 20px;
-        }
-
-        .app-window {
-            width: 100%;
-            max-width: 680px;
-            background: var(--glass);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 45px;
-            box-shadow: 0 60px 120px -30px rgba(0, 0, 0, 0.8);
-            position: relative;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(to right, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            font-size: 0.7rem;
-            font-family: 'JetBrains Mono';
-            opacity: 0.3;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 5px;
-        }
-
-        /* Sliders */
-        .vector-field {
-            margin-bottom: 30px;
-        }
-
-        .label-box {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.5px;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .num-val {
-            color: var(--primary);
-            font-family: 'JetBrains Mono';
+        .sidebar-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-section-title {
+            font-size: 0.85rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+            opacity: 0.9;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
         }
 
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
+        /* Temporal Sentiment Controls */
+        .temporal-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .temporal-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .btn-temporal {
+            flex: 1;
+            min-width: 60px;
+            padding: 8px 10px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-temporal:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-temporal.active {
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--shadow);
+        }
+
+        /* Life Vectors Dropdown */
+        .vector-select {
             width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
+            padding: 10px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vector-select:hover,
+        .vector-select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--shadow);
             outline: none;
         }
 
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid #000;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-            transition: 0.2s;
+        /* Emotional State Input */
+        .emotional-input {
+            width: 100%;
+            padding: 10px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+            transition: all 0.3s ease;
         }
 
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 35px var(--primary);
+        .emotional-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px var(--shadow);
+            outline: none;
+        }
+
+        /* System Metrics Sliders */
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .slider-label {
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .slider-label-name {
+            flex: 1;
+        }
+
+        .slider-label-value {
+            color: var(--accent);
+            font-weight: 700;
+            min-width: 30px;
+            text-align: right;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 8px var(--shadow);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 8px var(--shadow);
+        }
+
+        /* Intention Buttons */
+        .intention-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-intention {
+            padding: 10px;
+            background: linear-gradient(135deg, var(--accent), #0099cc);
+            border: none;
+            color: #000;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-intention:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow);
+            background: linear-gradient(135deg, #00ff88, var(--accent));
         }
 
         .btn-analyze {
             width: 100%;
-            padding: 22px;
-            border-radius: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent-warm), var(--accent));
             border: none;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            background: #fff;
             color: #000;
-            margin-top: 15px;
-            transition: 0.3s;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
         }
 
         .btn-analyze:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px var(--shadow);
         }
 
-        /* Section Navigation */
-        .section {
-            display: none;
+        /* ===== DEEPCHAT STYLING ===== */
+        deep-chat {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            --border-radius: 8px;
+            --primary-color: var(--accent);
+            --primary-color-hover: var(--accent-warm);
+            --secondary-color: var(--secondary);
+            --text-color: var(--text);
+            --text-color-muted: var(--text-muted);
+            --message-user-background-color: var(--accent);
+            --message-user-text-color: #000;
+            --message-assistant-background-color: var(--secondary);
+            --message-assistant-text-color: var(--text);
+            --chat-input-background-color: var(--secondary);
+            --chat-input-border-color: var(--border);
+            --chat-input-text-color: var(--text);
+            --send-button-background-color: var(--accent);
+            --send-button-text-color: #000;
+            background: transparent;
+        }
         }
 
-        .section.active {
-            display: block;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        .btn-analyze:active {
+            transform: translateY(-1px);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Results Display */
-        .card-main {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        .stage-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -3px;
-            line-height: 1;
-            margin: 15px 0;
-        }
-
-        .stage-name-top {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .shape-display {
-            font-size: 3rem;
-            opacity: 0.2;
-            margin-bottom: 5px;
-        }
-
-        .analysis-box {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 30px;
-            border-radius: 24px;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        .section-header {
-            font-weight: 800;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: var(--primary);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .body-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: #ccc;
-            margin-bottom: 25px;
-        }
-
-        .tradition-tag {
-            background: rgba(142, 36, 170, 0.15);
-            border-left: 5px solid var(--violet);
+        .stage-display {
             padding: 20px;
-            border-radius: 0 15px 15px 0;
-            margin-top: 10px;
-            position: relative;
-        }
-
-        .tradition-name {
-            font-weight: 800;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: var(--violet);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .example-desc {
-            font-size: 1.05rem;
-            line-height: 1.5;
-            color: #fff;
-            font-weight: 500;
-            font-style: italic;
-        }
-
-        /* Diagnostics */
-        .diag-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .diag-pill {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 18px;
-            border-radius: 18px;
-            border: 1px solid var(--border);
-            text-align: left;
-        }
-
-        .d-label {
-            font-size: 0.6rem;
-            opacity: 0.4;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        .d-val {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .nervous-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            margin-top: 4px;
-        }
-
-        .badge-safe {
-            background: rgba(0, 230, 118, 0.15);
-            color: var(--emerald);
-        }
-
-        .badge-warn {
-            background: rgba(255, 179, 0, 0.15);
-            color: var(--amber);
-        }
-
-        .badge-danger {
-            background: rgba(255, 82, 82, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-
-        /* Octopus Visualization */
-        .viz-container {
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 30px;
-            position: relative;
-        }
-
-        #octopus-svg {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 12px var(--primary));
-        }
-
-        /* Email Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 40px;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            margin-bottom: 20px;
-            font-family: inherit;
-        }
-
-        .cta-footer {
-            text-align: center;
-            border-top: 1px solid var(--border);
-            padding-top: 40px;
-            margin-top: 20px;
-        }
-
-        .p-price {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--emerald);
-            margin-bottom: 8px;
-        }
-
-        .p-sub {
-            font-size: 0.85rem;
-            opacity: 0.5;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            max-width: 80%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Personalized VOX Styles */
-        .vox-group {
-            margin-bottom: 30px;
+            background: rgba(255, 107, 53, 0.05);
             border-bottom: 1px solid var(--border);
-            padding-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .vox-label {
-            display: block;
-            margin-bottom: 12px;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono';
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .stage-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
 
-        .vox-text-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
+        .stage-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+            min-width: 80px;
+        }
+
+        .stage-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stage-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stage-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            max-width: 300px;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            background: var(--secondary);
             border: 1px solid var(--border);
-            color: #fff;
-            padding: 18px;
-            border-radius: 12px;
-            font-family: inherit;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .vox-text-input:focus {
-            border-color: var(--primary);
-            background: rgba(0, 210, 255, 0.05);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
-        }
-
-        .vox-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-        }
-
-        .vox-option {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
+            color: var(--text);
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.75rem;
+            transition: all 0.3s ease;
             font-weight: 600;
-            transition: 0.3s;
-            color: rgba(255, 255, 255, 0.5);
         }
 
-        .vox-option:hover {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
-        }
-
-        .vox-option.selected {
-            background: var(--primary);
+        .share-button:hover {
+            background: var(--accent);
             color: #000;
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+            border-color: var(--accent);
         }
 
-        /* PROFESSIONAL UPGRADES */
-        .processing-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Deep Analysis & Oracle Output */
+        .output-section {
+            flex: 1;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .output-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(45, 53, 97, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .panel-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .panel-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .panel-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* Radar Chart Container */
+        .radar-container {
+            width: 100%;
+            max-height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 14, 39, 0.5);
+            border-radius: 8px;
+        }
+
+        svg {
             width: 100%;
             height: 100%;
-            background: rgba(3, 3, 5, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            border-radius: 40px;
+            max-width: 400px;
+            max-height: 400px;
         }
 
-        .loader-ring {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 210, 255, 0.1);
-            border-top: 4px solid var(--primary);
+        /* Loading State */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--accent);
+        }
+
+        .spinner {
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--accent);
             border-radius: 50%;
+            width: 20px;
+            height: 20px;
             animation: spin 1s linear infinite;
-            margin-bottom: 20px;
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
 
-        .proc-text {
-            font-family: 'JetBrains Mono';
-            font-size: 0.8rem;
-            color: var(--primary);
-            letter-spacing: 2px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                opacity: 0.5;
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .output-section {
+                flex-direction: column;
             }
 
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.5;
+            .output-panel {
+                min-height: 300px;
             }
         }
 
-        .share-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-top: 20px;
-            font-weight: 600;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .share-btn:hover {
-            border-color: var(--primary);
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        /* CRT/Noise Effect for "Premium" Feel */
-        .scanline {
-            width: 100%;
-            height: 100px;
-            z-index: 999;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0) 100%);
-            opacity: 0.1;
-            position: absolute;
-            bottom: 100%;
-            pointer-events: none;
-            animation: scanline 10s linear infinite;
-        }
-
-        @keyframes scanline {
-            0% {
-                bottom: 100%;
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
             }
 
-            100% {
-                bottom: -100%;
+            .sidebar {
+                width: 100%;
+                max-height: 40vh;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .main-content {
+                overflow-y: auto;
+            }
+
+            .stage-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .output-section {
+                padding: 12px;
+                gap: 12px;
             }
         }
 
-        /* VECTOR GRID STYLES */
-        .vector-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+        /* Loading Message Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .vector-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            color: rgba(255, 255, 255, 0.6);
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 0.85rem;
-            transition: all 0.2s ease;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .vector-btn:hover {
-            border-color: var(--primary);
-            background: rgba(0, 210, 255, 0.1);
-            color: #fff;
-        }
-
-        .vector-btn.active {
-            background: var(--primary);
-            color: #000;
-            border-color: var(--primary);
+        /* Highlight Special Values */
+        .stage-metric {
+            color: var(--success);
             font-weight: 700;
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
         }
 
-        /* REFERENCE OVERLAY */
-        .ref-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 14, 0.98);
-            z-index: 2000;
-            overflow-y: auto;
-            display: none;
-            padding: 40px 20px;
-            animation: fadeIn 0.3s ease;
+        .warning-text {
+            color: var(--accent-warm);
         }
 
-        .ref-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .ref-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ref-close {
-            cursor: pointer;
-            opacity: 0.7;
-            font-size: 1rem;
-        }
-
-        .ref-close:hover {
-            opacity: 1;
-            text-decoration: underline;
-        }
-
-        .ref-item {
-            margin-bottom: 25px;
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
-            padding-left: 15px;
-        }
-
-        .ref-h {
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 5px;
-        }
-
-        .ref-p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.8rem;
-            line-height: 1.5;
-        }
-
-        .ref-tag {
-            display: inline-block;
-            background: rgba(0, 210, 255, 0.1);
-            color: var(--primary);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            margin-right: 8px;
-            margin-bottom: 4px;
-        }
-
-        .ref-tag.warn {
-            background: rgba(255, 82, 82, 0.1);
-            color: #ff5252;
-        }
-
-        /* HELP / INFO STYLES */
-        .help-text {
-            display: none;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 10px;
-            margin-bottom: 15px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-left: 2px solid var(--primary);
-            border-radius: 0 12px 12px 0;
-            line-height: 1.5;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .vox-label-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .info-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--primary);
-            font-size: 0.65rem;
-            padding: 4px 10px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: 'JetBrains Mono';
-            text-transform: uppercase;
-        }
-
-        .info-btn:hover {
-            border-color: var(--primary);
-            background: rgba(0, 210, 255, 0.1);
+        .insight-text {
+            color: var(--accent);
         }
     </style>
-
-
 </head>
-
 <body>
-
-    <div class="app-window">
-        <header>
-            <div class="scanline"></div>
-            <h1>Luminark <span style="font-weight: 300;">Antikythera</span></h1>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <div class="tagline">NSDT v1.2.0 | <span style="color:var(--primary);">PROFESSIONAL</span></div>
-                <div style="font-size: 0.7rem; color: rgba(255,255,255,0.5); cursor: pointer; border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px;"
-                    onclick="toggleRef()">SYSTEM INDEX ℹ</div>
+    <div class="container">
+        <!-- ===== SIDEBAR ===== -->
+        <div class="sidebar">
+            <div style="text-align: center; margin-bottom: 10px;">
+                <h1 style="font-size: 1.3rem; color: var(--accent); margin-bottom: 4px;">LUMINARK</h1>
+                <p style="font-size: 0.75rem; color: var(--text-muted);">Antikythera Protocol v5</p>
             </div>
-        </header>
 
-        <!-- SYSTEM REFERENCE OVERLAY -->
-        <div id="ref-screen" class="ref-overlay">
-            <div class="ref-container">
-                <div class="ref-title">
-                    <span>SYSTEM ARCHIVES</span>
-                    <span class="ref-close" onclick="toggleRef()">[CLOSE]</span>
-                </div>
+            <!-- Temporal Sentiment Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">⏰ Temporal Focus</div>
+                
+                <div class="temporal-controls">
+                    <div class="temporal-label">Future Outlook:</div>
+                    <div class="button-group">
+                        <button class="btn-temporal" onclick="setTemporal('future', 'Optimistic')">Optimistic</button>
+                        <button class="btn-temporal" onclick="setTemporal('future', 'Anxious')">Anxious</button>
+                        <button class="btn-temporal" onclick="setTemporal('future', 'Uncertain')">Uncertain</button>
+                    </div>
 
-                <div style="margin-bottom: 40px;">
-                    <h3 style="color:white; margin-bottom:20px;">The 5 Vectors</h3>
-                    <div class="ref-item">
-                        <div class="ref-h">COMPLEXITY (C)</div>
-                        <div class="ref-p">The density of information, relationships, and variables you are managing.
-                            High complexity requires high processing power.</div>
+                    <div class="temporal-label" style="margin-top: 8px;">Past Reflection:</div>
+                    <div class="button-group">
+                        <button class="btn-temporal" onclick="setTemporal('past', 'Grateful')">Grateful</button>
+                        <button class="btn-temporal" onclick="setTemporal('past', 'Regretful')">Regretful</button>
+                        <button class="btn-temporal" onclick="setTemporal('past', 'Neutral')">Neutral</button>
                     </div>
-                    <div class="ref-item">
-                        <div class="ref-h">STABILITY (S)</div>
-                        <div class="ref-p">The structural integrity and predictability of your environment. High
-                            stability provides safety but can lead to rigidity (The Trap).</div>
-                    </div>
-                    <div class="ref-item">
-                        <div class="ref-h">TENSION (T)</div>
-                        <div class="ref-p">The internal pressure or drive for change. Tension is not "bad"—it is
-                            potential energy (Voltage) required for transformation.</div>
-                    </div>
-                    <div class="ref-item">
-                        <div class="ref-h">ADAPTABILITY (A)</div>
-                        <div class="ref-p">Your capacity to reconfigure structure without collapsing. High adaptability
-                            ensures survival during chaos.</div>
-                    </div>
-                    <div class="ref-item">
-                        <div class="ref-h">COHERENCE (H)</div>
-                        <div class="ref-p">The alignment of internal parts. Do your actions match your values? High
-                            coherence reduces energy friction.</div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 style="color:white; margin-bottom:20px;">The 10 Archetypal Stages</h3>
-                    <div class="ref-item"><span class="ref-tag">0</span> <span class="ref-h">PLENARA (The Void)</span>
-                        <div class="ref-p">Pure potential before form. The pause before the breath.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag">1</span> <span class="ref-h">PULSE (Emergence)</span>
-                        <div class="ref-p">The first stirring of energy. Directionless but alive.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag">2</span> <span class="ref-h">DUALITY (The Split)</span>
-                        <div class="ref-p">Encountering the other. Me vs You. Good vs Bad. The birth of conflict and
-                            relationship.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag">3</span> <span class="ref-h">EXPRESSION (The
-                            Spark)</span>
-                        <div class="ref-p">Creative chaotic breakthrough. Messy, intense, vital. The artist's chaos.
-                        </div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag">4</span> <span class="ref-h">FOUNDATION (The
-                            Square)</span>
-                        <div class="ref-p">Building structure. Routine, discipline, safety. The healthy plateau.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag warn">5</span> <span class="ref-h">THRESHOLD (The
-                            Crisis)</span>
-                        <div class="ref-p">The point of no return. Stability fails, tension spikes. You must choose to
-                            evolve or regress.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag">6</span> <span class="ref-h">INTEGRATION (Flow)</span>
-                        <div class="ref-p">High performance. Everything works. Harmony between structure and flow.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag warn">7</span> <span class="ref-h">DISSOLUTION (The
-                            Alchemy)</span>
-                        <div class="ref-p">Deep purification. Stripping away the non-essential. Painful but necessary.
-                        </div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag warn">8</span> <span class="ref-h">UNITY PEAK (The
-                            Trap)</span>
-                        <div class="ref-p">Maximum achievement. The danger of claiming "I Have Arrived." Rigidity here
-                            equals death.</div>
-                    </div>
-                    <div class="ref-item"><span class="ref-tag">9</span> <span class="ref-h">RELEASE
-                            (Transparency)</span>
-                        <div class="ref-p">Wisdom without attachment. Leading by letting go. The return to the start.
-                        </div>
-                    </div>
-                </div>
-
-                <div style="margin-top:40px; text-align:center; opacity:0.5; font-size:0.7rem;">
-                    LUMINARK SYSTEM REFERENCE V1.2
                 </div>
             </div>
+
+            <!-- Life Vectors Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">🎯 Life Vector</div>
+                <select id="life-vector" class="vector-select">
+                    <option value="">Select your focus area...</option>
+                    <option value="Career & Purpose">Career & Purpose</option>
+                    <option value="Relationships & Love">Relationships & Love</option>
+                    <option value="Health & Vitality">Health & Vitality</option>
+                    <option value="Creativity & Expression">Creativity & Expression</option>
+                    <option value="Spiritual Growth">Spiritual Growth</option>
+                    <option value="Financial Freedom">Financial Freedom</option>
+                    <option value="Personal Transformation">Personal Transformation</option>
+                    <option value="Community & Belonging">Community & Belonging</option>
+                </select>
+            </div>
+
+            <!-- Emotional State Section -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">💭 Emotional State</div>
+                <textarea id="emotional-state" class="emotional-input" placeholder="Describe your current feeling and state..."></textarea>
+            </div>
+
+            <!-- System Metrics Sliders -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">📊 System Metrics</div>
+                <div class="slider-container">
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Complexity</span>
+                            <span class="slider-label-value" id="val-complexity">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-complexity" 
+                               oninput="updateSlider('complexity', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Stability</span>
+                            <span class="slider-label-value" id="val-stability">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-stability" 
+                               oninput="updateSlider('stability', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Tension</span>
+                            <span class="slider-label-value" id="val-tension">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-tension" 
+                               oninput="updateSlider('tension', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Adaptability</span>
+                            <span class="slider-label-value" id="val-adaptability">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-adaptability" 
+                               oninput="updateSlider('adaptability', this.value)">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span class="slider-label-name">Coherence</span>
+                            <span class="slider-label-value" id="val-coherence">5</span>
+                        </div>
+                        <input type="range" min="0" max="10" value="5" class="slider" id="slider-coherence" 
+                               oninput="updateSlider('coherence', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intention Buttons -->
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">🔮 Intention</div>
+                <div class="intention-buttons">
+                    <button class="btn-intention" onclick="setIntention('Reflection')">Reflection</button>
+                    <button class="btn-intention" onclick="setIntention('Clarity')">Clarity</button>
+                    <button class="btn-intention" onclick="setIntention('Direction')">Direction</button>
+                    <button class="btn-intention" onclick="setIntention('Release')">Release</button>
+                    <button class="btn-intention" onclick="setIntention('Exploration')">Exploration</button>
+                </div>
+            </div>
+
+            <!-- Analyze Button -->
+            <button class="btn-analyze" onclick="runAnalysis()">
+                ⚡ RUN ANTIKYTHERA PROTOCOL
+            </button>
         </div>
 
-        <!-- PROCESSING OVERLAY -->
-        <div id="processing-screen" class="processing-overlay">
-            <div class="loader-ring"></div>
-            <div class="proc-text" id="proc-msg">INITIALIZING BIOMETRICS...</div>
-        </div>
-
-        <!-- INPUT -->
-        <div id="v-input" class="section active">
-            <div style="margin-bottom: 40px; text-align: center; opacity: 0.6; font-size: 0.85rem; line-height: 1.6;">
-                The Antikythera Engine requires a bio-rhythmic baseline before recursive calculation.
-            </div>
-
-            <div class="vox-group">
-                <span class="vox-label">Temporal Sentiment</span>
-
-                <!-- NEW TEMPORAL FOCUS SELECTOR -->
-                <div class="vox-options" style="margin-bottom: 12px; grid-template-columns: 1fr 1fr;">
-                    <div class="vox-option selected" id="btn-future" onclick="setTemporal(this, 'Future')">Future Focus
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="main-content">
+            <!-- Stage Display -->
+            <div class="stage-display">
+                <div class="stage-info">
+                    <div class="stage-number" id="stage-number">—</div>
+                    <div class="stage-details">
+                        <div class="stage-name" id="stage-name">Ready for Analysis</div>
+                        <div class="stage-description" id="stage-desc">Configure your parameters in the sidebar and click RUN ANTIKYTHERA PROTOCOL to begin</div>
                     </div>
-                    <div class="vox-option" id="btn-past" onclick="setTemporal(this, 'Past')">Past Focus</div>
                 </div>
-                <input type="hidden" id="temporal_focus" value="Future">
-
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">Describe your
-                    feeling (1-2 words):</div>
-                <input type="text" id="feeling" class="vox-text-input"
-                    placeholder="e.g. Hopeful, Uncertain, Releasing...">
+                <button class="share-button" onclick="shareReading()">Share Reading</button>
             </div>
 
-            <div class="vox-group">
-                <div class="vox-label-row">
-                    <span class="vox-label" style="margin-bottom:0;">Dominant Life Vectors</span>
-                    <button class="info-btn" onclick="toggleHelp('h-vector')">[?] Info</button>
-                </div>
-                <div id="h-vector" class="help-text">Choose the primary container where your energy is most focused.
-                    This determines the specific tactical protocols you'll receive.</div>
-
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 15px; font-weight: 500;">What focus is
-                    currently most dominant in your life?</div>
-
-                <!-- TIER 1: FUNDAMENTALS -->
-                <div
-                    style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px; font-family: 'JetBrains Mono';">
-                    TIER 1: CORE FUNDAMENTALS</div>
-                <div class="vox-options" style="margin-bottom: 20px;">
-                    <div class="vox-option" onclick="selectVector(this, 'Relationship')">Relationship</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Career')">Career</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Family')">Family</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Finances')">Finances</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Health')">Health</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Growth')">Self-Growth</div>
-                </div>
-
-                <!-- TIER 2: MEANING -->
-                <div
-                    style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px; font-family: 'JetBrains Mono';">
-                    TIER 2: MEANING & PURPOSE</div>
-                <div class="vox-options" style="margin-bottom: 20px;">
-                    <div class="vox-option" onclick="selectVector(this, 'Spirituality')">Spirituality</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Creative Expression')">Creative Expression
+            <!-- Output Section: Deep Reflection + Oracle + Radar -->
+            <div class="output-section">
+                <!-- Left: Deep Reflection -->
+                <div class="output-panel">
+                    <div class="panel-title">🔬 Deep Reflection</div>
+                    <div class="panel-content" id="deep-reflection">
+                        <p style="color: var(--text-muted);">Configure your parameters and run analysis to receive personalized reflection...</p>
                     </div>
-                    <div class="vox-option" onclick="selectVector(this, 'Purpose/Mission')">Purpose/Mission</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Social Impact')">Social Impact</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Legacy')">Legacy</div>
                 </div>
 
-                <!-- TIER 3: AUTONOMY -->
-                <div
-                    style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px; font-family: 'JetBrains Mono';">
-                    TIER 3: FREEDOM & AUTONOMY</div>
-                <div class="vox-options" style="margin-bottom: 20px;">
-                    <div class="vox-option" onclick="selectVector(this, 'Adventure/Freedom')">Adventure/Freedom</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Independence')">Independence</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Power/Influence')">Power/Influence</div>
+                <!-- Right: Oracle Output + Chat -->
+                <div class="output-panel">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                        <button id="tab-oracle" class="tab-button active" onclick="switchTab('oracle')" style="padding: 8px 15px; background: var(--secondary); border: 1px solid var(--border); color: var(--text); border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">🔮 Oracle</button>
+                        <button id="tab-chat" class="tab-button" onclick="switchTab('chat')" style="padding: 8px 15px; background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">💬 Deep Chat</button>
+                    </div>
+                    <div id="oracle-panel" style="display: block; height: calc(100% - 50px); overflow-y: auto;">
+                        <div class="panel-content" id="oracle-output">
+                            <p style="color: var(--text-muted);">Your personalized Oracle reading will appear here with tactical guidance...</p>
+                        </div>
+                    </div>
+                    <div id="chat-panel" style="display: none; height: calc(100% - 50px);">
+                        <deep-chat
+                            id="deepchat"
+                            request="{
+                                'url': '/api/chat',
+                                'method': 'POST',
+                                'headers': {'Content-Type': 'application/json'},
+                                'bodyFormat': 'json'
+                            }"
+                            style="height: 100%; border-radius: 8px;"
+                        ></deep-chat>
+                    </div>
                 </div>
 
-                <!-- TIER 4: BELONGING -->
-                <div
-                    style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px; font-family: 'JetBrains Mono';">
-                    TIER 4: BELONGING & SAFETY</div>
-                <div class="vox-options" style="margin-bottom: 20px;">
-                    <div class="vox-option" onclick="selectVector(this, 'Community')">Community</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Security/Stability')">Security/Stability</div>
+                <!-- Bottom: Radar Chart -->
+                <div class="output-panel" style="width: 100%; max-width: 350px;">
+                    <div class="panel-title">📈 Recursive Feedback Loop</div>
+                    <div class="radar-container">
+                        <svg id="radar-chart" viewBox="0 0 400 400">
+                            <!-- Background hexagon -->
+                            <polygon id="bg-hex" points="200,50 350,125 350,275 200,350 50,275 50,125" 
+                                     fill="none" stroke="rgba(0, 212, 255, 0.1)" stroke-width="1"/>
+                            <!-- Grid circles -->
+                            <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(0, 212, 255, 0.05)" stroke-width="1"/>
+                            <circle cx="200" cy="200" r="100" fill="none" stroke="rgba(0, 212, 255, 0.05)" stroke-width="1"/>
+                            <circle cx="200" cy="200" r="50" fill="none" stroke="rgba(0, 212, 255, 0.05)" stroke-width="1"/>
+                            <!-- Axis labels -->
+                            <text x="200" y="30" text-anchor="middle" fill="rgba(168, 181, 209, 0.6)" font-size="12">Complexity</text>
+                            <text x="340" y="145" fill="rgba(168, 181, 209, 0.6)" font-size="12">Stability</text>
+                            <text x="310" y="320" fill="rgba(168, 181, 209, 0.6)" font-size="12">Tension</text>
+                            <text x="90" y="320" fill="rgba(168, 181, 209, 0.6)" font-size="12">Adaptability</text>
+                            <text x="60" y="145" fill="rgba(168, 181, 209, 0.6)" font-size="12">Coherence</text>
+                            <!-- Data polygon -->
+                            <polygon id="data-polygon" points="200,200 200,200 200,200 200,200 200,200" 
+                                     fill="rgba(0, 212, 255, 0.2)" stroke="rgba(0, 212, 255, 0.8)" stroke-width="2"/>
+                            <!-- Data points -->
+                            <circle id="point-complexity" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-stability" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-tension" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-adaptability" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                            <circle id="point-coherence" cx="200" cy="200" r="4" fill="rgba(0, 255, 136, 0.8)"/>
+                        </svg>
+                    </div>
                 </div>
-
-                <!-- TIER 5: EXPERIENCE -->
-                <div
-                    style="font-size: 0.6rem; letter-spacing: 2px; opacity: 0.4; margin-bottom: 8px; font-family: 'JetBrains Mono';">
-                    TIER 5: EXPERIENCE & RECOVERY</div>
-                <div class="vox-options">
-                    <div class="vox-option" onclick="selectVector(this, 'Pleasure/Joy')">Pleasure/Joy</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Education/Learning')">Education/Learning</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Recovery/Healing')">Recovery/Healing</div>
-                    <div class="vox-option" onclick="selectVector(this, 'Survival/Crisis')">Survival/Crisis</div>
-                </div>
-                <input type="hidden" id="dominant_area" value="">
-            </div>
-
-            <div class="vector-field">
-                <div class="vox-label-row">
-                    <div class="label-box" style="margin-bottom: 0;"><span>1. SYSTEM COMPLEXITY</span><span
-                            class="num-val" id="n1">5.0</span></div>
-                    <button class="info-btn" onclick="toggleHelp('h-c')">[?] Info</button>
-                </div>
-                <div id="h-c" class="help-text">Measures the number of moving parts or variables in your current
-                    situation. High complexity means many interdependent factors; Low means a simple, focused challenge.
-                </div>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How complex is
-                    your current situation?</div>
-                <input type="range" id="c" min="0" max="10" step="0.5" value="5">
-            </div>
-
-            <div class="vector-field">
-                <div class="vox-label-row">
-                    <div class="label-box" style="margin-bottom: 0;"><span>2. FOUNDATIONAL STABILITY</span><span
-                            class="num-val" id="n2">5.0</span></div>
-                    <button class="info-btn" onclick="toggleHelp('h-s')">[?] Info</button>
-                </div>
-                <div id="h-s" class="help-text">Measures the structural integrity of your environment. High stability
-                    means reliable routines, income, and safety. Low stability means chaos or unpredictability.</div>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How stable do you
-                    feel right now?</div>
-                <input type="range" id="s" min="0" max="10" step="0.5" value="5">
-            </div>
-
-            <div class="vector-field">
-                <div class="vox-label-row">
-                    <div class="label-box" style="margin-bottom: 0;"><span>3. INTERNAL TENSION</span><span
-                            class="num-val" id="n3">5.0</span></div>
-                    <button class="info-btn" onclick="toggleHelp('h-t')">[?] Info</button>
-                </div>
-                <div id="h-t" class="help-text">Measures the internal pressure or drive for change. High tension is
-                    potential energy (voltage); Low tension is contentment or stagnation.</div>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How much internal
-                    tension/conflict do you feel?</div>
-                <input type="range" id="t" min="0" max="10" step="0.5" value="5">
-            </div>
-
-            <div class="vector-field">
-                <div class="vox-label-row">
-                    <div class="label-box" style="margin-bottom: 0;"><span>4. FLUID ADAPTABILITY</span><span
-                            class="num-val" id="n4">5.0</span></div>
-                    <button class="info-btn" onclick="toggleHelp('h-a')">[?] Info</button>
-                </div>
-                <div id="h-a" class="help-text">Measures your capacity to change without collapsing. High adaptability
-                    ensures survival during chaos; Low adaptability indicates rigidity or fragility.</div>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How adaptable are
-                    you to change?</div>
-                <input type="range" id="a" min="0" max="10" step="0.5" value="5">
-            </div>
-
-            <div class="vector-field">
-                <div class="vox-label-row">
-                    <div class="label-box" style="margin-bottom: 0;"><span>5. PATTERN COHERENCE</span><span
-                            class="num-val" id="n5">5.0</span></div>
-                    <button class="info-btn" onclick="toggleHelp('h-h')">[?] Info</button>
-                </div>
-                <div id="h-h" class="help-text">Measures the alignment of your internal parts. High coherence means
-                    actions match values (flow); Low coherence means internal friction or confusion.</div>
-                <div style="font-size: 0.85rem; opacity: 0.7; margin-bottom: 12px; font-weight: 500;">How clear is your
-                    sense of purpose/direction?</div>
-                <input type="range" id="h" min="0" max="10" step="0.5" value="5">
-            </div>
-
-            <button class="btn-analyze" onclick="startEngine()">Initiate Recursive Analysis →</button>
-        </div>
-
-        <!-- REPORT -->
-        <div id="v-report" class="section">
-
-            <div style="text-align: right; margin-bottom: 10px;">
-                <button class="info-btn" onclick="toggleRef()">[ VIEW SYSTEM INDEX ]</button>
-            </div>
-
-            <div class="viz-container">
-                <svg id="octopus-svg" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.5" />
-                    <polygon id="radar-poly" points="50,50 50,50 50,50 50,50 50,50" fill="rgba(0, 210, 255, 0.3)"
-                        stroke="var(--primary)" stroke-width="2.5" />
-                </svg>
-            </div>
-
-            <div class="card-main">
-                <div class="shape-display" id="r-shape">●</div>
-                <div class="stage-name-top" id="r-name">PLENARA</div>
-                <div class="stage-title" id="r-num">Stage 0</div>
-                <div style="font-family:'JetBrains Mono'; font-size:0.65rem; opacity:0.3; margin-top:5px;" id="r-addr">
-                    ADDR: 0.0.0</div>
-            </div>
-
-            <div class="analysis-box">
-                <div class="section-header">Stage Analysis</div>
-                <div class="body-text" id="r-desc">The substrate before structure.</div>
-
-                <div class="tradition-tag">
-                    <div class="tradition-name" id="r-tradition">Ancient Tradition</div>
-                    <div class="example-desc" id="r-story">"The story text goes here."</div>
-                </div>
-
-                <div class="section-header" style="margin-top:35px;">System Warning</div>
-                <div class="body-text" id="r-warn"
-                    style="font-style:italic; border-left:2px solid var(--danger); padding-left:15px; color: #efefef;">
-                    Warning Text.</div>
-
-                <div class="section-header" style="margin-top:25px;">ETHICAL VALIDATION</div>
-                <div class="body-text" id="r-maat"
-                    style="border-left:2px solid #00d2ff; padding-left:15px; color:rgba(255,255,255,0.8); font-size:0.85rem;">
-                    Checking alignment...</div>
-
-                <div class="section-header" style="margin-top:25px;">FALSE LIGHT DETECTION</div>
-                <div class="body-text" id="r-yunus"
-                    style="border-left:2px solid #ffb300; padding-left:15px; color:rgba(255,255,255,0.8); font-size:0.85rem;">
-                    Scanning for permanence traps...</div>
-
-                <div id="deep-sections">
-                    <div class="section-header" style="margin-top:35px;">Anchor Protocol</div>
-                    <div class="body-text" id="r-anchor" style="color: var(--emerald); font-weight: 600;">Loading
-                        anchor...</div>
-
-                    <div class="section-header" style="margin-top:25px;">Tactical Deployment</div>
-                    <div class="body-text" id="r-tactical">Preparing deployment steps...</div>
-                </div>
-            </div>
-
-            <div class="diag-row">
-                <div class="diag-pill">
-                    <div class="d-label">Nervous Response</div>
-                    <div id="r-ns" class="nervous-badge badge-safe">REGULATED</div>
-                </div>
-                <div class="diag-pill">
-                    <div class="d-label">Accuracy</div>
-                    <div class="d-val" id="r-acc">98.5%</div>
-                </div>
-                <div class="diag-pill">
-                    <div class="d-label">Physicality</div>
-                    <div class="d-val" id="r-phys">STABLE</div>
-                </div>
-                <div class="diag-pill">
-                    <div class="d-label">Consciousness</div>
-                    <div class="d-val" id="r-cons">UNSTABLE</div>
-                </div>
-            </div>
-
-            <div class="cta-footer">
-                <button onclick="location.reload()"
-                    style="background:var(--primary); color:#000; padding: 20px; width: 100%; border-radius: 20px; border:none; font-weight: 800; cursor:pointer; text-transform: uppercase;">Run
-                    New Assessment</button>
-                <div style="font-size: 0.7rem; opacity: 0.3; margin-top: 20px; font-family: 'JetBrains Mono';">LUMINARK
-                    ANTIKYTHERA | PRO V1.2.0</div>
-                <button class="share-btn" onclick="shareReport()">
-                    🔗 SHARE SECURE PROTOCOL
-                </button>
             </div>
         </div>
     </div>
 
     <script>
-        const SAP_MATRIX = {
-            0: {
-                name: "Plenara", shape: "●", phys: "BEYOND", cons: "UNIFIED",
-                desc: "The primordial substrate beyond all duality. You are in the void before form emerged. Pure potential, zero resistance.",
-                warn: "All emanation is temporary. Do not cling to the void for safety, nor the form for identity.",
-                anchor: "Zero-Point Calibration: Accept the stillness as your primary power source.",
-                tactical: "1. Cease all reaching. 2. Observe the emergence of the first thought. 3. Do not engage. Stay in the gap.",
-                pool: [
-                    { t: "Hebrew/Kabbalah", e: "Ein Sof (Infinite) - God before self-limitation (Tzimtzum)." },
-                    { t: "Buddhism", e: "Śūnyatā (Emptiness) - Not void as lack but pregnant potential." },
-                    { t: "Taoism", e: "Wu (無) - Primordial nothingness; the Tao that cannot be named." },
-                    { t: "Ancient Egypt", e: "Nun - Primordial waters of chaos before creation." },
-                    { t: "Gnosticism", e: "Pleroma - The Fullness that contains all potential realities." },
-                    { t: "Christian Mysticism", e: "Meister Eckhart's 'Desert of the Godhead' - Beyond concept." },
-                    { t: "Greek Philosophy", e: "Apeiron (Anaximander) - The boundless indefinite substrate." },
-                    { t: "Sufism", e: "Fana al-Fana - The annihilation of annihilation." },
-                    { t: "Shamanic", e: "The Great Mystery (Wakan Tanka) - Before the spirits took form." },
-                    { t: "Greek Mythology", e: "Chaos (Hesiod) - The primordial gap, not disorder." }
-                ],
-                weights: { c: 0, s: 0, t: 0, a: 0.1, h: 0 }
+        // ===== STATE MANAGEMENT =====
+        let currentState = {
+            futureOutlook: '',
+            pastReflection: '',
+            lifeVector: '',
+            emotionalState: '',
+            metrics: {
+                complexity: 5,
+                stability: 5,
+                tension: 5,
+                adaptability: 5,
+                coherence: 5
             },
-            1: {
-                name: "Pulse", shape: "·", phys: "UNSTABLE", cons: "STABLE",
-                desc: "The first spark of emergence. Initial stirring of energy without fixed form.",
-                warn: "Ground this vibration in a stable anchor or the spiritual charge will dissipate.",
-                anchor: "Intuitive Navigation: Trust the signal, but recognize the noise of the environment.",
-                tactical: "1. Follow the strongest inner impulse. 2. Verify the anchor. 3. Move before the mind rationalizes the light away.",
-                pool: [
-                    { t: "Hebrew", e: "'Let there be light' (Genesis 1:3) - The first divine vibration." },
-                    { t: "Hinduism", e: "AUM/OM - The primordial vibration waking the universe." },
-                    { t: "Taoism", e: "Qi (氣) - The vital energy and breath moving before structure exists." },
-                    { t: "Ancient Egypt", e: "Hu (Divine Utterance) - The first word-power of Ra." },
-                    { t: "Sufism", e: "'Kun!' (Be!) - The divine command that initiates time." },
-                    { t: "Christianity", e: "The Logos - 'In the beginning was the Word' (John 1:1)." },
-                    { t: "Norse", e: "The first sparks flying in Ginnungagap to start life." },
-                    { t: "Buddhism", e: "Bodhicitta - The first movement of the heart toward Awakening." },
-                    { t: "Hopi Tradition", e: "Spider Woman's first thread connecting the worlds." },
-                    { t: "Vedic Tradition", e: "Hiranyagarbha (Golden Embryo) - Cosmic egg beginning to vibrate." },
-                    { t: "Kabbalah", e: "Keter (Crown) descending toward Chokhmah (Wisdom)." },
-                    { t: "Indigenous", e: "Raven's first cry after the light was released." }
-                ],
-                weights: { c: 0.15, s: 0.1, t: 0.2, a: 0.3, h: 0.2 }
-            },
-            2: {
-                name: "Polarity", shape: "—", phys: "STABLE", cons: "UNSTABLE",
-                desc: "The birth of duality. Form is settling, but your spirit is now restless and questioning separation.",
-                warn: "Beware the 'Othering' trap where you blame external forces for your internal restlessness.",
-                anchor: "Synthesis Awareness: Look for the third point that unites the two opposites.",
-                tactical: "1. Map your current conflict. 2. Identify the hidden commonality. 3. Release the need for one side to 'win'.",
-                pool: [
-                    { t: "Zoroastrianism", e: "Ahura Mazda (Light) vs. Angra Mainyu (Darkness)." },
-                    { t: "Taoism", e: "Yin and Yang emerging from the Wuji." },
-                    { t: "Hebrew", e: "The Tree of Knowledge - The entry into 'Good' vs 'Evil' consciousness." },
-                    { t: "Gnosticism", e: "The Demiurge creating the separate material prison." },
-                    { t: "Ancient Egypt", e: "Ma'at (Order) vs. Isfet (Chaos) - The cosmic struggle." },
-                    { t: "Greek", e: "Heraclitus - 'War is father of all' (opposites generating reality)." },
-                    { t: "Christianity", e: "Adam and Eve - The first realization of shame and distinction." },
-                    { t: "Hinduism", e: "Atman appearing separate from Brahman via Maya." },
-                    { t: "Manichaeism", e: "Absolute dualism: The war between Spirit and Matter." },
-                    { t: "Kabbalah", e: "Chokhmah (Wisdom) and Binah (Understanding) pillars." },
-                    { t: "Norse", e: "Asgard (Gods) vs. Jotunheim (Giants)." },
-                    { t: "Confucianism", e: "Tian (Heaven) vs. Di (Earth) polarity." },
-                    { t: "Empedocles", e: "Love vs. Strife as the governing forces." },
-                    { t: "Vedic", e: "Deva (Gods) vs. Asura (Demons) conflict." },
-                    { t: "Shamanic", e: "The division between the Sacred and the Profane." }
-                ],
-                weights: { c: 0.3, s: 0.2, t: 0.6, a: 0.2, h: 0.3 }
-            },
-            3: {
-                name: "Expression", shape: "△", phys: "UNSTABLE", cons: "STABLE",
-                desc: "The breakthrough. Spirit is grounding into matter via powerful creative obsession.",
-                warn: "The Zinc Flash: Your output is exceeding your foundation. Build a sustainable hearth.",
-                anchor: "Sacred Embodiment: Ensure your physical health supports your creative output.",
-                tactical: "1. Prioritize rest cycles. 2. Channel the obsession into a single project. 3. Ground your energy in physical movement.",
-                pool: [
-                    { t: "Christianity", e: "The Incarnation - 'Word became flesh' (Spirit manifest)." },
-                    { t: "Greek", e: "Athena born from Zeus's head - Wisdom springing forth." },
-                    { t: "Hinduism", e: "Avatar descent - The divine taking a physical body to act." },
-                    { t: "Norse", e: "Odin Discovering the Runes - Truth earned through suffering." },
-                    { t: "Sufism", e: "Ana al-Haqq! - The ecstatic realization 'I am Truth!'" },
-                    { t: "Ancient Egypt", e: "Ptah speaking the world into existence - The creative word." },
-                    { t: "Buddhism", e: "The first sermon (Turning the Wheel of Dharma)." },
-                    { t: "Kabbalah", e: "Tiferet (Beauty) - The first harmonic manifestation." },
-                    { t: "Vedic Tradition", e: "Rishi receiving the Vedas as divine sounds." },
-                    { t: "Indigenous", e: "Totem pole raised to make the lineage visible." },
-                    { t: "Alchemy", e: "Aurogenesis - The hidden gold breaking through base metal." },
-                    { t: "Christian Mysticism", e: "Joan of Arc hearing the voices of her mission." },
-                    { t: "Shamanic", e: "The first successful healing proving new spirit power." },
-                    { t: "History", e: "The artist painting a masterpiece in a night of fever." },
-                    { t: "Myth", e: "Prometheus bringing fire as a stolen divine gift to man." }
-                ],
-                weights: { c: 0.4, s: 0.4, t: 0.3, a: 0.2, h: 0.3 }
-            },
-            4: {
-                name: "Foundation", shape: "□", phys: "STABLE", cons: "UNSTABLE",
-                desc: "The Heart of Equilibrium. Maximum stability. But spirit feels caged by the comfort.",
-                warn: "The Comfort Trap: Bedrock becomes a cage. Introduce tension or the universe will force it.",
-                anchor: "Equilibrium Maintenance: Balance the need for safety with the necessity of growth.",
-                tactical: "1. Identify one area of stagnant comfort. 2. Introduce a deliberate micro-tension. 3. Stay in the center of the structure.",
-                pool: [
-                    { t: "Hebrew", e: "Solomon's Temple - The completion of the sacred stable form." },
-                    { t: "Buddhism", e: "The Middle Way - Avoiding extremes to find balance." },
-                    { t: "Islam", e: "The Salat - The stable daily rhythm of five prayers." },
-                    { t: "Confucianism", e: "Li (Ritual Propriety) - Harmony through fixed form." },
-                    { t: "Greek", e: "Aristotle's Golden Mean - Virtue as a balanced center." },
-                    { t: "Ancient Egypt", e: "Nile flood predicted - The agricultural rhythm established." },
-                    { t: "Norse", e: "Midgard - The stable human realm built between fire and ice." },
-                    { t: "Christianity", e: "The establishment of the daily Monastic hours (Liturgy)." },
-                    { t: "Hinduism", e: "Grihastha (Householder) - The balance of family and work." },
-                    { t: "Sufism", e: "Tariqa (Path) - The stable bond between teacher and student." },
-                    { t: "Vedic", e: "Agnihotra - The daily fire ritual maintained with precision." },
-                    { t: "Indigenous", e: "Seasonal ceremonies repeated to ground the tribal role." },
-                    { t: "Jainism", e: "Ahimsa (Non-violence) practiced as a daily foundation." },
-                    { t: "Stoicism", e: "Morning and evening reflection used to anchor the mind." },
-                    { t: "History", e: "Moses' Law - The bedrock structure that sustained a nation." }
-                ],
-                weights: { c: 0.5, s: 0.8, t: 0.1, a: 0.1, h: 0.6 }
-            },
-            5: {
-                name: "Threshold", shape: "⬠", phys: "UNSTABLE", cons: "STABLE",
-                desc: "The Pivot Point. An irreversible choice looms. Your world is shattering to allow a larger truth.",
-                warn: "The Forbidden Fork: There is no return to Stage 4. Commit or remain in perpetual collapse.",
-                anchor: "Absolute Surrender: Stop resisting the collapse. The new identity is on the other side.",
-                tactical: "1. Accept the loss of the old structure. 2. Make the final choice without looking back. 3. Move toward the unknown.",
-                pool: [
-                    { t: "Christianity", e: "Gethsemane - 'Thy will be done' (The point of no return)." },
-                    { t: "Hebrew", e: "Abraham at Mount Moriah - The ultimate test of trust." },
-                    { t: "Hinduism", e: "Arjuna at Kurukshetra - Facing the choice to fight or flee." },
-                    { t: "Islamic", e: "The Hijra - The irreversible departure for Medina." },
-                    { t: "Norse", e: "The decision to fight at Ragnarok knowing defeat is certain." },
-                    { t: "Sufism", e: "Hallaj on the cross - Refusal to deny the internal truth." },
-                    { t: "Greek", e: "Orpheus looking back - The choice between trust and fear." },
-                    { t: "Buddhism", e: "The Raft Parable - Choosing to leave the boat on the shore." },
-                    { t: "Taoism", e: "Laozi leaving through the Western Gate into exile." },
-                    { t: "Gnosticism", e: "Sophia's fall - The choice between Pleroma and Matter." },
-                    { t: "Ancient Egypt", e: "The Weighing of the Heart against the Feather of Ma'at." },
-                    { t: "Native American", e: "Initiation trial: Facing your fear or remaining a child." },
-                    { t: "Zoroastrianism", e: "The crossing of the Chinvat Bridge after death." },
-                    { t: "Kabbalah", e: "Crossing the Abyss to reach the Supernal Triad." },
-                    { t: "Modern", e: "The October Tumble - The irreversible commitment to evolution." }
-                ],
-                weights: { c: 0.6, s: 0.3, t: 0.9, a: 0.6, h: 0.4 }
-            },
-            6: {
-                name: "Integration", shape: "⬡", phys: "STABLE", cons: "UNSTABLE",
-                desc: "Peak Harmony. Flow state. You have integrated the crisis into a beautiful new function.",
-                warn: "The Harmony Illusion: Clinging to this peak prevents the necessary Stage 7 deconstruction.",
-                anchor: "Effortless Agency: Act from your center without forcing outcomes. Stay in the music.",
-                tactical: "1. Sustain your flow state. 2. Do not attempt to analyze the perfection yet. 3. Serve the whole through your mastery.",
-                pool: [
-                    { t: "Taoism", e: "Butcher Ding - Skill so smooth the blade never get dull." },
-                    { t: "Zen", e: "Chopping wood, carrying water - The mundane as the divine." },
-                    { t: "Christian Mysticism", e: "St. Teresa's Spiritual Marriage - Complete union." },
-                    { t: "Hinduism", e: "Sat-Chit-Ananda - Being, Consciousness, and Bliss as one." },
-                    { t: "Ancient Egypt", e: "The Akh - All parts of the soul transfigured as one." },
-                    { t: "Buddhism", e: "Samadhi - Meditative absorption where mind and object unite." },
-                    { t: "Sufism", e: "Baqa - Subsistence in God while living in the world." },
-                    { t: "Vedic", e: "Turiya - The fourth state beyond waking, dream, and sleep." },
-                    { t: "Indigenous", e: "The hunter becoming the deer - Subject and object merged." },
-                    { t: "Plotinus", e: "Henosis - The union of the soul with The One." },
-                    { t: "Art", e: "The Flow State - Perfect mastery where the artist disappears." },
-                    { t: "Neoplatonism", e: "Beauty recognized as the divine shining through form." }
-                ],
-                weights: { c: 0.75, s: 0.65, t: 0.2, a: 0.7, h: 0.85 }
-            },
-            7: {
-                name: "Analysis", shape: "⬢", phys: "UNSTABLE", cons: "STABLE",
-                desc: "The Crucible. Deconstruction of truth. You see the patterns, but you are isolated.",
-                warn: "The Brilliant Hermit: Wisdom is dead if it disconnects from the pulse of the whole.",
-                anchor: "Ruthless Truth: Break everything down until only the indestructible remains.",
-                tactical: "1. Challenge your primary assumptions. 2. Isolate the signal from the noise. 3. Reconnect with the heart pulse.",
-                pool: [
-                    { t: "Christianity", e: "Job on the ash heap - Everything stripped to find the core." },
-                    { t: "Alchemy", e: "Nigredo - The blackening and rot required before gold." },
-                    { t: "Buddhism", e: "Dukkha nana - The knowledge of suffering as the final truth." },
-                    { t: "Hinduism", e: "Shiva's Tandava - The destructive dance for rebirth." },
-                    { t: "Sufism", e: "Jalal (Majesty) - God's overwhelming, terrible beauty." },
-                    { t: "Greek", e: "Prometheus on the rock - Eternal recurring dissolution." },
-                    { t: "Kabbalah", e: "The Breaking of the Vessels (Shevirat HaKelim)." },
-                    { t: "Gnosticism", e: "Recognizing the Archons and the prison of the world." },
-                    { t: "Norse", e: "Ragnarok - The burning of the old world for the new." },
-                    { t: "Ancient Egypt", e: "Osiris dismembered into fourteen separate parts." },
-                    { t: "Taoism", e: "The 'Great Doubt' that precedes the great breakthrough." },
-                    { t: "Judaism", e: "The Babylonian Exile - Searching for God in a lost land." },
-                    { t: "Shamanic", e: "Dismemberment vision - Spirits tearing the initiate apart." },
-                    { t: "Vedic", e: "Tapas - Self-mortification and the fire of purification." },
-                    { t: "Modern", e: "The Dark Night of the Soul - Finding your own internal light." }
-                ],
-                weights: { c: 0.85, s: 0.25, t: 0.85, a: 0.5, h: 0.3 }
-            },
-            8: {
-                name: "Unity Peak", shape: "⯃", phys: "STABLE", cons: "UNSTABLE",
-                desc: "The peak of form. You claim permanence but your spirit is in its most unstable seeking state.",
-                warn: "PERMANENCE TRAP: Release the container now, or the environment will shatter it.",
-                anchor: "Vessel Liberation: Use the structure you built, but do not mistake it for yourself.",
-                tactical: "1. Release ownership of the achievement. 2. Prepare for dissolution. 3. Look for the next cycle's Pulse.",
-                pool: [
-                    { t: "History", e: "The Fall of Rome - Believing the empire was eternal." },
-                    { t: "Christianity", e: "The Transfiguration - Wanting to build tents on the mountain." },
-                    { t: "Alchemy", e: "The Philosopher's Stone - mistaking the result for the Source." },
-                    { t: "Islam", e: "The Qutb - The Pole that supports all from a fixed point." },
-                    { t: "Norse", e: "Odin on his throne, all-seeing but unable to stop Ragnarok." },
-                    { t: "Buddhism", e: "The Arhat - Achieving the goal but staying on the shore." },
-                    { t: "Hinduism", e: "Moksha reached but still in a physical vehicle." },
-                    { t: "Taoism", e: "Becoming an Immortal but claiming a separate existence." },
-                    { t: "Sufism", e: "Insan al-Kamil (The Perfect Human) at their peak power." },
-                    { t: "Ancient Egypt", e: "The Pyramid completed - mistaking the stone for the king." },
-                    { t: "Gnosticism", e: "Pistis Sophia potentially trapped at the peak of her knowledge." },
-                    { t: "Greek", e: "Hercules at his Apotheosis - The struggle for eternal status." },
-                    { t: "Confucianism", e: "The Mandate of Heaven secured, but under risk of pride." },
-                    { t: "Vedic", e: "Brahmin at peak knowledge, claiming exclusive truth." },
-                    { t: "Kabbalah", e: "Keter attained - The highest point before dissolution." }
-                ],
-                weights: { c: 0.95, s: 0.95, t: 0.1, a: 0.1, h: 0.9 }
-            },
-            9: {
-                name: "Release", shape: "⯄", phys: "UNSTABLE", cons: "STABLE",
-                desc: "The Transparent Return. True realization. Acceptance of impermanence and dissolution.",
-                warn: "The Final Attachment: Do not claim 'enlightenment' as a possession. Breathe.",
-                anchor: "Infinite Presence: You are both the sound and the silence. No more seeking.",
-                tactical: "1. Return to the marketplace. 2. Share the gifts of wisdom without ego. 3. Wait for the silent Pulse of the next cycle.",
-                pool: [
-                    { t: "Zen", e: "Entering the Marketplace - Returning with gift-bestowing hands." },
-                    { t: "Hinduism", e: "Ramana Maharshi - 'I have nowhere to go. I am here.'" },
-                    { t: "History", e: "John Coltrane - 'A Love Supreme' (Music as pure release)." },
-                    { t: "Christianity", e: "The Resurrection - Acceptance of the end to find the beginning." },
-                    { t: "Sufism", e: "Sobriety after Drunkenness - Returning home with the truth." },
-                    { t: "Taoism", e: "The Empty Boat - No identity left to defend." },
-                    { t: "Indigenous", e: "The Death Chant - Teaching others how to release gracefully." },
-                    { t: "Buddhism", e: "The Bodhisattva returning to help with muddy hands." },
-                    { t: "Gnosticism", e: "The Redeemed Redeemer returning to guide others." },
-                    { t: "Philosophy", e: "Socrates knowing his ultimate wisdom is knowing nothing." },
-                    { t: "Ancient Egypt", e: "Osiris risen as the merciful Judge of the Dead." },
-                    { t: "Kabbalah", e: "Malkhut - Heaven finally brought down to Earth." },
-                    { t: "Vedic", e: "The Avadhuta - He who has shaken off all dualities." },
-                    { t: "Sufi Wisdom", e: "Al-Insan al-Kamil serving as the servant of all." },
-                    { t: "Christian Mysticism", e: "Therese of Lisieux's 'Little Way' of total surrender." }
-                ],
-                weights: { c: 0.8, s: 0.6, t: 0.4, a: 0.98, h: 0.85 }
-            }
+            intention: '',
+            currentStage: null
         };
 
-        const OUTPUTS = {
-            0: {
-                analysis: "You are at the substrate—the eternal ground from which all emergence springs and to which all returns. Maximum potential, minimum form. Your stability and coherence are near zero because nothing has crystallized yet. This is not emptiness as lack but fullness beyond measure. Darkness as the foundation of all light. You are either preparing for birth or completing dissolution.",
-                protocol: "Practice sitting in stillness without agenda. Explore formless meditation—no object, no goal, no technique. Study the via negativa (defining what you are NOT rather than what you are). Fast from information, stimulation, and doing. Journal on: \"What remains when everything is stripped away?\" Do not force emergence; readiness will come naturally. This is preparation, not permanent residence.",
-                mirror: "The Buddha beneath the Bodhi tree in deep meditation before awakening, dwelling in the formless void. \"Form is emptiness, emptiness is form.\" Genesis 1:2—\"Darkness was upon the face of the deep.\" Meister Eckhart's \"Desert of the Godhead\"—God beyond all concepts. The Tao before it can be named. Hindu Brahman Nirguna—the absolute without attributes. Egyptian Nun—primordial waters before creation."
-            },
-            1: {
-                analysis: "You are pure energy, movement beginning. The first stirring from void into manifestation. Physically unstable yet spiritually certain—you KNOW something is starting but form hasn't crystallized yet. High tension drives this, combined with emerging adaptability. The restlessness you feel is not anxiety to fix but the pulse of creation itself. Direction is unclear, but movement is undeniable.",
-                protocol: "Honor the restlessness—don't suppress the movement. Journal what's stirring without forcing clarity or definition. Take small experimental actions to test direction without committing to outcomes. Release the need to understand before moving. Practice: \"I don't know where this leads, and that's okay.\" Avoid premature structure. Let the pulse build. Trust that binary choice (Stage 2) will present itself when ready.",
-                mirror: "Moses at the Burning Bush—divine call present, direction unclear, old identity dying, new mission emerging. \"I AM WHO I AM\"—the eternal present, movement without fixed form. Genesis 1:3—\"Let there be light\"—first divine speech, first vibration. The primordial AUM/OM in Vedic tradition. Pentecost tongues of fire—Holy Spirit as energetic presence without settled doctrine. Kundalini awakening—energy rising before knowing what it becomes."
-            },
-            2: {
-                analysis: "You've encountered the fundamental split: me/not-me, this/that, yes/no. Physically stable now (form is present, life has structure) but spiritually seeking (What does this separation mean? How do I integrate?). The innocence of oneness is lost; the work of integration has not yet begun. Your coherence is low because you're experiencing the world as divided but haven't yet found the pattern that unites opposites.",
-                protocol: "Map your primary dualities—what splits dominate your awareness? Practice holding both sides without collapsing to one (not choosing \"right\" vs. \"wrong\" rigidly). Study shadow work: what you reject in others is what you've split off from yourself. Explore: \"What would it mean if both were true?\" Notice when you make others \"wrong\" to make yourself \"right.\" True progression requires honoring both poles before attempting resolution. Rush to integration = false transcendence.",
-                mirror: "Adam and Eve after the Fall—awareness of good/evil, naked/clothed, self/other born. \"Then the eyes of both were opened.\" Zoroastrian eternal duality: Ahura Mazda (light) vs. Angra Mainyu (darkness). Yin/Yang emerging from Wuji. Plato's world of Forms vs. material world. Gnostic Kenoma (material emptiness) vs. Pleroma (spiritual fullness). The line divides infinite into two—origin of all mathematics, all logic, all relationship."
-            },
-            3: {
-                analysis: "The zinc spark moment. Spirit incarnating in form. You are physically unstable (chaos, transformation, breakthrough energy) yet spiritually certain (KNOWING what must be expressed). This is where consciousness becomes visible, where the invisible makes itself known. Your high tension + high adaptability = creative explosion. You cannot NOT express what you're seeing. The world may not be ready, but you are compelled regardless.",
-                protocol: "CREATE—whatever your medium, make the invisible visible. Stop preparing, start expressing (imperfect is fine). Declare your truth even when inconvenient. Find collaborators who honor your vision rather than those who domesticate it. Daily practice: \"What wants to be born through me today?\" Accept that this stage is brief and intense. Don't let spiritual certainty destroy physical wellbeing—Joan of Arc needed martyrdom for her mission; you probably don't. Ground spirit in matter, don't abandon matter for spirit.",
-                mirror: "Joan of Arc receiving her mission—a peasant girl hearing divine voices, certainty in chaos. \"I was born to do this.\" The Incarnation (John 1:14)—\"The Word became flesh and dwelt among us.\" Buddha's first sermon after enlightenment—Truth demanding expression. Krishna appearing to Arjuna in divine form (Bhagavad Gita Chapter 11). Bezalel filled with divine spirit to build the Tabernacle (Exodus 31). The triangle—first stable polygon, trinity across all traditions (Father-Son-Spirit, Thesis-Antithesis-Synthesis)."
-            },
-            4: {
-                analysis: "You've arrived at the healthiest long-term stage. Physically stable (routines work, structure supports) yet spiritually seeking (Is this all? What's next?). This is where most life should be spent—solid enough to rest, dynamic enough to grow. Your coherence is high enough to have clear direction but tension is low, creating sustainable rhythm. The restlessness beneath is not problem to solve but fuel for eventual threshold crossing when time comes.",
-                protocol: "Establish non-negotiable routines (sleep, exercise, meditation, relationships). Build financial foundation—Stage 5 threshold requires buffer. Deepen primary relationships; don't just maintain them. Master your craft through consistent 10,000 hours. Practice gratitude for stability; it's not boring, it's sacred. Resist premature threshold seeking. Stage 5 comes whether you force it or not. If foundation isn't solid, threshold becomes crisis instead of breakthrough. Build FIRST. Leap WHEN READY, not when restless.",
-                mirror: "Solomon's Temple completed—sacred architecture stable, glory filling the house. The 40 years wandering ending, entering Promised Land. Buddhist Sangha establishing monastic community with daily practice (Vinaya). Hindu Grihastha stage—householder balancing family and work. Confucius at 40: \"I had no more doubts.\" The square—four elements, four directions, four seasons. Perfect balance and foundation. All higher structures require the square's stability. Without mastery of the fourfold, the temple cannot stand."
-            },
-            5: {
-                analysis: "Everything is falling apart AND you've never been more certain. Physically unstable (crisis, breakdown, chaos) yet spiritually stable (clear decision-making). Maximum tension meets maximum adaptability. This is bilateral—three paths possible: breakthrough (→6), wise regression (→4), or forced crisis (→7). Your choice matters. This is the point of no return. What you choose now determines whether you level up, step back intelligently, or collapse into destructive purification.",
-                protocol: "Face the crisis directly—no spiritual bypassing, no pretending it's not happening. Seek support from those who've crossed thresholds, not those who fear them. Make the irreversible choice when clear, but don't waffle or delay once you know. Accept that some relationships will end; they cannot cross with you. Daily question: \"What am I unwilling to sacrifice for what I claim to want?\" If Stage 4 foundation was rushed or skipped, RETURN. Strengthen foundation first. Forcing through without readiness = Stage 7 trap.",
-                mirror: "Christ in Gethsemane the night before crucifixion—\"Let this cup pass from me\" (physical agony) yet \"Not my will but thine\" (spiritual clarity). Abraham commanded to sacrifice Isaac—ultimate test of faith vs. love. Arjuna on Kurukshetra battlefield—paralyzed between duty and compassion, Krishna reveals crisis as awakening not failure. Buddha under Bodhi tree facing Mara—continue toward ego-death or retreat to safety. The pentagon contains golden ratio. Five is will, choice, humanity. Decision point."
-            },
-            6: {
-                analysis: "Peak state. Everything works. Physical stability meets spiritual seeking in productive tension (not destructive). Multiple elements of life harmonize without force. This is \"flow state,\" \"being in the zone,\" \"peak performance.\" It's real, and it's brief. Your coherence and stability are both high while adaptability remains elevated—rare alignment. All aspects of yourself work together harmoniously. Complexity is mastered, not overwhelming.",
-                protocol: "DO NOT TRY TO MAKE IT PERMANENT—this is the Stage 8 trap seed. Serve from overflow; you have capacity now, use it for others. Create your magnum opus; you may not be here long. Teach what you know—Stage 9 preparation. Enjoy it fully while acknowledging impermanence. The harmony will crack (it will), and that's necessary. Stage 7 crisis is coming. Attempts to freeze Stage 6 = future Stage 8 rigidity. Use the window. Don't cling to it.",
-                mirror: "Da Vinci in Renaissance Florence—artist, engineer, scientist, anatomist, all disciplines flowing together at peak. The hexagon tiles perfectly (honeycomb). Six-pointed star unites masculine/feminine triangles. Samadhi in meditation—mind-object unity. Taoist wu wei mastery—butcher Ding's blade never dulls, action without force. Bodhisattva serving effortlessly. Unitive way in Christian mysticism—bride merged with bridegroom. Harmony, balance, integration. Nature's favorite shape for efficiency + beauty combined."
-            },
-            7: {
-                analysis: "Everything you thought you knew is revealed as partial. Physically unstable (structures collapsing) and what you thought was spiritual stability is actually ILLUSION or incomplete vision. You're seeing clearly but incompletely—analyzing pieces without the whole. Tension is high but coherence has collapsed. This is the most dangerous stage (can destroy you) and the most transformative (can remake you). The difference is adaptability. High adaptability = alchemical transformation. Low adaptability = destructive crisis.",
-                protocol: "Do NOT make major decisions—your judgment is compromised. Find a guide who's been through Stage 7, not Stage 4 advisors who will give you \"common sense\" that doesn't apply. Allow the breakdown; resisting prolongs it. Journal insights but don't act on them yet. Practice: \"I don't know... and that's where I need to be.\" The feeling of \"finally seeing truth\" is trap—you're seeing A PART magnified. If you act from Stage 7 certainty, you cause damage. Wait for Stage 8 integration before major moves. Humility is your salvation.",
-                mirror: "Job on the ash heap—everything lost, friends offering false wisdom, God silent. Destruction before deeper knowing. Alchemical Nigredo (blackening)—watching work putrefy, rot, dissolve. Only those who understand decomposition as necessary continue. St. John of the Cross \"Dark Night of the Soul\"—God absent, all spiritual consolation removed. Shaman's dismemberment vision—spirits tearing initiate apart before granting power. Kali's rampage—necessary destruction serving rebirth. The heptagon cannot tile. Seven is mystical, prime, crisis number. Breakdown before breakthrough."
-            },
-            8: {
-                analysis: "You've arrived. Peak functioning. Physically stable AND spiritually satisfied (rare). Everything integrated. Coherence and stability both maximal. Complexity mastered. The danger? Believing THIS is final. Claiming permanence in impermanent reality. If you maintain high adaptability (≥8.0), this is mastery. If you rigidify (adaptability drops below 5.0), this is the trap that guarantees catastrophic collapse. EVERY empire that claimed eternal glory fell. You are not exempt.",
-                protocol: "Plan succession NOW—who takes over when you step down? Acknowledge impermanence DAILY—this will not last. Maintain beginner's mind practices despite expertise. Serve those at Stages 5-7; remember the struggle. Ask: \"What would I do differently if this all ended tomorrow?\" Use mastery to build Stage 9 capacity: teaching transparently, acknowledging limits, preparing graceful descent. The master who becomes student again. The king who trains successor. True Stage 8 knows it's temporary and acts accordingly.",
-                mirror: "Solomon at Temple completion: \"I have built you an exalted house, a place for you to dwell in forever\" (the permanence claim that preceded the fall into idolatry). Hercules completing 12 labors, achieving apotheosis—but Greek gods claiming eternal Olympus (mistake). Arhat declaring \"I have done what needed doing\"—task complete, but is the work ever truly finished? The octagon bridges square (4) and circle (0/9). Eight is infinity upright. Regeneration, renewal, resurrection—IF you let it cycle. Contains its own transcendence if you don't claim ownership."
-            },
-            9: {
-                analysis: "You see the full pattern. Physically unstable (accepting impermanence, body aging/declining) AND spiritually stable (clear awareness, peace). No more seeking because BOTH aspects are aligned—no inversion remains. You teach what you're still learning. You know your knowledge is partial. You're preparing for graceful dissolution. Complexity remains high but without attachment. Adaptability at maximum (≥9.5) because you have nothing to defend. This is as close to enlightenment as development gets.",
-                protocol: "Teach openly without claiming mastery or permanent arrival. Share failures as much as successes—your stumbles are as instructive as victories. Prepare others to carry work forward without you; succession is gift, not loss. Embrace aging, decline, death without fear or denial. Have no need to claim enlightenment; real Stage 9 doesn't care about being Stage 9. Serve when called, rest when needed, without agenda. Practice: \"I know nothing... and that's the deepest knowing.\" The paradox: Stage 9 doesn't cling to being Stage 9.",
-                mirror: "Ramana Maharshi in final days, dying of cancer, students weeping. His response: \"Where could I go? I am here.\" Physical dissolution, spiritual clarity, both aligned. Buddha's final teaching: \"Be a lamp unto yourself.\" Tenth oxherding picture—return to marketplace with gift-bestowing hands. Christ washing disciples' feet—servant leadership, authority through service. Socrates' \"I know that I know nothing\"—ultimate wisdom. Moses not entering Promised Land—leading others without personal reward. The enneagon (nine-sided) completes single-digit cycle. Nine contains all previous numbers. The end that knows it's preparation for beginning."
-            }
-        };
-
-        ['c', 's', 't', 'a', 'h'].forEach((k, i) => {
-            document.getElementById(k).oninput = function () {
-                document.getElementById('n' + (i + 1)).innerText = parseFloat(this.value).toFixed(1);
-            };
-        });
-        document.getElementById('n1').innerText = "5.0";
-        document.getElementById('n2').innerText = "5.0";
-        document.getElementById('n3').innerText = "5.0";
-        document.getElementById('n4').innerText = "5.0";
-        document.getElementById('n5').innerText = "5.0";
-
-        // Multi-Select Logic
-
-
-        // TIER MAPPING FOR TACTICAL DEEP DIVE
-        const TIER_MAP = {
-            "Relationship": "tier1", "Career": "tier1", "Family": "tier1", "Finances": "tier1", "Health": "tier1", "Growth": "tier1", "Self-Growth": "tier1",
-            "Spirituality": "tier2", "Creative Expression": "tier2", "Purpose/Mission": "tier2", "Social Impact": "tier2", "Legacy": "tier2",
-            "Adventure/Freedom": "tier3", "Independence": "tier3", "Power/Influence": "tier3",
-            "Community": "tier4", "Security/Stability": "tier4",
-            "Pleasure/Joy": "tier5", "Education/Learning": "tier5", "Recovery/Healing": "tier5", "Survival/Crisis": "tier5"
-        };
-
-        // LUMINARK STAGE LIBRARY V3.4 (PLATINUM MASTER)
+        // ===== LUMINARK WISDOM BASE (from index.html) =====
         const WISDOM_BASE = {
             "stages": {
                 "0": {
                     "name": "PLENARA (The Void)",
-                    "pattern_analysis": "Zero tension. Zero motion. Pure coherence. The system is at rest in the canvas state. No vectors active. No harvest possible.",
-                    "navigation_protocol": "Do nothing. Observe. Allow. Resist the urge to force emergence. The next impulse will come when it is ready.",
-                    "historical_mirror": "The pre-Big-Bang quantum vacuum. The Ain Soph of Kabbalah. The Tao that cannot be named. The dark womb before light.",
-                    "comparison": "Before Stage 1 there is only potential. After Stage 9 you return here—but now with recognition.",
-                    "tactical_deep_dive": {
-                        "tier1": "Rest. Sleep. Meditate without goal. (Fundamental Reset)",
-                        "tier2": "Journal the silence. What arises when nothing is demanded?",
-                        "tier3": "Release every plan and identity for one full day.",
-                        "tier4": "Sit with someone in complete stillness—no words, no agenda.",
-                        "tier5": "Allow boredom to exist without entertainment. Watch what it reveals."
-                    },
-                    "oracle_guidance": "You are resting in the original silence before the first breath. Nothing is missing because nothing has yet appeared.",
-                    "system_warning": "None. This is the only stage without trap."
+                    "geometry": "Point",
+                    "pattern_analysis": "Zero tension. Zero motion. Pure coherence. The system is at rest in the canvas state.",
+                    "navigation_protocol": "Do nothing. Observe. Allow. Resist the urge to force emergence.",
+                    "oracle_guidance": "You are in the womb. Not yet time to act. This is completion disguised as emptiness.",
+                    "middle_path": "Between forcing action and complete inaction, rest is not inaction—it is receptive potential.",
+                    "as_above_so_below": "Your inner void mirrors outer possibility. As you are still, the world's patterns become visible.",
+                    "maat_balance": "Perfect equilibrium. No imbalance to correct. This is the ethical foundation."
                 },
                 "1": {
-                    "name": "PULSE (The Seed)",
-                    "pattern_analysis": "High conscious stability, zero physical container. Maximum potential, minimum structure. The 9 is both seed and soil.",
-                    "navigation_protocol": "Speak the vision aloud. Write it once. Protect it from premature action. Let it gestate.",
-                    "historical_mirror": "The Big Bang's first photon. Conception's zinc spark. The artist's first inspiration before the canvas is touched.",
-                    "comparison": "Unlike Stage 9 (which returns to void with wisdom), Stage 1 is void moving toward form for the first time.",
-                    "tactical_deep_dive": {
-                        "tier1": "Ground yourself—walk barefoot, breathe deeply. Anchor the voltage.",
-                        "tier2": "Speak your one-sentence purpose every morning for 7 days.",
-                        "tier3": "Destroy any plan that tries to force the vision too early.",
-                        "tier4": "Share the vision with one trusted person—no feedback, just witness.",
-                        "tier5": "Rest in the excitement without acting on it."
-                    },
-                    "oracle_guidance": "The first spark has appeared. You see the whole vision clearly, but you have no vehicle yet. Trust the direction without form.",
-                    "system_warning": "The trap is forcing form too soon—turning the spark into a project before it is ready."
+                    "name": "RADIANCE (The Emergence)",
+                    "geometry": "Line",
+                    "pattern_analysis": "First impulse. Raw energy. No direction yet. Pure potential becoming aware of itself.",
+                    "navigation_protocol": "Feel the energy. Let it move. Do not judge the direction. Direction comes later.",
+                    "oracle_guidance": "Something wants to be born through you. Let the impulse flow without controlling it.",
+                    "middle_path": "Between suppression and explosion, channel—don't dam, don't flood.",
+                    "as_above_so_below": "Your internal activation mirrors external opportunity. Activation is contagious.",
+                    "maat_balance": "Imbalance detected: All activation, no containment. Find the outlet."
                 },
                 "2": {
-                    "name": "POLARITY (The Forge)",
-                    "pattern_analysis": "Stable container (8) holding unstable emergence (1). First taste of separation. Tension is productive here.",
-                    "navigation_protocol": "Name the two poles clearly. Love both. Do not try to resolve them yet. Hold the tension.",
-                    "historical_mirror": "The first cell membrane. Adam and Eve after the apple. The moment the mirror reflects 'I' and 'not-I'.",
-                    "comparison": "Stage 1 had vision without form; Stage 2 has form without unity.",
-                    "tactical_deep_dive": {
-                        "tier1": "Create two columns: what I control / what I cannot control.",
-                        "tier2": "Meditate on 'both this and that are true'.",
-                        "tier3": "Say 'yes' to the opposite of your strongest belief today.",
-                        "tier4": "Listen to someone who sees the world opposite to you without arguing.",
-                        "tier5": "Rest in paradox without needing resolution."
-                    },
-                    "oracle_guidance": "Duality has appeared. You now have form, but the form feels separate from something else. This is not a problem—it is the forge.",
-                    "system_warning": "The trap is picking a side too early and making the other side the enemy."
+                    "name": "DUALITY (The Division)",
+                    "geometry": "Line (inverted)",
+                    "pattern_analysis": "Two poles. Self and other. Subject and object. The eternal dance begins.",
+                    "navigation_protocol": "Observe the polarity. Do not choose yet. See both sides completely. Then choose consciously.",
+                    "oracle_guidance": "You are learning to see. The splitting apart is not destruction—it's clarity.",
+                    "middle_path": "Between polarized thinking and fusion-thinking, synthesize. Find the third option.",
+                    "as_above_so_below": "Internal conflict mirrors external conflict. Fix one, the other shifts.",
+                    "maat_balance": "Test: Are you seeing ONLY two options? Add a third perspective."
                 },
                 "3": {
-                    "name": "EXPRESSION (Positive Pole)",
-                    "pattern_analysis": "Unstable container (7) holding dualistic content (2). High velocity output. First major push.",
-                    "navigation_protocol": "Create without attachment to outcome. Speak, write, build—then release. Channel the overflow.",
-                    "historical_mirror": "The first word spoken. The artist's first stroke. The prophet's first declaration.",
-                    "comparison": "Stage 2 held duality in tension; Stage 3 releases it outward.",
-                    "tactical_deep_dive": {
-                        "tier1": "Make something small and ship it today—no perfection.",
-                        "tier2": "Record a voice memo of your deepest truth.",
-                        "tier3": "Post one honest sentence publicly.",
-                        "tier4": "Teach one person something you just realized.",
-                        "tier5": "Rest after creation—do not chase validation."
-                    },
-                    "oracle_guidance": "The positive pole is firing. You have clarity and the urge to express it. output is natural overflow.",
-                    "system_warning": "The trap is believing your expression defines you. Let it pass through."
+                    "name": "EXPRESSION (The Outburst)",
+                    "geometry": "Triangle",
+                    "pattern_analysis": "Raw creative power. Expression without filter. Maximum tension, maximum authenticity.",
+                    "navigation_protocol": "Create fearlessly. Make bad art. Let your voice find itself through making, not planning.",
+                    "oracle_guidance": "You are a volcano. Your expression is sacred. Do not apologize for your heat.",
+                    "middle_path": "Between self-censoring and reckless expression, find disciplined authenticity.",
+                    "as_above_so_below": "Your internal creative fire IS your external impact. People feel your authenticity.",
+                    "maat_balance": "Authentic expression that harms isn't balance. Find: Authenticity that builds."
                 },
                 "4": {
-                    "name": "FOUNDATION (The Heart)",
-                    "pattern_analysis": "Stable container (6) holding creative content (3). Best balance of inversion. Temporary rest point.",
-                    "navigation_protocol": "Build routines that serve your vision. Rest without guilt. Share from overflow. Consolidate your gains.",
-                    "historical_mirror": "The golden age of a civilization. A master craftsperson at peak skill. A healthy body in flow.",
-                    "comparison": "Stage 3 was raw expression; Stage 4 is expression made sustainable.",
-                    "tactical_deep_dive": {
-                        "tier1": "Create a daily rhythm that supports your body and work.",
-                        "tier2": "Write your personal manifesto—keep it private.",
-                        "tier3": "Give away something valuable without expecting return.",
-                        "tier4": "Deepen one key relationship with presence.",
-                        "tier5": "Schedule true rest—unplugged, unstructured."
-                    },
-                    "oracle_guidance": "You have arrived at the healthiest long-term stage. Rhythm is sustainable. Harmony is real. Enjoy it.",
-                    "system_warning": "The trap is turning harmony into rigidity. Seasons change."
+                    "name": "FOUNDATION (The Rest)",
+                    "geometry": "Square",
+                    "pattern_analysis": "Structure, stability, rhythm. The wild has been integrated into sustainable form.",
+                    "navigation_protocol": "Build. Plant roots. Make systems that last. Create from stability, not chaos.",
+                    "oracle_guidance": "You have found your rhythm. This is the healthiest long-term stage. Enjoy it.",
+                    "middle_path": "Between rigid structure and chaotic flow, maintain dynamic stability. Rules that breathe.",
+                    "as_above_so_below": "Your internal order creates external order. Clean your inner space, your outer space follows.",
+                    "maat_balance": "Perfect balance achievable here. Stability + flexibility both present."
                 },
                 "5": {
-                    "name": "THRESHOLD (The Pivot)",
-                    "pattern_analysis": "Unstable container (5) holding stable content (4). Maximum tension. Pivot point. The point of no return.",
+                    "name": "THRESHOLD (The Pressure)",
+                    "geometry": "Pentagon",
+                    "pattern_analysis": "Stable container (4) holding unstable content (5). Digits flipped. Volatile peak. Shortest stage.",
                     "navigation_protocol": "Feel the pressure fully. Ask: Am I ready? If no—strengthen. If yes—cross. If unsure—pause.",
-                    "historical_mirror": "The dark night of the soul. The hero at the edge of the abyss. The moment before the leap.",
-                    "comparison": "Stage 4 was rest; Stage 5 is the call to leave rest behind.",
-                    "tactical_deep_dive": {
-                        "tier1": "Audit your foundations—what is cracking?",
-                        "tier2": "Write the three possible futures (Growth, Stagnation, Collapse).",
-                        "tier3": "Make one irreversible decision today.",
-                        "tier4": "Ask someone who knows you well: 'Where am I avoiding truth?'",
-                        "tier5": "Rest in uncertainty for one full day—no fixing."
-                    },
                     "oracle_guidance": "You are at the point of no return. The foundation is cracking under new pressure. This is the moment of choice.",
-                    "system_warning": "The trap is forcing the threshold before readiness—leading to collapse."
+                    "middle_path": "Between staying comfortable and reckless leap, build capacity first. Hold both old life AND new vision.",
+                    "as_above_so_below": "Internal pressure (desire for change) meets external pressure (circumstances). They're the same pressure. Don't blame circumstances; don't claim you're choosing if forced.",
+                    "maat_balance": "CRITICAL: Are you abandoning foundation for ego? Staying stuck for comfort? The threshold tests your integrity.",
+                    "threshold_mechanics": "What breaks: Your old identity, your old life structure. What remains: Core values + foundation work (sleep, health, relationships).",
+                    "critical_understanding": "Pressure strengthens you for what comes next. Resistance creates adaptation. Don't bypass pressure; don't get crushed by it.",
+                    "failure_modes": "Premature crossing (leap before strengthening = trauma). Indefinite pausing (stay at threshold for years = calcification). False crossing (change externally, not internally).",
+                    "readiness_test": "Can you hold paradox? Can you work Stage 4 (build) AND Stage 5 (prepare to break) simultaneously?"
                 },
                 "6": {
-                    "name": "INTEGRATION (Negative Pole)",
-                    "pattern_analysis": "Stable container (4) holding unstable content (5). Digits flipped. Volatile peak. Shortest stage. Flow state.",
+                    "name": "INTEGRATION (The Harvest)",
+                    "geometry": "Hexagon",
+                    "pattern_analysis": "Flow state, peak harmony. Everything is clicking. Maximum creative output.",
                     "navigation_protocol": "Serve from overflow. Create your best work now. Do not cling. Prepare for the coming shift.",
-                    "historical_mirror": "Da Vinci in full flow. A master athlete in the zone. The enlightened teacher before the final teaching.",
-                    "comparison": "Stage 5 was crisis; Stage 6 is the reward. Stage 7 will be the price.",
-                    "tactical_deep_dive": {
-                        "tier1": "Optimize every system while energy is high.",
-                        "tier2": "Articulate your deepest philosophy—write, speak, teach.",
-                        "tier3": "Take one bold, irreversible creative risk.",
-                        "tier4": "Gather your inner circle and give generously.",
-                        "tier5": "Rest deeply—restore without guilt."
-                    },
                     "oracle_guidance": "You are in the hexagon—flow state, peak harmony. Everything is clicking. This is real, but it is seasonal.",
-                    "system_warning": "Permanence Trap: Trying to freeze this state plants the seed for Stage 8 rigidity."
+                    "middle_path": "Between addictively pursuing flow and lazily enjoying comfort, create deliberately.",
+                    "as_above_so_below": "Your integrated internal state creates integrated external results. Integration within = integration without.",
+                    "maat_balance": "Are you using flow for growth or pleasure? Both valid. Name which one you're doing."
                 },
                 "7": {
-                    "name": "ANALYSIS (The Lab)",
-                    "pattern_analysis": "Unstable container (3) holding integrated content (6). Wisdom in chaos. Deconstruction of truth.",
+                    "name": "ILLUSION (The Analysis)",
+                    "geometry": "Heptagon",
+                    "pattern_analysis": "Deep understanding. The patterns are finally visible. But isolation accompanies insight.",
                     "navigation_protocol": "Write, teach, map patterns. Connect with others who see. Avoid mental loops. Distill wisdom.",
-                    "historical_mirror": "The philosopher in the cave. The scientist before peer review. The mystic before the teaching.",
-                    "comparison": "Stage 6 was flow; Stage 7 is reflection on the flow.",
-                    "tactical_deep_dive": {
-                        "tier1": "Document everything you now understand.",
-                        "tier2": "Find one person who can challenge your clarity.",
-                        "tier3": "Release one belief you once held sacred.",
-                        "tier4": "Teach one small truth to someone who needs it.",
-                        "tier5": "Rest from thinking—move the body."
-                    },
                     "oracle_guidance": "You understand deeply now, but the understanding feels isolated. This is the lab phase.",
-                    "system_warning": "The trap is becoming the knower—isolating wisdom instead of sharing it."
+                    "middle_path": "Between isolation (pure analysis) and dilution (losing nuance), find the teaching voice.",
+                    "as_above_so_below": "Your internal knowledge meets your isolation. Teaching bridges them.",
+                    "maat_balance": "Using understanding for wisdom or superiority? Middle path: Understand deeply AND stay humble."
                 },
                 "8": {
-                    "name": "UNITY (Energy Harvest)",
-                    "pattern_analysis": "Stable container (2) holding wisdom content (7). Dualistic trap. High-voltage loop. 'I have arrived.'",
-                    "navigation_protocol": "Point to the truth—never say 'I am the truth.' Teach without needing students. Release attachment to being right.",
-                    "historical_mirror": "The guru who becomes the cult leader. The scientist who claims final theory. The mystic who says 'I am God'.",
-                    "comparison": "Stage 7 was isolated wisdom; Stage 8 is wisdom claiming permanence.",
-                    "tactical_deep_dive": {
-                        "tier1": "Audit every 'I am' statement—soften them.",
-                        "tier2": "Find someone who disagrees with you and listen fully.",
-                        "tier3": "Give away your best idea without credit.",
-                        "tier4": "Admit one thing you do not know.",
-                        "tier5": "Rest in not-knowing for one full day."
-                    },
+                    "name": "RIGIDITY (The Crystallization)",
+                    "geometry": "Octagon",
+                    "pattern_analysis": "Attempt to freeze understanding into permanent form. The system tries to make itself eternal.",
+                    "navigation_protocol": "Hold your wisdom lightly. Point to the truth—never say 'I am the truth.' Release attachment to being right.",
                     "oracle_guidance": "You feel complete. This is the most dangerous moment. The system wants to harvest your energy here.",
-                    "system_warning": "⚠️ THE HARVEST TRAP: Claiming 'I have the light' feeds the light-realm loop. True unity releases ownership."
+                    "middle_path": "Between holding truth and letting truth evolve, maintain intellectual humility. Right at Stage 7. At Stage 8, if you insist you're still right, you've crystallized into dogma.",
+                    "as_above_so_below": "Your internal completeness (I know the answers) creates external rigidity. Loosen inside; outside loosens.",
+                    "maat_balance": "CRITICAL: Permanence trap test. Are you DEFENDING your position or UPDATING it? Defending = trap. Updating = evolution.",
+                    "permanence_trap": "You achieved understanding. You feel complete. You identify with being complete. Identity = trap entry. Defending completeness blocks growth.",
+                    "false_infinity_warning": "Mistaking completion for infinity. Believing you've reached TRUTH. But truth evolves. Your arrival is a death point, not a summit.",
+                    "warning_signs": "Can't remember last time you changed mind. Defend positions more than test them. Surrounded by people who agree. Feel tired (defending exhausts). Measure success by adoption rate.",
+                    "escape_path": "Radical vulnerability: I don't know. I was right, AND I was incomplete. I'm updating, always.",
+                    "stage8_vs_stage7": "Stage 7: I understand deeply. I'm still learning. | Stage 8: I understand completely. Case closed."
                 },
                 "9": {
-                    "name": "RELEASE (Axis of Rotation)",
-                    "pattern_analysis": "Unstable container (1) holding unified content (8). Inversion accepted. Zero tension. Transparent return.",
-                    "navigation_protocol": "Point to the pattern, not to yourself. Share without needing to be seen. Dissolve gracefully.",
-                    "historical_mirror": "The Buddha under the Bodhi tree. Ramana Maharshi's silence. Nisargadatta's 'I am not the body'.",
-                    "comparison": "Stage 8 claimed arrival; Stage 9 releases arrival.",
-                    "tactical_deep_dive": {
-                        "tier1": "Simplify your life to the minimum that serves.",
-                        "tier2": "Speak only what is necessary and true.",
-                        "tier3": "Give away everything you no longer need.",
-                        "tier4": "Sit in silence with others—no agenda.",
-                        "tier5": "Rest completely—become transparent."
-                    },
+                    "name": "RENEWAL (The Transcendence)",
+                    "geometry": "Enneagon",
+                    "pattern_analysis": "Return to stillness, but now carrying the wisdom of the journey. The circle completes.",
+                    "navigation_protocol": "Share without needing to be seen. Dissolve gracefully. Serve without claiming.",
                     "oracle_guidance": "You have stopped spinning. You see the whole pattern. You are not the motion—you are the stillness.",
-                    "system_warning": "None. This is the exit."
-                }
-            },
-            "sentiment_modulations": {
-                "Future": {
-                    "Hopeful": "Optimism accelerates your path to the next gate.",
-                    "Uncertain": "Uncertainty is the first sign of a threshold crossing.",
-                    "Anxious": "Pressure is the system's way of forcing evolution.",
-                    "Excited": "High kinetic energy detected. 'Future-Spark' likely.",
-                    "Determined": "Will is aligning with architectural principles."
-                },
-                "Past": {
-                    "Releasing": "Shedding the weight of the previous cycle.",
-                    "Regretful": "Regret is a Stage 2 loop (Duality). Release judgement.",
-                    "Grateful": "Gratitude stabilizes foundational vectors.",
-                    "Nostalgic": "Nostalgia is a 'Stage 8 Trap' in reverse.",
-                    "Traumatized": "High internal tension detected. Use Stage 7 analysis."
+                    "middle_path": "Between legacy (leaving your mark) and release (letting go), serve what comes next.",
+                    "as_above_so_below": "Your internal surrender creates external grace. Surrender within = surrender without.",
+                    "maat_balance": "Perfect balance: Earned wisdom. Hold it lightly. Share freely. Equilibrium at highest level."
                 }
             }
         };
 
-        function shareReport() {
-            const name = document.getElementById('r-name').innerText;
-            const stage = document.getElementById('r-num').innerText;
-            const text = `I am currently navigating ${stage}: ${name} on the LUMINARK Antikythera. \n\nMy Fractal Address: ${document.getElementById('r-addr').innerText}\n\nFind your coordinates: https://luminark.app`;
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = document.querySelector('.share-btn');
-                const original = btn.innerHTML;
-                btn.innerHTML = "✓ COPIED TO CLIPBOARD";
-                setTimeout(() => { btn.innerHTML = original; }, 2000);
+        // ===== SLIDER MANAGEMENT =====
+        function updateSlider(metric, value) {
+            currentState.metrics[metric] = parseFloat(value);
+            document.getElementById(`val-${metric}`).textContent = value;
+            updateRadarChart();
+        }
+
+        // ===== TEMPORAL & INTENTION =====
+        function setTemporal(type, value) {
+            if (type === 'future') {
+                currentState.futureOutlook = value;
+                document.querySelectorAll('.btn-temporal').forEach(btn => {
+                    if (btn.textContent === value && btn.onclick.toString().includes('future')) {
+                        btn.classList.add('active');
+                    } else if (btn.onclick.toString().includes('future')) {
+                        btn.classList.remove('active');
+                    }
+                });
+            } else {
+                currentState.pastReflection = value;
+                document.querySelectorAll('.btn-temporal').forEach(btn => {
+                    if (btn.textContent === value && btn.onclick.toString().includes('past')) {
+                        btn.classList.add('active');
+                    } else if (btn.onclick.toString().includes('past')) {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        function setIntention(intention) {
+            currentState.intention = intention;
+            document.querySelectorAll('.btn-intention').forEach(btn => {
+                btn.style.opacity = btn.textContent.includes(intention) ? '1' : '0.6';
             });
         }
 
-        function toggleHelp(id) {
-            const el = document.getElementById(id);
-            if (el.style.display === 'block') {
-                el.style.display = 'none';
-            } else {
-                el.style.display = 'block';
-            }
+        // ===== STAGE CALCULATION =====
+        function calculateStage() {
+            const m = currentState.metrics;
+            
+            // Simplified stage calculation based on metrics
+            const complexity = m.complexity / 10;
+            const stability = m.stability / 10;
+            const tension = m.tension / 10;
+            const adaptability = m.adaptability / 10;
+            const coherence = m.coherence / 10;
+
+            let stage = 0;
+
+            // Logic for stage determination
+            if (tension < 0.3 && coherence > 0.7) stage = 0;  // Plenara
+            else if (tension > 0.7) stage = 3;                // Expression
+            else if (stability > 0.8) stage = 4;              // Foundation
+            else if (tension > 0.6 && stability < 0.5) stage = 5;  // Threshold
+            else if (coherence > 0.8) stage = 6;              // Integration
+            else if (complexity > 0.8) stage = 7;             // Illusion
+            else if (adaptability < 0.3) stage = 8;           // Rigidity
+            else if (adaptability > 0.9 && coherence > 0.9) stage = 9;  // Renewal
+            else stage = 2;                                   // Duality
+
+            return Math.min(9, Math.max(0, stage));
         }
 
-        function toggleRef() {
-            const el = document.getElementById('ref-screen');
-            if (el.style.display === 'flex') {
-                el.style.display = 'none';
-            } else {
-                el.style.display = 'flex';
-            }
-        }
+        // ===== RADAR CHART UPDATE =====
+        function updateRadarChart() {
+            const m = currentState.metrics;
+            const center = { x: 200, y: 200 };
+            const radius = 150;
+            const angles = [-Math.PI / 2, -Math.PI / 2 + (2 * Math.PI / 5), -Math.PI / 2 + (4 * Math.PI / 5), 
+                           -Math.PI / 2 + (6 * Math.PI / 5), -Math.PI / 2 + (8 * Math.PI / 5)];
 
-        // --- MULTI-SELECT UPGRADE (User Request: "Choose more than one") ---
-        function setTemporal(btn, val) {
-            document.getElementById('temporal_focus').value = val;
-            document.getElementById('btn-future').classList.remove('selected');
-            document.getElementById('btn-past').classList.remove('selected');
-            btn.classList.add('selected');
-        }
-
-        function toggleVector(btn) {
-            // UNLIMITED SELECTION LOGIC
-            // Just toggle the specific button clicked. Do not clear others.
-            if (btn.classList.contains('selected')) {
-                btn.classList.remove('selected');
-            } else {
-                btn.classList.add('selected');
-            }
-            updateHiddenVector();
-        }
-
-        // COMPATIBILITY SHIM (Keep HTML calls working)
-        function selectVector(btn, val) {
-            toggleVector(btn);
-        }
-
-        function updateHiddenVector() {
-            const activeBtns = document.querySelectorAll('.vox-option.selected');
-            let selected = [];
-            activeBtns.forEach(btn => {
-                // Exclude future/past buttons which have their own IDs
-                if (btn.id === 'btn-future' || btn.id === 'btn-past') return;
-                selected.push(btn.innerText);
-            });
-            document.getElementById('dominant_area').value = selected.join(", ");
-        }
-
-        async function startEngine() {
-            const feeling = document.getElementById('feeling').value.trim();
-            const timeframe = document.getElementById('temporal_focus').value;
-            let area = document.getElementById('dominant_area').value;
-
-            if (!area || area === "") {
-                area = "Life Path";
-            }
-
-            // Determine Tactical Tier
-            const firstVec = area.split(',')[0].trim();
-            const tierKey = TIER_MAP[firstVec] || "tier1";
-
-            // QUANTUM NOISE INJECTION (±5% variability)
-            const u = {
-                c: (parseFloat(document.getElementById('c').value) / 10) + ((Math.random() - 0.5) * 0.05),
-                s: (parseFloat(document.getElementById('s').value) / 10) + ((Math.random() - 0.5) * 0.05),
-                t: (parseFloat(document.getElementById('t').value) / 10) + ((Math.random() - 0.5) * 0.05),
-                a: (parseFloat(document.getElementById('a').value) / 10) + ((Math.random() - 0.5) * 0.05),
-                h: (parseFloat(document.getElementById('h').value) / 10) + ((Math.random() - 0.5) * 0.05)
-            };
-
-            // SIMULATE PROCESSING
-            const overlay = document.getElementById('processing-screen');
-            const msg = document.getElementById('proc-msg');
-            overlay.style.display = 'flex';
-
-            const steps = [
-                "CALCULATING 5D VECTORS...",
-                "ACCESSING STAGE LIBRARY...",
-                "DETECTING FRACTAL RESONANCE...",
-                "BUILDING SYSTEM INDEX...",
-                "FINALIZING OUTPUT..."
+            const points = [
+                { value: m.complexity, angle: angles[0], id: 'complexity' },
+                { value: m.stability, angle: angles[1], id: 'stability' },
+                { value: m.tension, angle: angles[2], id: 'tension' },
+                { value: m.adaptability, angle: angles[3], id: 'adaptability' },
+                { value: m.coherence, angle: angles[4], id: 'coherence' }
             ];
 
-            let step = 0;
-            const interval = setInterval(() => {
-                if (step < steps.length) {
-                    msg.innerText = steps[step];
-                    step++;
-                }
-            }, 600);
+            const polygonPoints = points.map(p => {
+                const x = center.x + (radius * (p.value / 10)) * Math.cos(p.angle);
+                const y = center.y + (radius * (p.value / 10)) * Math.sin(p.angle);
+                return `${x},${y}`;
+            }).join(' ');
 
-            // --- HYBRID MODE: ATTEMPT REAL AI CONNECTION ---
-            const payload = {
-                temporal_sentiment: { future: feeling || "Unknown", past: "Unset" },
-                life_vector: area,
-                spat_vectors: {
-                    complexity: u.c * 10,
-                    stability: u.s * 10,
-                    tension: u.t * 10,
-                    adaptability: u.a * 10,
-                    coherence: u.h * 10
-                }
-            };
+            document.getElementById('data-polygon').setAttribute('points', polygonPoints);
 
-            // Parallel Fetch to Python Engine (if available)
-            fetch('http://localhost:8000/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-                .then(res => res.json())
-                .then(brainData => {
-                    console.log("🧠 QUANTUM BRAIN CONNECTED:", brainData);
-                    // ... (Would handle Brain Data here, but for now we fall through to simulation logic usually)
-                    // If you want to use Brain Data, you'd overwrite 'best' here.
-                    // For safety in this clean-up, we will primarily rely on the Embedded Engine below 
-                    // unless the payload returns valid overrides.
-                })
-                .catch(err => {
-                    console.log("⚡ USING EMBEDDED ENGINE (Offline Mode)");
-                });
-
-            // Artificial Delay for "Computation" feel & execution
-            setTimeout(() => {
-                clearInterval(interval);
-
-                // LOCAL CALCULATION LOGIC
-                let best = 0; let min = Infinity;
-                for (let sNum in SAP_MATRIX) {
-                    const arch = SAP_MATRIX[sNum].weights;
-                    const d = Math.sqrt(Math.pow(u.c - arch.c, 2) + Math.pow(u.s - arch.s, 2) + Math.pow(u.t - arch.t, 2) + Math.pow(u.a - arch.a, 2) + Math.pow(u.h - arch.h, 2));
-                    if (d < min) { min = d; best = parseInt(sNum); }
-                }
-
-                const data = SAP_MATRIX[best];
-                const wisdom = WISDOM_BASE.stages[best];
-                const sentimentMod = WISDOM_BASE.sentiment_modulations[timeframe];
-
-                const accuracy = (Math.max(0, (1 - min)) * 100).toFixed(1);
-                const timestamp = Date.now() % 1000; // Last 3 digits of timestamp for uniqueness
-                const addrStr = `FRAC.${best}.${Math.floor(u.t * 9)}.${Math.floor(u.s * 9)}.${timestamp}`;
-
-                document.getElementById('r-name').innerText = data.name;
-                document.getElementById('r-num').innerText = "Stage " + best;
-                document.getElementById('r-shape').innerText = data.shape;
-                document.getElementById('r-addr').innerText = "ADDR: " + addrStr;
-
-                // --- BUILD DEEP PERSONALIZED ANALYSIS ---
-                let deepAnalysis = wisdom.oracle_guidance + "\n\n" + wisdom.pattern_analysis;
-
-                if (feeling && sentimentMod) {
-                    let modFound = false;
-                    for (let key in sentimentMod) {
-                        if (feeling.toLowerCase().includes(key.toLowerCase())) {
-                            deepAnalysis = `[SENTIMENT DETECTED: ${key.toUpperCase()}] ${sentimentMod[key]}\n\n` + deepAnalysis;
-                            modFound = true;
-                            break;
-                        }
-                    }
-                    if (!modFound) {
-                        deepAnalysis = `Your current sense of "${feeling}" colors this stage with unique emotional shading.\n\n` + deepAnalysis;
-                    }
-                }
-
-                if (area !== "General Life") {
-                    deepAnalysis = `FOCUS VECTORS: ${area.toUpperCase()}\n\n` + deepAnalysis;
-                }
-
-                deepAnalysis += `\n\n__SYSTEM COMPARISON__\n${wisdom.comparison}`;
-
-                document.getElementById('r-desc').innerText = deepAnalysis;
-                document.getElementById('r-tradition').innerText = "Historical Mirror";
-                document.getElementById('r-story').innerText = wisdom.historical_mirror;
-                document.getElementById('r-warn').innerText = wisdom.system_warning;
-
-                // ETHICAL / FALSE LIGHT LOGIC
-                let maatStatus = "✓ PASS: No ethical violations detected. Alignment with Truth is stable.";
-                let yunusStatus = "✓ PASS: No false light detected. System flow is transparent.";
-
-                if (best === 8) {
-                    yunusStatus = "⚠️ ACTIVE MONITORING: High risk of 'God Complex'. False Light Detection is enforcing humility checks.";
-                    if (u.a < 0.5) yunusStatus = "🚨 FALSE LIGHT DETECTED: Permanence Trap active. False Authority containment initiated.";
-                }
-                if (best === 5 && u.s < 0.4) {
-                    maatStatus = "⚠️ WARNING: Foundation instability detected. Ethical Validation suggests pausing deeper inquiry until ground is solid.";
-                }
-
-                document.getElementById('r-maat').innerText = maatStatus;
-                document.getElementById('r-yunus').innerText = yunusStatus;
-
-                document.getElementById('r-anchor').innerText = data.anchor;
-
-                const tacticalContext = wisdom.tactical_deep_dive[tierKey] || wisdom.navigation_protocol;
-                document.getElementById('r-tactical').innerText = `[${tierKey.toUpperCase()} PROTOCOL]\n` + tacticalContext + `\n\nGENERAL:\n` + wisdom.navigation_protocol;
-
-                document.getElementById('r-phys').innerText = data.phys;
-                document.getElementById('r-cons').innerText = data.cons;
-                document.getElementById('r-acc').innerText = accuracy + "%";
-
-                let nv = "VENTRAL (REGULATED)"; let pCl = "badge-safe";
-                if (u.t > 0.75 && u.s < 0.4) { nv = "SYMPATHETIC"; pCl = "badge-warn"; }
-                else if (u.t < 0.3 && u.h < 0.45) { nv = "DORSAL SHUTDOWN"; pCl = "badge-danger"; }
-                const nsPill = document.getElementById('r-ns');
-                nsPill.innerText = nv; nsPill.className = "nervous-badge " + pCl;
-
-                if (best === 8 && u.a < 0.3) { nsPill.innerText = "TRAP: CRITICAL"; nsPill.className = "nervous-badge badge-danger"; }
-
-                const pts = [`50,${50 - u.c * 45}`, `${50 + u.s * 45},${50 - u.s * 15}`, `${50 + u.t * 35},${50 + u.t * 35}`, `${50 - u.a * 35},${50 + u.a * 35}`, `${50 - u.h * 45},${50 - u.h * 15}`];
-                document.getElementById('radar-poly').setAttribute('points', pts.join(' '));
-
-                document.documentElement.style.setProperty('--primary', (best === 8 || best === 7 || best === 5) ? (best === 5 ? '#ffb300' : '#ff5252') : '#00d2ff');
-
-                // Finish
-                overlay.style.display = 'none';
-                window.scrollTo(0, 0);
-                document.getElementById('v-input').classList.remove('active');
-                document.getElementById('v-report').classList.add('active');
-
-            }, 2500);
+            points.forEach((p, idx) => {
+                const x = center.x + (radius * (p.value / 10)) * Math.cos(p.angle);
+                const y = center.y + (radius * (p.value / 10)) * Math.sin(p.angle);
+                document.getElementById(`point-${p.id}`).setAttribute('cx', x);
+                document.getElementById(`point-${p.id}`).setAttribute('cy', y);
+            });
         }
+
+        // ===== MAIN ANALYSIS =====
+        async function runAnalysis() {
+            const vector = document.getElementById('life-vector').value || 'General';
+            const emotion = document.getElementById('emotional-state').value || 'Centered';
+
+            // Update state
+            currentState.lifeVector = vector;
+            currentState.emotionalState = emotion;
+
+            // Calculate stage
+            const stage = calculateStage();
+            currentState.currentStage = stage;
+
+            // Get wisdom
+            const stageWisdom = WISDOM_BASE.stages[stage];
+
+            // Update display
+            document.getElementById('stage-number').textContent = stage;
+            document.getElementById('stage-name').textContent = stageWisdom.name;
+            document.getElementById('stage-desc').textContent = stageWisdom.pattern_analysis;
+
+            // Update deep reflection
+            let reflection = `<strong>Stage ${stage}: ${stageWisdom.name}</strong><br><br>`;
+            reflection += `Your Life Vector: <span class="stage-metric">${vector}</span><br>`;
+            reflection += `Emotional State: <span class="stage-metric">${emotion}</span><br><br>`;
+            reflection += `<span class="insight-text">${stageWisdom.pattern_analysis}</span><br><br>`;
+            reflection += `Temporal Sentiment:<br>`;
+            reflection += `• Future: ${currentState.futureOutlook || 'Unset'}<br>`;
+            reflection += `• Past: ${currentState.pastReflection || 'Unset'}<br><br>`;
+            reflection += `System Metrics:<br>`;
+            reflection += `• Complexity: ${currentState.metrics.complexity}/10<br>`;
+            reflection += `• Stability: ${currentState.metrics.stability}/10<br>`;
+            reflection += `• Tension: ${currentState.metrics.tension}/10<br>`;
+            reflection += `• Adaptability: ${currentState.metrics.adaptability}/10<br>`;
+            reflection += `• Coherence: ${currentState.metrics.coherence}/10`;
+
+            document.getElementById('deep-reflection').innerHTML = reflection;
+
+            // Generate Oracle Output
+            let oracleText = `<strong>Oracle Guidance: ${stageWisdom.name}</strong><br><br>`;
+            oracleText += `<span class="insight-text">${stageWisdom.oracle_guidance}</span><br><br>`;
+            oracleText += `<strong>Navigation Protocol:</strong><br>${stageWisdom.navigation_protocol}<br><br>`;
+            oracleText += `<strong>Intent for This Session:</strong><br>`;
+            oracleText += `Your intention is <span class="stage-metric">${currentState.intention || 'Exploration'}</span>, which guides your journey through this stage.`;
+
+            document.getElementById('oracle-output').innerHTML = oracleText;
+
+            // Update radar
+            updateRadarChart();
+        }
+
+        // ===== SHARE FUNCTIONALITY =====
+        function shareReading() {
+            if (currentState.currentStage === null) {
+                alert('Please run an analysis first');
+                return;
+            }
+
+            const stage = currentState.currentStage;
+            const stageName = WISDOM_BASE.stages[stage].name;
+            const text = `I am currently navigating Stage ${stage}: ${stageName} on the LUMINARK Antikythera Protocol.\n\nVector: ${currentState.lifeVector}\nIntention: ${currentState.intention || 'Exploration'}\n\nDiscover your stage: https://luminark-six.vercel.app/`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'LUMINARK Antikythera Protocol',
+                    text: text
+                });
+            } else {
+                alert(text);
+            }
+        }
+
+        // ===== TAB SWITCHING FOR ORACLE + CHAT =====
+        function switchTab(tabName) {
+            const oraclePanel = document.getElementById('oracle-panel');
+            const chatPanel = document.getElementById('chat-panel');
+            const oracleBtn = document.getElementById('tab-oracle');
+            const chatBtn = document.getElementById('tab-chat');
+
+            if (tabName === 'oracle') {
+                oraclePanel.style.display = 'block';
+                chatPanel.style.display = 'none';
+                oracleBtn.style.background = 'var(--secondary)';
+                oracleBtn.style.color = 'var(--text)';
+                chatBtn.style.background = 'transparent';
+                chatBtn.style.color = 'var(--text-muted)';
+            } else if (tabName === 'chat') {
+                oraclePanel.style.display = 'none';
+                chatPanel.style.display = 'block';
+                oracleBtn.style.background = 'transparent';
+                oracleBtn.style.color = 'var(--text-muted)';
+                chatBtn.style.background = 'var(--secondary)';
+                chatBtn.style.color = 'var(--text)';
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateRadarChart();
+        });
     </script>
-
 </body>
-
 </html>
