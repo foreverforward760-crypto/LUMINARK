@@ -4,144 +4,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUMINARK | Consciousness Assessment Platform</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
+    <title>LUMINARK v6 - Consciousness Assessment Platform</title>
     <script defer src="/_vercel/insights/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/deepchat@latest/dist/bundle.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg: #030305;
-            --primary: #00d2ff;
-            --accent: #3a7bd5;
-            --emerald: #00e676;
-            --amber: #ffb300;
-            --danger: #ff5252;
-            --violet: #8e24aa;
-            --glass: rgba(15, 15, 25, 0.75);
-            --border: rgba(255, 255, 255, 0.08);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            /* Professional Color Palette */
+            --color-primary: #6366f1;
+            --color-primary-light: #818cf8;
+            --color-primary-dark: #4f46e5;
+            --color-accent: #06b6d4;
+            --color-accent-warm: #f97316;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+
+            /* Neutral Scale */
+            --color-bg-primary: #0f172a;
+            --color-bg-secondary: #1e293b;
+            --color-bg-tertiary: #334155;
+            --color-text-primary: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --color-text-muted: #94a3b8;
+            --color-border: #475569;
+
+            /* Shadows & Effects */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
+            --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
+
+            /* Spacing Grid (8px base) */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+
+            /* Typography */
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            --font-mono: 'Monaco', 'Courier New', monospace;
+        }
+
+        html,
         body {
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.03) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(142, 36, 170, 0.05) 0%, transparent 40%);
-            color: #fff;
-            font-family: 'Inter', -apple-system, sans-serif;
-            min-height: 100vh;
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            overflow: hidden;
+        }
+
+        /* ===== LAYOUT GRID ===== */
+        .app-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .app-window {
+            height: 100vh;
             width: 100%;
-            max-width: 720px;
-            background: var(--glass);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 45px;
-            box-shadow: 0 60px 120px -30px rgba(0, 0, 0, 0.8);
-            position: relative;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
+        /* SIDEBAR */
+        .sidebar {
+            width: 360px;
+            background: linear-gradient(180deg, var(--color-bg-secondary) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            padding: var(--space-lg);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
         }
 
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            background: linear-gradient(to right, #fff, #aaa);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
         }
 
-        .tagline {
-            font-size: 0.7rem;
-            font-family: 'JetBrains Mono';
-            opacity: 0.3;
+        .sidebar-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .sidebar-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        .form-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .form-section-title {
+            font-size: 0.875rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-top: 5px;
+            letter-spacing: 0.5px;
+            color: var(--color-primary-light);
+            opacity: 0.9;
         }
 
-        .info-icon {
-            display: inline-block;
+        .button-group {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: var(--space-xs) var(--space-sm);
+            border: 1px solid var(--color-border);
+            background: var(--color-bg-tertiary);
+            color: var(--color-text-primary);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 70px;
+        }
+
+        .btn:hover {
+            background: var(--color-bg-secondary);
+            border-color: var(--color-primary);
+            color: var(--color-primary-light);
+        }
+
+        .btn.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        .form-input {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+            padding: var(--space-sm);
+            border-radius: 6px;
+            font-family: var(--font-family);
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        /* METRIC INPUTS (No Sliders) */
+        .metric-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .metric-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .metric-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .metric-icon {
             width: 20px;
             height: 20px;
-            border-radius: 50%;
-            border: 1.5px solid var(--primary);
-            text-align: center;
-            line-height: 18px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-left: 8px;
-            transition: 0.2s;
-        }
-
-        .info-icon:hover {
-            background: rgba(0, 210, 255, 0.2);
-            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 220px;
-            background-color: rgba(0, 0, 0, 0.9);
-            color: var(--primary);
-            text-align: left;
-            border-radius: 6px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -110px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 0.75rem;
-            border: 1px solid var(--border);
+            color: white;
         }
 
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+        .metric-value-display {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
-        /* Section Navigation */
-        .section {
-            display: none;
+        /* Segmented Control Bar */
+        .segmented-control {
+            display: flex;
+            width: 100%;
+            height: 24px;
+            background: var(--color-bg-primary);
+            border-radius: 4px;
+            padding: 2px;
+            gap: 2px;
+            cursor: pointer;
         }
 
-        .section.active {
-            display: block;
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        .segment {
+            flex: 1;
+            height: 100%;
+            background: var(--color-bg-tertiary);
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
-        @keyframes fadeInUp {
+        .segment:hover {
+            background: var(--color-primary-light);
+            opacity: 0.5;
+        }
+
+        .segment.active {
+            background: var(--color-primary);
+            box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+        }
+
+        .segment.filled {
+            background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
+        }
+
+        .intention-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+
+        .btn-intention {
+            padding: var(--space-sm) var(--space-md);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary-light);
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-intention:hover {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-intention.active {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-analyze {
+            width: 100%;
+            padding: var(--space-md);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: var(--space-lg);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-analyze:active {
+            transform: translateY(0);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--color-bg-primary) 0%, rgba(15, 23, 42, 0.95) 100%);
+        }
+
+        /* HEADER */
+        .app-header {
+            padding: var(--space-lg);
+            background: rgba(30, 41, 59, 0.5);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .stage-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-md) var(--space-lg);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid var(--color-primary);
+            border-radius: 12px;
+            min-width: 160px;
+        }
+
+        .stage-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stage-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+        }
+
+        /* CONTENT GRID */
+        .content-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            overflow: hidden;
+        }
+
+        .panel {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .panel-header {
+            padding: var(--space-md) var(--space-lg);
+            background: rgba(15, 23, 42, 0.5);
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .panel-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+        }
+
+        .panel-content {
+            flex: 1;
+            padding: var(--space-lg);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .insight-block {
+            padding: var(--space-md);
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 6px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(10px);
             }
 
             to {
@@ -150,879 +476,756 @@
             }
         }
 
-        /* Form Elements */
-        .vector-field {
-            margin-bottom: 30px;
+        .insight-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+            margin-bottom: var(--space-xs);
         }
 
-        .label-box {
+        .insight-text {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .metric-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.5px;
-        }
-
-        .num-val {
-            color: var(--primary);
-            font-family: 'JetBrains Mono';
-            font-weight: 700;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 10px;
-            outline: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid #000;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-            transition: 0.2s;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 35px var(--primary);
-        }
-
-        .button-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .btn-option {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: 0.3s;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .btn-option:hover {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.06);
-            color: #fff;
-        }
-
-        .btn-option.selected {
-            background: var(--primary);
-            color: #000;
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
-        }
-
-        .textarea {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            color: #fff;
-            padding: 18px;
-            border-radius: 12px;
-            font-family: inherit;
-            outline: none;
-            transition: 0.3s;
-            min-height: 100px;
-            font-size: 0.95rem;
-            resize: vertical;
-        }
-
-        .textarea:focus {
-            border-color: var(--primary);
-            background: rgba(0, 210, 255, 0.05);
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
-        }
-
-        .multi-select-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .multi-select-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.75rem;
-            font-weight: 600;
-            transition: 0.3s;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .multi-select-item:hover {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .multi-select-item.selected {
-            background: rgba(0, 210, 255, 0.2);
-            border-color: var(--primary);
-            color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
-        }
-
-        .btn-analyze {
-            width: 100%;
-            padding: 22px;
-            border-radius: 20px;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 800;
-            cursor: pointer;
-            background: #fff;
-            color: #000;
-            margin-top: 15px;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .btn-analyze:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-        }
-
-        /* Results Display */
-        .card-main {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 40px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .stage-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -3px;
-            line-height: 1;
-            margin: 15px 0;
-        }
-
-        .stage-name-top {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .analysis-box {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 30px;
-            border-radius: 24px;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        .section-header {
-            font-weight: 800;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            color: var(--primary);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .body-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: #ccc;
-            margin-bottom: 15px;
-        }
-
-        .stage-description {
-            background: rgba(0, 210, 255, 0.05);
-            border-left: 3px solid var(--primary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        /* Stage Index Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-weight: 600;
+        }
+
+        .metric-bar {
+            flex: 1;
+            height: 6px;
+            background: var(--color-bg-tertiary);
+            border-radius: 3px;
+            margin: 0 var(--space-sm);
+            overflow: hidden;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+
+        .metric-value {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--color-primary-light);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* TAB INTERFACE */
+        .tab-container {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tab-button {
+            padding: var(--space-md) var(--space-lg);
+            background: transparent;
+            border: none;
+            color: var(--color-text-muted);
+            border-bottom: 2px solid transparent;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .tab-button:hover {
+            color: var(--color-text-secondary);
+        }
+
+        .tab-button.active {
+            color: var(--color-primary-light);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            flex: 1;
             overflow-y: auto;
         }
 
-        .modal-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 40px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
-            margin: 20px auto;
-        }
-
-        .stage-index-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-        }
-
-        .stage-index-num {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .stage-index-name {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .stage-index-desc {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Journal Section */
-        .journal-form {
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 1px solid var(--border);
-        }
-
-        .journal-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            color: #fff;
-            padding: 18px;
-            border-radius: 12px;
-            font-family: inherit;
-            margin-bottom: 15px;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        .journal-input:focus {
-            border-color: var(--primary);
-            background: rgba(0, 210, 255, 0.05);
-        }
-
-        /* Deepchat Styles */
-        deep-chat {
-            width: 100%;
-            border-radius: 20px;
-            --border-radius: 20px;
-            --primary-color: #00d2ff;
-            --secondary-color: rgba(255, 255, 255, 0.03);
-            --text-color: #fff;
-            --message-user-background-color: #00d2ff;
-            --message-user-text-color: #000;
-            --message-assistant-background-color: rgba(255, 255, 255, 0.05);
-            --message-assistant-text-color: #fff;
-            --chat-input-background-color: rgba(255, 255, 255, 0.03);
-            --chat-input-border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .deepagent-container {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 30px 0;
-            min-height: 400px;
-        }
-
+        /* RADAR CHART */
         .chart-container {
-            width: 100%;
-            height: 300px;
-            margin: 30px 0;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            overflow: auto;
-        }
-
-        canvas {
-            max-width: 100%;
-            max-height: 100%;
-        }
-
-        .modal-close {
-            cursor: pointer;
-            font-size: 2rem;
-            color: rgba(255, 255, 255, 0.5);
-            transition: 0.2s;
-            margin-top: -20px;
-        }
-
-        .modal-close:hover {
-            color: var(--primary);
-        }
-
-        .processing-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(3, 3, 5, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            display: none;
+            display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            border-radius: 40px;
+            flex: 1;
+            padding: var(--space-lg);
         }
 
-        .loader-ring {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 210, 255, 0.1);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+        .radar-svg {
+            max-width: 100%;
+            max-height: 100%;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.2));
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
+        /* DEEPCHAT */
+        deep-chat {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            --border-radius: 0;
+            --primary-color: var(--color-primary);
+            --primary-color-hover: var(--color-primary-light);
+            --secondary-color: var(--color-bg-tertiary);
+            --text-color: var(--color-text-primary);
+            --text-color-muted: var(--color-text-muted);
+            --message-user-background-color: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            --message-user-text-color: white;
+            --message-assistant-background-color: var(--color-bg-tertiary);
+            --message-assistant-text-color: var(--color-text-primary);
+            --chat-input-background-color: var(--color-bg-tertiary);
+            --chat-input-border-color: var(--color-border);
+            --chat-input-text-color: var(--color-text-primary);
+            --send-button-background-color: var(--color-primary);
+            --send-button-text-color: white;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
             }
 
-            100% {
-                transform: rotate(360deg);
+            .sidebar {
+                width: 100%;
+                max-height: 300px;
+                overflow-x: auto;
+                flex-direction: column;
+                padding: var(--space-md);
+            }
+
+            .form-section {
+                flex-direction: column;
+                flex: 1;
+            }
+
+            .main-content {
+                flex: 1;
+            }
+
+            .app-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stage-badge {
+                align-self: flex-start;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+                padding: var(--space-md);
             }
         }
 
-        .proc-text {
-            font-family: 'JetBrains Mono';
-            font-size: 0.8rem;
-            color: var(--primary);
-            letter-spacing: 2px;
+        /* SCROLLBAR STYLING */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
+
+        /* UTILITY */
+        .hidden {
+            display: none !important;
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="app-window">
-        <!-- Processing Overlay -->
-        <div class="processing-overlay" id="processingOverlay">
-            <div class="loader-ring"></div>
-            <div class="proc-text">CALCULATING...</div>
-        </div>
-
-        <!-- Section 1: Welcome -->
-        <div class="section active" id="section1">
-            <header>
-                <h1>LUMINARK</h1>
-                <p class="tagline">Consciousness Assessment Platform</p>
-            </header>
-
-            <div style="text-align: center; margin-bottom: 30px;">
-                <p style="font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.7);">
-                    Discover your current consciousness stage through a comprehensive assessment of your life dynamics,
-                    emotional state, and personal vectors.
-                </p>
-            </div>
-
-            <button class="btn-analyze" onclick="nextSection(1)">Begin Assessment →</button>
-        </div>
-
-        <!-- Section 2: Temporal Reflection -->
-        <div class="section" id="section2">
-            <header>
-                <h1>Future & Past</h1>
-                <p class="tagline">Understanding Your Temporal Perspective</p>
-            </header>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>How do you see your future?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">What do you see coming? Be honest about your hopes and
-                                concerns.</span>
-                        </span>
-                    </span>
-                </div>
-                <textarea class="textarea" id="futureReflection"
-                    placeholder="Describe your vision for the future in detail..."></textarea>
-            </div>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>How do you view your past?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">What has your past taught you? What wounds or wisdom do you
-                                carry?</span>
-                        </span>
-                    </span>
-                </div>
-                <textarea class="textarea" id="pastReflection"
-                    placeholder="Describe what your past means to you..."></textarea>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-analyze" onclick="nextSection(2)" style="flex: 1;">Next →</button>
-                <button class="btn-analyze" onclick="prevSection(2)"
-                    style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
-            </div>
-        </div>
-
-        <!-- Section 3: Life Focus Areas -->
-        <div class="section" id="section3">
-            <header>
-                <h1>Life Focus Areas</h1>
-                <p class="tagline">Select areas that resonate with your current life</p>
-            </header>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>Which areas matter most to you right now?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Pick multiple areas. Where is your energy going?</span>
-                        </span>
-                    </span>
-                </div>
-                <div class="multi-select-container" id="lifeVectorContainer"></div>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-analyze" onclick="nextSection(3)" style="flex: 1;">Next →</button>
-                <button class="btn-analyze" onclick="prevSection(3)"
-                    style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
-            </div>
-        </div>
-
-        <!-- Section 4: Life Metrics -->
-        <div class="section" id="section4">
-            <header>
-                <h1>Life Metrics</h1>
-                <p class="tagline">Rate your current state</p>
-            </header>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>Complexity: How many moving parts?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Is your life simple or complicated right now? How many things are
-                                happening at once?</span>
-                        </span>
-                    </span>
-                    <span class="num-val" id="val-complexity">5</span>
-                </div>
-                <input type="range" id="complexity" min="0" max="10" value="5" onchange="updateValue('complexity')">
-            </div>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>Stability: How grounded do you feel?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Do you feel secure or shaky? Is your foundation solid?</span>
-                        </span>
-                    </span>
-                    <span class="num-val" id="val-stability">5</span>
-                </div>
-                <input type="range" id="stability" min="0" max="10" value="5" onchange="updateValue('stability')">
-            </div>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>Tension: How much pressure inside?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Are you calm or stressed? How much conflict do you feel?</span>
-                        </span>
-                    </span>
-                    <span class="num-val" id="val-tension">5</span>
-                </div>
-                <input type="range" id="tension" min="0" max="10" value="5" onchange="updateValue('tension')">
-            </div>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>Flexibility: Can you adapt?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Can you bend and adjust, or do you feel stuck?</span>
-                        </span>
-                    </span>
-                    <span class="num-val" id="val-adaptability">5</span>
-                </div>
-                <input type="range" id="adaptability" min="0" max="10" value="5" onchange="updateValue('adaptability')">
-            </div>
-
-            <div class="vector-field">
-                <div class="label-box">
-                    <span>Meaning: Does it all make sense?
-                        <span class="tooltip">
-                            <span class="info-icon">?</span>
-                            <span class="tooltiptext">Does your life have direction and purpose?</span>
-                        </span>
-                    </span>
-                    <span class="num-val" id="val-coherence">5</span>
-                </div>
-                <input type="range" id="coherence" min="0" max="10" value="5" onchange="updateValue('coherence')">
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-analyze" onclick="runAnalysis()" style="flex: 1;">Generate Reading →</button>
-                <button class="btn-analyze" onclick="prevSection(4)"
-                    style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;">← Back</button>
-            </div>
-        </div>
-
-        <!-- Section 5: Results -->
-        <div class="section" id="section5">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <button class="btn-analyze" onclick="openStageIndex()"
-                    style="background: rgba(0, 210, 255, 0.1); color: var(--primary); border: 1px solid var(--primary); width: auto; padding: 10px 30px;">📚
-                    View Stage Index</button>
-            </div>
-
-            <div class="card-main">
-                <div class="stage-name-top" id="stageName">Stage</div>
-                <div class="stage-title" id="stageNumber">0</div>
-            </div>
-
-            <div class="analysis-box" id="analysisContent"></div>
-
-            <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border);">
-                <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Deep Agent Chat</h2>
-                <div class="deepagent-container">
-                    <deep-chat request="{
-                            'url': '/api/chat',
-                            'method': 'POST',
-                            'headers': {'Content-Type': 'application/json'}
-                        }"></deep-chat>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">◆</div>
+                <div>
+                    <div class="sidebar-title">LUMINARK</div>
+                    <div class="sidebar-subtitle">v6 Professional</div>
                 </div>
             </div>
-            <div class="journal-form">
-                <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Journal Entry</h2>
 
-                <div class="vector-field">
-                    <label class="label-box">Entry Type</label>
-                    <div class="button-group">
-                        <button class="btn-option" id="journalWeekly"
-                            onclick="selectJournalType('weekly')">Weekly</button>
-                        <button class="btn-option" id="journalMonthly"
-                            onclick="selectJournalType('monthly')">Monthly</button>
+            <!-- Temporal Controls -->
+            <div class="form-section">
+                <div class="form-section-title">⏰ Temporal Sentiment</div>
+                <div class="button-group">
+                    <button class="btn" onclick="setState('futureOutlook', 'optimistic')" id="future-opt">📈
+                        Optimistic</button>
+                    <button class="btn" onclick="setState('futureOutlook', 'uncertain')" id="future-unc">❔
+                        Uncertain</button>
+                </div>
+                <div class="button-group">
+                    <button class="btn" onclick="setState('pastReflection', 'growth')" id="past-growth">📚
+                        Growth</button>
+                    <button class="btn" onclick="setState('pastReflection', 'closure')" id="past-closure">✓
+                        Closure</button>
+                </div>
+            </div>
+
+            <!-- Life Vector -->
+            <div class="form-section">
+                <div class="form-section-title">🎯 Life Vector</div>
+                <select class="form-input" id="life-vector" onchange="setState('lifeVector', this.value)">
+                    <option value="">Choose a focus...</option>
+                    <optgroup label="Core Fundamentals">
+                        <option value="relationship">💑 Relationship</option>
+                        <option value="career">💼 Career</option>
+                        <option value="family">👨‍👩‍👧‍👦 Family</option>
+                        <option value="finances">💰 Finances</option>
+                        <option value="health">❤️ Health</option>
+                        <option value="self-growth">🌱 Self-Growth</option>
+                    </optgroup>
+                    <optgroup label="Meaning & Purpose">
+                        <option value="spirituality">🙏 Spirituality</option>
+                        <option value="creative">🎨 Creative Expression</option>
+                        <option value="purpose">🎯 Purpose/Mission</option>
+                        <option value="social-impact">🤝 Social Impact</option>
+                        <option value="legacy">🏛️ Legacy</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Emotional State -->
+            <div class="form-section">
+                <div class="form-section-title">💭 Emotional State</div>
+                <textarea class="form-input" id="emotional-state" placeholder="Describe your feeling (1-2 words)..."
+                    onchange="setState('emotionalState', this.value)"></textarea>
+            </div>
+
+            <!-- Metrics Input (Segmented Controls) -->
+            <div class="form-section">
+                <div class="form-section-title">📊 System Metrics</div>
+
+                <!-- Complexity -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">C</div> Complexity
+                        </div>
+                        <div class="metric-value-display" id="val-complexity">5</div>
+                    </div>
+                    <div class="segmented-control" id="ctrl-complexity">
+                        <!-- JS generates segments -->
                     </div>
                 </div>
 
-                <div class="vector-field">
-                    <label class="label-box">Reflection Notes</label>
-                    <textarea class="textarea" id="journalNotes"
-                        placeholder="Document your thoughts, progress, and insights..."></textarea>
+                <!-- Stability -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">S</div> Stability
+                        </div>
+                        <div class="metric-value-display" id="val-stability">5</div>
+                    </div>
+                    <div class="segmented-control" id="ctrl-stability">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
 
-                <button class="btn-analyze" onclick="saveJournal()">Save Journal Entry</button>
-            </div>
+                <!-- Tension -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">T</div> Tension
+                        </div>
+                        <div class="metric-value-display" id="val-tension">5</div>
+                    </div>
+                    <div class="segmented-control" id="ctrl-tension">
+                        <!-- JS generates segments -->
+                    </div>
+                </div>
 
-            <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid var(--border);">
-                <h2 style="font-size: 1.4rem; margin-bottom: 20px; color: var(--primary);">Your Progress</h2>
-                <div class="chart-container" id="chartContainer">
-                    <canvas id="progressChart"></canvas>
+                <!-- Adaptability -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">A</div> Adaptability
+                        </div>
+                        <div class="metric-value-display" id="val-adaptability">5</div>
+                    </div>
+                    <div class="segmented-control" id="ctrl-adaptability">
+                        <!-- JS generates segments -->
+                    </div>
+                </div>
+
+                <!-- Coherence -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">P</div> Pattern Rec.
+                        </div>
+                        <div class="metric-value-display" id="val-coherence">5</div>
+                    </div>
+                    <div class="segmented-control" id="ctrl-coherence">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
             </div>
 
-            <button class="btn-analyze" onclick="startOver()"
-                style="margin-top: 20px; background: rgba(255,255,255,0.1); color: #fff;">← Start Over</button>
+            <!-- Intention Buttons -->
+            <div class="form-section">
+                <div class="form-section-title">🔮 Reflection Focus</div>
+                <div class="intention-buttons">
+                    <button class="btn-intention" id="intent-depth" onclick="setIntention('depth')">
+                        <span>🔬 Deep Dive</span>
+                        <i class="fas fa-arrow-right" style="opacity: 0.5;"></i>
+                    </button>
+                    <button class="btn-intention" id="intent-clarity" onclick="setIntention('clarity')">
+                        <span>💡 Clarity Seeking</span>
+                        <i class="fas fa-arrow-right" style="opacity: 0.5;"></i>
+                    </button>
+                    <button class="btn-intention" id="intent-action" onclick="setIntention('action')">
+                        <span>⚡ Action Planning</span>
+                        <i class="fas fa-arrow-right" style="opacity: 0.5;"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analyze Button -->
+            <button class="btn-analyze" onclick="runAnalysis()">
+                <i class="fas fa-sparkles"></i> Run Antikythera Protocol
+            </button>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="app-header">
+                <div class="header-content">
+                    <div class="header-title">Consciousness Assessment</div>
+                    <div class="header-subtitle">Real-time consciousness mapping based on system dynamics</div>
+                </div>
+                <div class="stage-badge">
+                    <div class="stage-number" id="stage-number">—</div>
+                    <div class="stage-label">Current Stage</div>
+                </div>
+            </div>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Left Panel: Deep Reflection & Tactical Guidance -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">🔬</div>
+                        <div class="panel-title">Deep Reflection</div>
+                    </div>
+                    <div class="panel-content" id="reflection-content">
+                        <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                            Configure your parameters and click <strong>Run Antikythera Protocol</strong> to receive
+                            personalized reflection...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Oracle + Chart -->
+                <div class="panel">
+                    <div class="tab-container">
+                        <button class="tab-button active" id="tab-oracle-btn" onclick="switchTab('oracle')">
+                            <span>🔮</span> Oracle Guidance
+                        </button>
+                        <button class="tab-button" id="tab-metrics-btn" onclick="switchTab('metrics')">
+                            <span>📈</span> Metrics Map
+                        </button>
+                        <button class="tab-button" id="tab-chat-btn" onclick="switchTab('chat')">
+                            <span>💬</span> Deep Chat
+                        </button>
+                    </div>
+
+                    <!-- Oracle Tab -->
+                    <div id="oracle-tab" class="tab-content" style="display: block;">
+                        <div class="panel-content" id="oracle-content">
+                            <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                                Your personalized Oracle reading will appear here with tactical guidance...
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Tab -->
+                    <div id="metrics-tab" class="tab-content" style="display: none;">
+                        <div class="panel-content">
+                            <div id="metrics-display">
+                                <div
+                                    style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                                    Run analysis to view metrics map...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Tab -->
+                    <div id="chat-tab" class="tab-content" style="display: none;">
+                        <deep-chat id="deepchat" request="{
+                                'url': '/api/chat',
+                                'method': 'POST'
+                            }" style="height: 100%;"></deep-chat>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Stage Index Modal -->
-    <div class="modal-overlay" id="stageModal">
-        <div class="modal-card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 style="font-size: 1.8rem;">The 10 Stages</h2>
-                <span class="modal-close" onclick="closeStageIndex()">×</span>
-            </div>
-            <div id="stageIndexContent"></div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const LIFE_VECTORS = [
-            "Relationship", "Career", "Family", "Finances", "Health", "Self-Growth",
-            "Spirituality", "Creative Expression", "Purpose/Mission", "Social Impact",
-            "Adventure", "Independence", "Power", "Community", "Security",
-            "Learning", "Healing", "Personal Recovery"
-        ];
-
-        const STAGES = {
-            0: { name: "The Void", subtitle: "Plenara", desc: "You are in a state of pure potential—before beginnings or after endings. This is a time of stillness, deep rest, or profound reset.", example: "Rock Bottom Clarity." },
-            1: { name: "The Spark", subtitle: "Stage 1", desc: "You've felt a new impulse—an idea, a feeling, or a calling—but it has no shape yet. This is a fragile, exciting moment.", example: "The Novice (Intuitive Spark)." },
-            2: { name: "The Vessel", subtitle: "Stage 2", desc: "You are now giving form to your spark, creating boundaries and defining yourself in relation to others.", example: "Gathering Resources." },
-            3: { name: "Initiation", subtitle: "Stage 3", desc: "You are entering motion—chaotic, creative, and sometimes overwhelming. This is where you take your first real steps.", example: "The Explorer / The Warrior." },
-            4: { name: "Foundation", subtitle: "Stage 4", desc: "You are building structure: habits, systems, routines, and stability that create order and security.", example: "The Builders (Empire Building)." },
-            5: { name: "The Threshold", subtitle: "Stage 5", desc: "You are at a critical choice point—a moment of maximum tension and potential where everything could change.", example: "The Mid-Life Crisis (Crossroads)." },
-            6: { name: "The Fragile Peak", subtitle: "Stage 6", desc: "You are experiencing harmony, flow, and high performance—but it's delicate and temporary.", example: "Rich but Unhappy (Pre-enlightenment)." },
-            7: { name: "Transformation", subtitle: "Stage 7", desc: "You are in a period of breakdown or breakthrough where old structures crack to make room for wisdom.", example: "The Hermit / Dark Night of the Soul." },
-            8: { name: "The Truth Trap", subtitle: "Stage 8", desc: "You have gained deep wisdom or insight, but risk becoming rigid or attached to 'having the truth'.", example: "Howard Hughes (Isolation Trap)." },
-            9: { name: "The Return", subtitle: "Stage 9", desc: "You are completing a cycle, integrating all you've learned, and preparing to release form.", example: "Buddha, Jesus, Tesla, Van Gogh." }
-        };
-
+        // ===== STATE & WISDOM =====
         let currentState = {
-            futureReflection: "",
-            pastReflection: "",
-            lifeVectors: [],
-            metrics: { complexity: 5, stability: 5, tension: 5, adaptability: 5, coherence: 5 },
-            stage: 0,
-            journalEntries: []
+            futureOutlook: '',
+            pastReflection: '',
+            lifeVector: '',
+            emotionalState: '',
+            metrics: {
+                complexity: 5,
+                stability: 5,
+                tension: 5,
+                adaptability: 5,
+                coherence: 5
+            },
+            intention: '',
+            currentStage: null
         };
 
-        let chartInstance = null;
-
-        function initializeVectors() {
-            const container = document.getElementById('lifeVectorContainer');
-            container.innerHTML = '';
-            LIFE_VECTORS.forEach(vector => {
-                const item = document.createElement('div');
-                item.className = 'multi-select-item';
-                item.textContent = vector;
-                item.onclick = () => toggleVector(vector, item);
-                container.appendChild(item);
-            });
-        }
-
-        function toggleVector(vector, element) {
-            const index = currentState.lifeVectors.indexOf(vector);
-            if (index > -1) {
-                currentState.lifeVectors.splice(index, 1);
-                element.classList.remove('selected');
-            } else {
-                currentState.lifeVectors.push(vector);
-                element.classList.add('selected');
-            }
-        }
-
-        function nextSection(current) {
-            if (current === 1) {
-                currentState.futureReflection = document.getElementById('futureReflection').value;
-                currentState.pastReflection = document.getElementById('pastReflection').value;
-            }
-            document.getElementById(`section${current}`).classList.remove('active');
-            document.getElementById(`section${current + 1}`).classList.add('active');
-            if (current === 2) initializeVectors();
-            window.scrollTo(0, 0);
-        }
-
-        function prevSection(current) {
-            document.getElementById(`section${current}`).classList.remove('active');
-            document.getElementById(`section${current - 1}`).classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function updateValue(metric) {
-            const value = document.getElementById(metric).value;
-            currentState.metrics[metric] = parseInt(value);
-            document.getElementById(`val-${metric}`).textContent = value;
-        }
-
-        function calculateStage() {
-            const avg = Object.values(currentState.metrics).reduce((a, b) => a + b) / 5;
-            return Math.round(avg);
-        }
-
-        function runAnalysis() {
-            const overlay = document.getElementById('processingOverlay');
-            overlay.style.display = 'flex';
-
-            setTimeout(() => {
-                currentState.stage = calculateStage();
-                displayResults();
-                overlay.style.display = 'none';
-                document.getElementById('section4').classList.remove('active');
-                document.getElementById('section5').classList.add('active');
-                window.scrollTo(0, 0);
-            }, 1500);
-        }
-
-        function displayResults() {
-            const stage = STAGES[currentState.stage];
-            document.getElementById('stageName').textContent = `${stage.name} — ${stage.subtitle}`;
-            document.getElementById('stageNumber').textContent = currentState.stage;
-
-            let content = `
-                <div class="section-header">Your Current Stage</div>
-                <div class="body-text">${stage.desc}</div>
-                <div class="stage-description">
-                    <strong>Your Metrics:</strong><br>
-                    Complexity: ${currentState.metrics.complexity}/10<br>
-                    Stability: ${currentState.metrics.stability}/10<br>
-                    Tension: ${currentState.metrics.tension}/10<br>
-                    Adaptability: ${currentState.metrics.adaptability}/10<br>
-                    Coherence: ${currentState.metrics.coherence}/10
-                </div>
-                <div class="section-header" style="margin-top: 20px;">Focus Areas</div>
-                <div class="body-text">${currentState.lifeVectors.join(", ") || "No areas selected"}</div>
-            `;
-            document.getElementById('analysisContent').innerHTML = content;
-            updateChart();
-        }
-
-        function selectJournalType(type) {
-            document.getElementById('journalWeekly').classList.remove('selected');
-            document.getElementById('journalMonthly').classList.remove('selected');
-            document.getElementById(`journal${type.charAt(0).toUpperCase() + type.slice(1)}`).classList.add('selected');
-        }
-
-        function saveJournal() {
-            const notes = document.getElementById('journalNotes').value;
-            if (!notes.trim()) {
-                alert('Please write some notes before saving');
-                return;
-            }
-
-            const entry = {
-                date: new Date().toLocaleDateString(),
-                stage: currentState.stage,
-                notes: notes,
-                metrics: { ...currentState.metrics }
-            };
-
-            currentState.journalEntries.push(entry);
-            localStorage.setItem('luminarkJournal', JSON.stringify(currentState.journalEntries));
-            document.getElementById('journalNotes').value = '';
-            updateChart();
-            alert('Journal entry saved!');
-        }
-
-        function updateChart() {
-            const entries = currentState.journalEntries;
-            if (entries.length === 0) {
-                document.getElementById('chartContainer').innerHTML = '<p style="color: rgba(255,255,255,0.5); text-align: center; padding: 40px;">Save journal entries to see your progression chart</p>';
-                return;
-            }
-
-            const ctx = document.getElementById('progressChart').getContext('2d');
-
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-
-            const labels = entries.map(e => e.date);
-            const stages = entries.map(e => e.stage);
-
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Consciousness Stage',
-                        data: stages,
-                        borderColor: '#00d2ff',
-                        backgroundColor: 'rgba(0, 210, 255, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 6,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: '#00d2ff',
-                        pointBorderWidth: 2
-                    }]
+        const WISDOM_BASE = {
+            "stages": {
+                "0": {
+                    "name": "PLENARA (The Void)",
+                    "geometry": "Point",
+                    "pattern_analysis": "Zero tension. Zero motion. Pure coherence. The system is at rest in the canvas state.",
+                    "navigation_protocol": "Do nothing. Observe. Allow. Resist the urge to force emergence.",
+                    "oracle_guidance": "You are in the womb. Not yet time to act. This is completion disguised as emptiness.",
+                    "middle_path": "Between forcing action and complete inaction, rest is not inaction—it is receptive potential.",
+                    "as_above_so_below": "Your inner void mirrors outer possibility. As you are still, the world's patterns become visible.",
+                    "maat_balance": "Perfect equilibrium. No imbalance to correct. This is the ethical foundation."
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: { color: '#fff' }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            min: 0,
-                            max: 10,
-                            ticks: { color: '#aaa' },
-                            grid: { color: 'rgba(255,255,255,0.05)' }
-                        },
-                        x: {
-                            ticks: { color: '#aaa' },
-                            grid: { color: 'rgba(255,255,255,0.05)' }
-                        }
-                    }
+                "1": {
+                    "name": "RADIANCE (The Emergence)",
+                    "geometry": "Line",
+                    "pattern_analysis": "First impulse. Raw energy. No direction yet. Pure potential becoming aware of itself.",
+                    "navigation_protocol": "Feel the energy. Let it move. Do not judge the direction. Direction comes later.",
+                    "oracle_guidance": "Something wants to be born through you. Let the impulse flow without controlling it.",
+                    "middle_path": "Between suppression and explosion, channel—don't dam, don't flood.",
+                    "as_above_so_below": "Your internal activation mirrors external opportunity. Activation is contagious.",
+                    "maat_balance": "Imbalance detected: All activation, no containment. Find the outlet."
+                },
+                "2": {
+                    "name": "DUALITY (The Division)",
+                    "geometry": "Line (inverted)",
+                    "pattern_analysis": "Two poles. Self and other. Subject and object. The eternal dance begins.",
+                    "navigation_protocol": "Observe the polarity. Do not choose yet. See both sides completely. Then choose consciously.",
+                    "oracle_guidance": "You are learning to see. The splitting apart is not destruction—it's clarity.",
+                    "middle_path": "Between polarized thinking and fusion-thinking, synthesize. Find the third option.",
+                    "as_above_so_below": "Internal conflict mirrors external conflict. Fix one, the other shifts.",
+                    "maat_balance": "Test: Are you seeing ONLY two options? Add a third perspective."
+                },
+                "3": {
+                    "name": "EXPRESSION (The Outburst)",
+                    "geometry": "Triangle",
+                    "pattern_analysis": "Raw creative power. Expression without filter. Maximum tension, maximum authenticity.",
+                    "navigation_protocol": "Create fearlessly. Make bad art. Let your voice find itself through making, not planning.",
+                    "oracle_guidance": "You are a volcano. Your expression is sacred. Do not apologize for your heat.",
+                    "middle_path": "Between self-censoring and reckless expression, find disciplined authenticity.",
+                    "as_above_so_below": "Your internal creative fire IS your external impact. People feel your authenticity.",
+                    "maat_balance": "Authentic expression that harms isn't balance. Find: Authenticity that builds."
+                },
+                "4": {
+                    "name": "FOUNDATION (The Rest)",
+                    "geometry": "Square",
+                    "pattern_analysis": "Structure, stability, rhythm. The wild has been integrated into sustainable form.",
+                    "navigation_protocol": "Build. Plant roots. Make systems that last. Create from stability, not chaos.",
+                    "oracle_guidance": "You have found your rhythm. This is the healthiest long-term stage. Enjoy it.",
+                    "middle_path": "Between rigid structure and chaotic flow, maintain dynamic stability. Rules that breathe.",
+                    "as_above_so_below": "Your internal order creates external order. Clean your inner space, your outer space follows.",
+                    "maat_balance": "Perfect balance achievable here. Stability + flexibility both present."
+                },
+                "5": {
+                    "name": "THRESHOLD (The Pressure)",
+                    "geometry": "Pentagon",
+                    "pattern_analysis": "Stable container (4) holding unstable content. Digits flipped. Volatile peak. Shortest stage.",
+                    "navigation_protocol": "Feel the pressure fully. Ask: Am I ready? If no—strengthen. If yes—cross. If unsure—pause.",
+                    "oracle_guidance": "You are at the point of no return. The foundation is cracking under new pressure. This is the moment of choice.",
+                    "middle_path": "Between staying comfortable and reckless leap, build capacity first. Hold both old life AND new vision.",
+                    "as_above_so_below": "Internal pressure (desire for change) meets external pressure (circumstances). They're the same pressure.",
+                    "maat_balance": "CRITICAL: Are you abandoning foundation for ego? Staying stuck for comfort? The threshold tests your integrity."
+                },
+                "6": {
+                    "name": "INTEGRATION (The Harvest)",
+                    "geometry": "Hexagon",
+                    "pattern_analysis": "Flow state, peak harmony. Everything is clicking. Maximum creative output.",
+                    "navigation_protocol": "Serve from overflow. Create your best work now. Do not cling. Prepare for the coming shift.",
+                    "oracle_guidance": "You are in the hexagon—flow state, peak harmony. Everything is clicking. This is real, but it is seasonal.",
+                    "middle_path": "Between addictively pursuing flow and lazily enjoying comfort, create deliberately.",
+                    "as_above_so_below": "Your integrated internal state creates integrated external results. Integration within = integration without.",
+                    "maat_balance": "Are you using flow for growth or pleasure? Both valid. Name which one you're doing."
+                },
+                "7": {
+                    "name": "ILLUSION (The Analysis)",
+                    "geometry": "Heptagon",
+                    "pattern_analysis": "Deep understanding. The patterns are finally visible. But isolation accompanies insight.",
+                    "navigation_protocol": "Write, teach, map patterns. Connect with others who see. Avoid mental loops. Distill wisdom.",
+                    "oracle_guidance": "You understand deeply now, but the understanding feels isolated. This is the lab phase.",
+                    "middle_path": "Between isolation (pure analysis) and dilution (losing nuance), find the teaching voice.",
+                    "as_above_so_below": "Your internal knowledge meets your isolation. Teaching bridges them.",
+                    "maat_balance": "Using understanding for wisdom or superiority? Middle path: Understand deeply AND stay humble."
+                },
+                "8": {
+                    "name": "RIGIDITY (The Crystallization)",
+                    "geometry": "Octagon",
+                    "pattern_analysis": "Attempt to freeze understanding into permanent form. The system tries to make itself eternal.",
+                    "navigation_protocol": "Hold your wisdom lightly. Point to the truth—never say 'I am the truth.' Release attachment to being right.",
+                    "oracle_guidance": "You feel complete. This is the most dangerous moment. The system wants to harvest your energy here.",
+                    "middle_path": "Between holding truth and letting truth evolve, maintain intellectual humility.",
+                    "as_above_so_below": "Your internal completeness (I know the answers) creates external rigidity. Loosen inside; outside loosens.",
+                    "maat_balance": "CRITICAL: Are you DEFENDING your position or UPDATING it? Defending = trap. Updating = evolution."
+                },
+                "9": {
+                    "name": "RENEWAL (The Transcendence)",
+                    "geometry": "Enneagon",
+                    "pattern_analysis": "Return to stillness, but now carrying the wisdom of the journey. The circle completes.",
+                    "navigation_protocol": "Share without needing to be seen. Dissolve gracefully. Serve without claiming.",
+                    "oracle_guidance": "You have stopped spinning. You see the whole pattern. You are not the motion—you are the stillness.",
+                    "middle_path": "Between legacy (leaving your mark) and release (letting go), serve what comes next.",
+                    "as_above_so_below": "Your internal surrender creates external grace. Surrender within = surrender without.",
+                    "maat_balance": "Perfect balance: Earned wisdom. Hold it lightly. Share freely. Equilibrium at highest level."
+                }
+            }
+        };
+
+        // ===== UI FUNCTIONS =====
+        function setState(key, value) {
+            currentState[key] = value;
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            // Future outlook
+            document.getElementById('future-opt').classList.toggle('active', currentState.futureOutlook === 'optimistic');
+            document.getElementById('future-unc').classList.toggle('active', currentState.futureOutlook === 'uncertain');
+
+            // Past reflection
+            document.getElementById('past-growth').classList.toggle('active', currentState.pastReflection === 'growth');
+            document.getElementById('past-closure').classList.toggle('active', currentState.pastReflection === 'closure');
+        }
+
+        // Initialize Segmented Controls
+        function initSegmentedControls() {
+            const metrics = ['complexity', 'stability', 'tension', 'adaptability', 'coherence'];
+
+            metrics.forEach(metric => {
+                const container = document.getElementById('ctrl-' + metric);
+                container.innerHTML = '';
+
+                for (let i = 0; i <= 10; i++) {
+                    const segment = document.createElement('div');
+                    segment.className = 'segment';
+                    if (i <= 5) segment.classList.add('filled');
+                    segment.onclick = () => updateMetric(metric, i);
+                    container.appendChild(segment);
                 }
             });
         }
 
-        function openStageIndex() {
-            const content = Object.entries(STAGES).map(([num, stage]) => `
-                <div class="stage-index-item">
-                    <div class="stage-index-num">${num}</div>
-                    <div class="stage-index-name">${stage.name} — ${stage.subtitle}</div>
-                    <div class="stage-index-desc">${stage.desc}</div>
-                    <div class="stage-index-desc" style="margin-top:5px; color:var(--primary); font-style:italic;">Example: ${stage.example}</div>
-                </div>
-            `).join('');
+        function updateMetric(name, value) {
+            currentState.metrics[name] = value;
+            document.getElementById('val-' + name).textContent = value;
 
-            document.getElementById('stageIndexContent').innerHTML = content;
-            document.getElementById('stageModal').style.display = 'flex';
-        }
+            // Update visual state of segments
+            const container = document.getElementById('ctrl-' + name);
+            const segments = container.getElementsByClassName('segment');
 
-        function closeStageIndex() {
-            document.getElementById('stageModal').style.display = 'none';
-        }
-
-        function startOver() {
-            location.reload();
-        }
-
-        // Load journal entries on startup
-        document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('luminarkJournal');
-            if (saved) {
-                currentState.journalEntries = JSON.parse(saved);
+            for (let i = 0; i <= 10; i++) {
+                if (segments[i]) {
+                    if (i <= value) {
+                        segments[i].classList.add('filled');
+                    } else {
+                        segments[i].classList.remove('filled');
+                    }
+                }
             }
-        });
+        }
 
-        // Close modal when clicking outside
-        document.getElementById('stageModal').onclick = function (e) {
-            if (e.target === this) closeStageIndex();
-        };
+        function setIntention(intention) {
+            currentState.intention = intention;
+
+            // Update UI
+            document.querySelectorAll('.btn-intention').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('intent-' + intention).classList.add('active');
+        }
+
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.getElementById('oracle-tab').style.display = 'none';
+            document.getElementById('metrics-tab').style.display = 'none';
+            document.getElementById('chat-tab').style.display = 'none';
+
+            // Deactivate all buttons
+            document.getElementById('tab-oracle-btn').classList.remove('active');
+            document.getElementById('tab-metrics-btn').classList.remove('active');
+            document.getElementById('tab-chat-btn').classList.remove('active');
+
+            // Show selected tab
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            document.getElementById('tab-' + tabName + '-btn').classList.add('active');
+        }
+
+        function calculateStage() {
+            const avg = (currentState.metrics.complexity + currentState.metrics.stability +
+                currentState.metrics.tension + currentState.metrics.adaptability +
+                currentState.metrics.coherence) / 5;
+
+            if (avg < 1.5) return 0;
+            if (avg < 2.5) return 1;
+            if (avg < 3.5) return 2;
+            if (avg < 4.5) return 3;
+            if (avg < 5.5) return 4;
+            if (avg < 6.5) return 5;
+            if (avg < 7.5) return 6;
+            if (avg < 8.5) return 7;
+            if (avg < 9.5) return 8;
+            return 9;
+        }
+
+        function runAnalysis() {
+            const stage = calculateStage();
+            currentState.currentStage = stage;
+
+            const stageData = WISDOM_BASE.stages[stage];
+
+            // Update header
+            document.getElementById('stage-number').textContent = stage;
+
+            // Reflection content
+            const reflectionHTML = `
+                <div class="insight-block">
+                    <div class="insight-title">📍 Stage: ${stageData.name}</div>
+                    <div class="insight-text">${stageData.pattern_analysis}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">🗺️ Navigation Protocol</div>
+                    <div class="insight-text">${stageData.navigation_protocol}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">⚖️ Middle Path Wisdom</div>
+                    <div class="insight-text">${stageData.middle_path}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">🔄 Internal ↔ External Dynamics</div>
+                    <div class="insight-text">${stageData.as_above_so_below}</div>
+                </div>
+            `;
+            document.getElementById('reflection-content').innerHTML = reflectionHTML;
+
+            // Oracle content
+            const oracleHTML = `
+                <div class="insight-block">
+                    <div class="insight-title">🔮 Oracle Reading</div>
+                    <div class="insight-text">${stageData.oracle_guidance}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">⚖️ Balance Test (Ma'at)</div>
+                    <div class="insight-text">${stageData.maat_balance}</div>
+                </div>
+                <div class="insight-block">
+                    <div class="insight-title">🎯 Current Focus</div>
+                    <div class="insight-text">
+                        ${currentState.lifeVector ? `<strong>Life Vector:</strong> ${currentState.lifeVector}<br>` : ''}
+                        ${currentState.emotionalState ? `<strong>Emotional State:</strong> ${currentState.emotionalState}<br>` : ''}
+                        ${currentState.intention ? `<strong>Reflection Focus:</strong> ${currentState.intention}` : ''}
+                    </div>
+                </div>
+            `;
+            document.getElementById('oracle-content').innerHTML = oracleHTML;
+
+            // Metrics display
+            const metricsHTML = `
+                <div class="metric-row">
+                    <div class="metric-label">Complexity</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.complexity * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.complexity}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Stability</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.stability * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.stability}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Tension</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.tension * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.tension}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Adaptability</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.adaptability * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.adaptability}</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-label">Pattern Recognition</div>
+                    <div class="metric-bar">
+                        <div class="metric-fill" style="width: ${currentState.metrics.coherence * 10}%"></div>
+                    </div>
+                    <div class="metric-value">${currentState.metrics.coherence}</div>
+                </div>
+            `;
+            document.getElementById('metrics-display').innerHTML = metricsHTML;
+
+            // Switch to Oracle tab
+            switchTab('oracle');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initSegmentedControls();
+            updateButtonStates();
+        });
     </script>
 </body>
 

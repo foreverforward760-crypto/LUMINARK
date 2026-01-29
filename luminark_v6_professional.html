@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
             --color-success: #10b981;
             --color-warning: #f59e0b;
             --color-danger: #ef4444;
-            
+
             /* Neutral Scale */
             --color-bg-primary: #0f172a;
             --color-bg-secondary: #1e293b;
@@ -33,26 +34,27 @@
             --color-text-secondary: #cbd5e1;
             --color-text-muted: #94a3b8;
             --color-border: #475569;
-            
+
             /* Shadows & Effects */
             --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.2);
             --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.2);
-            
+
             /* Spacing Grid (8px base) */
             --space-xs: 0.5rem;
             --space-sm: 1rem;
             --space-md: 1.5rem;
             --space-lg: 2rem;
             --space-xl: 3rem;
-            
+
             /* Typography */
             --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
             --font-mono: 'Monaco', 'Courier New', monospace;
         }
 
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -72,7 +74,7 @@
 
         /* SIDEBAR */
         .sidebar {
-            width: 340px;
+            width: 360px;
             background: linear-gradient(180deg, var(--color-bg-secondary) 0%, rgba(30, 41, 59, 0.95) 100%);
             border-right: 1px solid var(--color-border);
             overflow-y: auto;
@@ -171,6 +173,7 @@
             font-family: var(--font-family);
             font-size: 0.9rem;
             transition: all 0.2s ease;
+            width: 100%;
         }
 
         .form-input:focus {
@@ -188,28 +191,29 @@
             min-height: 70px;
         }
 
-        .slider-group {
+        /* METRIC INPUTS (No Sliders) */
+        .metric-group {
             display: flex;
             flex-direction: column;
-            gap: var(--space-sm);
+            gap: 8px;
         }
 
-        .slider-label {
+        .metric-label-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .slider-name {
+        .metric-name {
             font-size: 0.9rem;
             font-weight: 600;
             color: var(--color-text-secondary);
             display: flex;
             align-items: center;
-            gap: var(--space-xs);
+            gap: 8px;
         }
 
-        .slider-icon {
+        .metric-icon {
             width: 20px;
             height: 20px;
             background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
@@ -221,49 +225,49 @@
             color: white;
         }
 
-        .slider-value {
+        .metric-value-display {
+            font-family: var(--font-mono);
             font-size: 0.9rem;
             font-weight: 700;
             color: var(--color-primary-light);
-            min-width: 35px;
-            text-align: right;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
-        input[type="range"] {
+        /* Segmented Control Bar */
+        .segmented-control {
+            display: flex;
             width: 100%;
-            height: 6px;
-            border-radius: 3px;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: white;
+            height: 24px;
+            background: var(--color-bg-primary);
+            border-radius: 4px;
+            padding: 2px;
+            gap: 2px;
             cursor: pointer;
-            box-shadow: var(--shadow-md);
-            transition: all 0.2s ease;
         }
 
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: var(--shadow-lg), 0 0 10px rgba(99, 102, 241, 0.3);
+        .segment {
+            flex: 1;
+            height: 100%;
+            background: var(--color-bg-tertiary);
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
-        input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: white;
-            cursor: pointer;
-            border: none;
-            box-shadow: var(--shadow-md);
-            transition: all 0.2s ease;
+        .segment:hover {
+            background: var(--color-primary-light);
+            opacity: 0.5;
+        }
+
+        .segment.active {
+            background: var(--color-primary);
+            box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+        }
+
+        .segment.filled {
+            background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary));
         }
 
         .intention-buttons {
@@ -282,12 +286,22 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 0.9rem;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .btn-intention:hover {
             background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
             color: white;
             transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-intention.active {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            color: white;
             box-shadow: var(--shadow-glow);
         }
 
@@ -304,6 +318,8 @@
             margin-top: var(--space-lg);
             transition: all 0.3s ease;
             box-shadow: var(--shadow-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-analyze:hover {
@@ -360,6 +376,7 @@
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(6, 182, 212, 0.1));
             border: 1px solid var(--color-primary);
             border-radius: 12px;
+            min-width: 160px;
         }
 
         .stage-number {
@@ -452,6 +469,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -598,15 +616,14 @@
 
             .sidebar {
                 width: 100%;
-                max-height: 200px;
+                max-height: 300px;
                 overflow-x: auto;
-                flex-direction: row;
+                flex-direction: column;
                 padding: var(--space-md);
             }
 
             .form-section {
-                flex-direction: row;
-                flex-wrap: wrap;
+                flex-direction: column;
                 flex: 1;
             }
 
@@ -660,6 +677,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="app-container">
         <!-- SIDEBAR -->
@@ -676,12 +694,16 @@
             <div class="form-section">
                 <div class="form-section-title">⏰ Temporal Sentiment</div>
                 <div class="button-group">
-                    <button class="btn" onclick="setState('futureOutlook', 'optimistic')" id="future-opt">📈 Optimistic</button>
-                    <button class="btn" onclick="setState('futureOutlook', 'uncertain')" id="future-unc">❔ Uncertain</button>
+                    <button class="btn" onclick="setState('futureOutlook', 'optimistic')" id="future-opt">📈
+                        Optimistic</button>
+                    <button class="btn" onclick="setState('futureOutlook', 'uncertain')" id="future-unc">❔
+                        Uncertain</button>
                 </div>
                 <div class="button-group">
-                    <button class="btn" onclick="setState('pastReflection', 'growth')" id="past-growth">📚 Growth</button>
-                    <button class="btn" onclick="setState('pastReflection', 'closure')" id="past-closure">✓ Closure</button>
+                    <button class="btn" onclick="setState('pastReflection', 'growth')" id="past-growth">📚
+                        Growth</button>
+                    <button class="btn" onclick="setState('pastReflection', 'closure')" id="past-closure">✓
+                        Closure</button>
                 </div>
             </div>
 
@@ -705,86 +727,83 @@
                         <option value="social-impact">🤝 Social Impact</option>
                         <option value="legacy">🏛️ Legacy</option>
                     </optgroup>
-                    <optgroup label="Freedom & Autonomy">
-                        <option value="adventure">🚀 Adventure/Freedom</option>
-                        <option value="independence">🦅 Independence</option>
-                        <option value="power">⚡ Power/Influence</option>
-                    </optgroup>
-                    <optgroup label="Belonging & Safety">
-                        <option value="community">👥 Community</option>
-                        <option value="security">🔒 Security/Stability</option>
-                    </optgroup>
-                    <optgroup label="Experience & Recovery">
-                        <option value="pleasure">🎉 Pleasure/Joy</option>
-                        <option value="education">📖 Education/Learning</option>
-                        <option value="recovery">💪 Recovery/Healing</option>
-                        <option value="survival">🛡️ Survival/Crisis</option>
-                    </optgroup>
                 </select>
             </div>
 
             <!-- Emotional State -->
             <div class="form-section">
                 <div class="form-section-title">💭 Emotional State</div>
-                <textarea class="form-input" id="emotional-state" placeholder="Describe your feeling (1-2 words)..." onchange="setState('emotionalState', this.value)"></textarea>
+                <textarea class="form-input" id="emotional-state" placeholder="Describe your feeling (1-2 words)..."
+                    onchange="setState('emotionalState', this.value)"></textarea>
             </div>
 
-            <!-- Metrics Sliders -->
+            <!-- Metrics Input (Segmented Controls) -->
             <div class="form-section">
                 <div class="form-section-title">📊 System Metrics</div>
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <div class="slider-name">
-                            <div class="slider-icon">C</div>
-                            Complexity
+
+                <!-- Complexity -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">C</div> Complexity
                         </div>
-                        <div class="slider-value" id="complexity-val">5</div>
+                        <div class="metric-value-display" id="val-complexity">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="complexity" onchange="updateSlider('complexity')">
+                    <div class="segmented-control" id="ctrl-complexity">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
 
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <div class="slider-name">
-                            <div class="slider-icon">S</div>
-                            Stability
+                <!-- Stability -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">S</div> Stability
                         </div>
-                        <div class="slider-value" id="stability-val">5</div>
+                        <div class="metric-value-display" id="val-stability">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="stability" onchange="updateSlider('stability')">
+                    <div class="segmented-control" id="ctrl-stability">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
 
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <div class="slider-name">
-                            <div class="slider-icon">T</div>
-                            Tension
+                <!-- Tension -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">T</div> Tension
                         </div>
-                        <div class="slider-value" id="tension-val">5</div>
+                        <div class="metric-value-display" id="val-tension">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="tension" onchange="updateSlider('tension')">
+                    <div class="segmented-control" id="ctrl-tension">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
 
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <div class="slider-name">
-                            <div class="slider-icon">A</div>
-                            Adaptability
+                <!-- Adaptability -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">A</div> Adaptability
                         </div>
-                        <div class="slider-value" id="adaptability-val">5</div>
+                        <div class="metric-value-display" id="val-adaptability">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="adaptability" onchange="updateSlider('adaptability')">
+                    <div class="segmented-control" id="ctrl-adaptability">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
 
-                <div class="slider-group">
-                    <div class="slider-label">
-                        <div class="slider-name">
-                            <div class="slider-icon">P</div>
-                            Pattern Recognition
+                <!-- Coherence -->
+                <div class="metric-group">
+                    <div class="metric-label-row">
+                        <div class="metric-name">
+                            <div class="metric-icon">P</div> Pattern Rec.
                         </div>
-                        <div class="slider-value" id="coherence-val">5</div>
+                        <div class="metric-value-display" id="val-coherence">5</div>
                     </div>
-                    <input type="range" min="0" max="10" value="5" id="coherence" onchange="updateSlider('coherence')">
+                    <div class="segmented-control" id="ctrl-coherence">
+                        <!-- JS generates segments -->
+                    </div>
                 </div>
             </div>
 
@@ -792,11 +811,18 @@
             <div class="form-section">
                 <div class="form-section-title">🔮 Reflection Focus</div>
                 <div class="intention-buttons">
-                    <button class="btn-intention" onclick="setIntention('depth')">🔬 Deep Dive</button>
-                    <button class="btn-intention" onclick="setIntention('clarity')">💡 Clarity Seeking</button>
-                    <button class="btn-intention" onclick="setIntention('action')">⚡ Action Planning</button>
-                    <button class="btn-intention" onclick="setIntention('integration')">🔄 Integration</button>
-                    <button class="btn-intention" onclick="setIntention('wisdom')">📚 Wisdom Seeking</button>
+                    <button class="btn-intention" id="intent-depth" onclick="setIntention('depth')">
+                        <span>🔬 Deep Dive</span>
+                        <i class="fas fa-arrow-right" style="opacity: 0.5;"></i>
+                    </button>
+                    <button class="btn-intention" id="intent-clarity" onclick="setIntention('clarity')">
+                        <span>💡 Clarity Seeking</span>
+                        <i class="fas fa-arrow-right" style="opacity: 0.5;"></i>
+                    </button>
+                    <button class="btn-intention" id="intent-action" onclick="setIntention('action')">
+                        <span>⚡ Action Planning</span>
+                        <i class="fas fa-arrow-right" style="opacity: 0.5;"></i>
+                    </button>
                 </div>
             </div>
 
@@ -830,7 +856,8 @@
                     </div>
                     <div class="panel-content" id="reflection-content">
                         <p style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
-                            Configure your parameters and click <strong>Run Antikythera Protocol</strong> to receive personalized reflection...
+                            Configure your parameters and click <strong>Run Antikythera Protocol</strong> to receive
+                            personalized reflection...
                         </p>
                     </div>
                 </div>
@@ -862,7 +889,8 @@
                     <div id="metrics-tab" class="tab-content" style="display: none;">
                         <div class="panel-content">
                             <div id="metrics-display">
-                                <div style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
+                                <div
+                                    style="color: var(--color-text-muted); text-align: center; padding: var(--space-lg) 0;">
                                     Run analysis to view metrics map...
                                 </div>
                             </div>
@@ -871,14 +899,10 @@
 
                     <!-- Chat Tab -->
                     <div id="chat-tab" class="tab-content" style="display: none;">
-                        <deep-chat
-                            id="deepchat"
-                            request="{
+                        <deep-chat id="deepchat" request="{
                                 'url': '/api/chat',
                                 'method': 'POST'
-                            }"
-                            style="height: 100%;"
-                        ></deep-chat>
+                            }" style="height: 100%;"></deep-chat>
                     </div>
                 </div>
             </div>
@@ -1024,14 +1048,49 @@
             document.getElementById('past-closure').classList.toggle('active', currentState.pastReflection === 'closure');
         }
 
-        function updateSlider(name) {
-            const value = document.getElementById(name).value;
-            currentState.metrics[name] = parseInt(value);
-            document.getElementById(name + '-val').textContent = value;
+        // Initialize Segmented Controls
+        function initSegmentedControls() {
+            const metrics = ['complexity', 'stability', 'tension', 'adaptability', 'coherence'];
+
+            metrics.forEach(metric => {
+                const container = document.getElementById('ctrl-' + metric);
+                container.innerHTML = '';
+
+                for (let i = 0; i <= 10; i++) {
+                    const segment = document.createElement('div');
+                    segment.className = 'segment';
+                    if (i <= 5) segment.classList.add('filled');
+                    segment.onclick = () => updateMetric(metric, i);
+                    container.appendChild(segment);
+                }
+            });
+        }
+
+        function updateMetric(name, value) {
+            currentState.metrics[name] = value;
+            document.getElementById('val-' + name).textContent = value;
+
+            // Update visual state of segments
+            const container = document.getElementById('ctrl-' + name);
+            const segments = container.getElementsByClassName('segment');
+
+            for (let i = 0; i <= 10; i++) {
+                if (segments[i]) {
+                    if (i <= value) {
+                        segments[i].classList.add('filled');
+                    } else {
+                        segments[i].classList.remove('filled');
+                    }
+                }
+            }
         }
 
         function setIntention(intention) {
             currentState.intention = intention;
+
+            // Update UI
+            document.querySelectorAll('.btn-intention').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('intent-' + intention).classList.add('active');
         }
 
         function switchTab(tabName) {
@@ -1051,9 +1110,9 @@
         }
 
         function calculateStage() {
-            const avg = (currentState.metrics.complexity + currentState.metrics.stability + 
-                         currentState.metrics.tension + currentState.metrics.adaptability + 
-                         currentState.metrics.coherence) / 5;
+            const avg = (currentState.metrics.complexity + currentState.metrics.stability +
+                currentState.metrics.tension + currentState.metrics.adaptability +
+                currentState.metrics.coherence) / 5;
 
             if (avg < 1.5) return 0;
             if (avg < 2.5) return 1;
@@ -1072,7 +1131,7 @@
             currentState.currentStage = stage;
 
             const stageData = WISDOM_BASE.stages[stage];
-            
+
             // Update header
             document.getElementById('stage-number').textContent = stage;
 
@@ -1164,8 +1223,10 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            initSegmentedControls();
             updateButtonStates();
         });
     </script>
 </body>
+
 </html>
