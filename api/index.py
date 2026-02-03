@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
 import json
@@ -11,7 +12,28 @@ import numpy as np
 load_dotenv()
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
 
-app = FastAPI()
+app = FastAPI(
+    title="LUMINARK API",
+    description="LUMINARK Consciousness Framework API - Including Overwatch Regulatory System",
+    version="2.0.0"
+)
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Import and include Overwatch router
+try:
+    from api.overwatch import router as overwatch_router
+    app.include_router(overwatch_router)
+except ImportError:
+    # Overwatch module not available - continue without it
+    pass
 
 # Path to Wisdom Core linked from Root
 WISDOM_PATH = os.path.join(os.path.dirname(__file__), "..", "wisdom_core.json")

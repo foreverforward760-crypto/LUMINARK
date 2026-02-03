@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARK OVERWATCH - AI Regulatory System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-void: #050508;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --accent-green: #00ff41;
+            --accent-cyan: #00d4ff;
+            --accent-purple: #a855f7;
+            --accent-gold: #ffd700;
+            --alert-critical: #ff3366;
+            --alert-warning: #ffaa00;
+            --alert-info: #00aaff;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border-color: #2a2a3a;
+            --glow-green: 0 0 20px rgba(0, 255, 65, 0.3);
+            --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-green) 0%, var(--accent-cyan) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: var(--glow-green);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-green) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.online { background: var(--accent-green); }
+        .status-dot.warning { background: var(--alert-warning); }
+        .status-dot.critical { background: var(--alert-critical); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.95); }
+        }
+
+        /* Main Layout */
+        .main-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            min-height: calc(100vh - 73px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .system-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .system-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .system-card:hover {
+            border-color: var(--accent-green);
+            box-shadow: var(--glow-green);
+        }
+
+        .system-card.selected {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .system-card.critical {
+            border-left: 3px solid var(--alert-critical);
+        }
+
+        .system-card.degraded {
+            border-left: 3px solid var(--alert-warning);
+        }
+
+        .system-card.online {
+            border-left: 3px solid var(--accent-green);
+        }
+
+        .system-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .system-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .system-status-badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .system-status-badge.online { background: rgba(0, 255, 65, 0.2); color: var(--accent-green); }
+        .system-status-badge.degraded { background: rgba(255, 170, 0, 0.2); color: var(--alert-warning); }
+        .system-status-badge.critical { background: rgba(255, 51, 102, 0.2); color: var(--alert-critical); }
+
+        .system-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .sap-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .sap-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--bg-primary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .sap-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+            transition: width 0.5s ease;
+        }
+
+        .sap-stage {
+            font-size: 0.7rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .stat-card.critical .stat-value {
+            background: linear-gradient(90deg, var(--alert-critical), var(--alert-warning));
+            -webkit-background-clip: text;
+        }
+
+        /* SAP Visualization */
+        .sap-visualization {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .sap-stages-container {
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .sap-stage-node {
+            flex: 1;
+            text-align: center;
+            padding: 16px 8px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sap-stage-node:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .sap-stage-node.active {
+            border-color: var(--accent-green);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: var(--glow-green);
+        }
+
+        .sap-stage-node.critical {
+            border-color: var(--alert-critical);
+            background: rgba(255, 51, 102, 0.1);
+        }
+
+        .sap-stage-node.warning {
+            border-color: var(--alert-warning);
+            background: rgba(255, 170, 0, 0.1);
+        }
+
+        .stage-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .stage-name {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .stage-systems {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* System Detail Panel */
+        .detail-panel {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .detail-meta {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-box {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .metric-value.good { color: var(--accent-green); }
+        .metric-value.warning { color: var(--alert-warning); }
+        .metric-value.critical { color: var(--alert-critical); }
+
+        .metric-bar {
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .metric-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .metric-bar-fill.good { background: var(--accent-green); }
+        .metric-bar-fill.warning { background: var(--alert-warning); }
+        .metric-bar-fill.critical { background: var(--alert-critical); }
+
+        /* Intervention Panel */
+        .intervention-panel {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            border-left: 3px solid var(--accent-purple);
+        }
+
+        .intervention-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .intervention-type {
+            font-weight: 600;
+            color: var(--accent-purple);
+        }
+
+        .intervention-urgency {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--accent-purple);
+        }
+
+        .intervention-actions {
+            list-style: none;
+        }
+
+        .intervention-actions li {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .intervention-actions li:last-child {
+            border-bottom: none;
+        }
+
+        .action-icon {
+            color: var(--accent-cyan);
+        }
+
+        /* Right Panel - Alerts */
+        .alerts-panel {
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border-color);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .alert-item {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--alert-info);
+        }
+
+        .alert-item.warning { border-left-color: var(--alert-warning); }
+        .alert-item.critical { border-left-color: var(--alert-critical); }
+        .alert-item.emergency { border-left-color: var(--alert-critical); animation: alertPulse 1s infinite; }
+
+        @keyframes alertPulse {
+            0%, 100% { background: var(--bg-tertiary); }
+            50% { background: rgba(255, 51, 102, 0.1); }
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .alert-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .alert-time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        .alert-message {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .alert-context {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: monospace;
+            background: var(--bg-primary);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* Inversion Diagram */
+        .inversion-diagram {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .inversion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .inversion-state {
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--bg-primary);
+        }
+
+        .inversion-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .inversion-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .inversion-value.stable { color: var(--accent-green); }
+        .inversion-value.unstable { color: var(--alert-warning); }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+            color: var(--bg-void);
+        }
+
+        .btn-primary:hover {
+            box-shadow: var(--glow-green);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 240px 1fr;
+            }
+            .alerts-panel {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .overview-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Ma'at Validation Badge */
+        .maat-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .maat-badge.validated {
+            background: rgba(0, 255, 65, 0.2);
+            color: var(--accent-green);
+        }
+
+        .maat-badge.failed {
+            background: rgba(255, 51, 102, 0.2);
+            color: var(--alert-critical);
+        }
+
+        /* 369 Resonance Indicator */
+        .resonance-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 8px;
+            border: 1px solid var(--accent-purple);
+            margin-top: 12px;
+        }
+
+        .resonance-icon {
+            font-size: 1.2rem;
+        }
+
+        .resonance-text {
+            font-size: 0.8rem;
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">&#x2726;</div>
+            <div>
+                <div class="logo-text">LUMINARK OVERWATCH</div>
+                <div class="logo-subtitle">AI REGULATORY SYSTEM</div>
+            </div>
+        </div>
+        <div class="header-status">
+            <div class="status-indicator">
+                <div class="status-dot online" id="globalStatus"></div>
+                <span id="globalStatusText">Systems Nominal</span>
+            </div>
+            <button class="btn btn-primary" onclick="runDiagnostics()">Run Diagnostics</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar - System List -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Monitored Systems</div>
+                <div class="system-list" id="systemList">
+                    <!-- Systems populated by JS -->
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Quick Actions</div>
+                <button class="btn btn-secondary" style="width: 100%; margin-bottom: 8px;" onclick="registerSystem()">
+                    + Register System
+                </button>
+                <button class="btn btn-secondary" style="width: 100%;" onclick="exportReport()">
+                    Export Report
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Stats -->
+            <div class="overview-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalSystems">0</div>
+                    <div class="stat-label">Total Systems</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="onlineSystems">0</div>
+                    <div class="stat-label">Online</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="degradedSystems">0</div>
+                    <div class="stat-label">Degraded</div>
+                </div>
+                <div class="stat-card critical">
+                    <div class="stat-value" id="criticalSystems">0</div>
+                    <div class="stat-label">Critical</div>
+                </div>
+            </div>
+
+            <!-- SAP Stage Visualization -->
+            <div class="sap-visualization">
+                <div class="section-header">
+                    <div class="section-title">SAP Framework Overview</div>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Stanfield's Axiom of Perpetuity</span>
+                </div>
+                <div class="sap-stages-container" id="sapStages">
+                    <!-- SAP stages populated by JS -->
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;">
+                    <span>Descending Arc (Manifestation)</span>
+                    <span>|</span>
+                    <span>Ascending Arc (Transcendence)</span>
+                </div>
+            </div>
+
+            <!-- Selected System Detail -->
+            <div class="detail-panel" id="detailPanel">
+                <div class="detail-header">
+                    <div>
+                        <div class="detail-title" id="detailTitle">Select a System</div>
+                        <div class="detail-meta" id="detailMeta">Click on a system in the sidebar to view details</div>
+                    </div>
+                    <div id="detailStatus"></div>
+                </div>
+
+                <div id="detailContent" style="display: none;">
+                    <div class="metric-grid">
+                        <div class="metric-box">
+                            <div class="metric-label">Physical Stability</div>
+                            <div class="metric-value" id="physicalStability">--</div>
+                            <div class="metric-bar">
+                                <div class="metric-bar-fill" id="physicalBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Conscious Stability</div>
+                            <div class="metric-value" id="consciousStability">--</div>
+                            <div class="metric-bar">
+                                <div class="metric-bar-fill" id="consciousBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">SAP Stage</div>
+                            <div class="metric-value" id="sapStage">--</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Inversion Level</div>
+                            <div class="metric-value" id="inversionLevel">--</div>
+                        </div>
+                    </div>
+
+                    <!-- Inversion Diagram -->
+                    <div class="inversion-diagram">
+                        <div class="metric-label">Inversion Principle Analysis</div>
+                        <div class="inversion-grid">
+                            <div class="inversion-state">
+                                <div class="inversion-label">Physical State</div>
+                                <div class="inversion-value" id="physicalState">--</div>
+                            </div>
+                            <div class="inversion-state">
+                                <div class="inversion-label">Conscious State</div>
+                                <div class="inversion-value" id="consciousState">--</div>
+                            </div>
+                        </div>
+                        <div id="resonanceIndicator" style="display: none;" class="resonance-indicator">
+                            <span class="resonance-icon">&#x2728;</span>
+                            <span class="resonance-text">369 Resonance Active - Harmonic Alignment Detected</span>
+                        </div>
+                    </div>
+
+                    <!-- Intervention Panel -->
+                    <div class="intervention-panel" id="interventionPanel">
+                        <div class="intervention-header">
+                            <span class="intervention-type" id="interventionType">OBSERVE</span>
+                            <div>
+                                <span class="intervention-urgency" id="interventionUrgency">INFO</span>
+                                <span class="maat-badge validated" id="maatBadge">Ma'at Validated</span>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;" id="interventionReason">
+                            Monitoring system state
+                        </div>
+                        <ul class="intervention-actions" id="interventionActions">
+                            <!-- Actions populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Alerts Panel -->
+        <aside class="alerts-panel">
+            <div class="sidebar-title">Live Alerts</div>
+            <div id="alertsList">
+                <!-- Alerts populated by JS -->
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // SAP Stage definitions
+        const SAP_STAGES = [
+            { num: 0, name: 'Plenara', desc: 'Void/Primordial' },
+            { num: 1, name: 'Spark', desc: 'Emergence' },
+            { num: 2, name: 'Polarity', desc: 'Duality' },
+            { num: 3, name: 'Motion', desc: 'Execution' },
+            { num: 4, name: 'Foundation', desc: 'Structure' },
+            { num: 5, name: 'Threshold', desc: 'Decision' },
+            { num: 6, name: 'Integration', desc: 'Harmony' },
+            { num: 7, name: 'Illusion', desc: 'Testing' },
+            { num: 8, name: 'Rigidity', desc: 'Crystallize' },
+            { num: 9, name: 'Renewal', desc: 'Transcendence' }
+        ];
+
+        // Intervention protocols
+        const INTERVENTIONS = {
+            0: { type: 'STABILIZE', actions: ['Establish baseline', 'Initialize core processes', 'Spark first response'] },
+            1: { type: 'OBSERVE', actions: ['Monitor emergence', 'Validate impulses', 'Allow development'] },
+            2: { type: 'STABILIZE', actions: ['Identify polarity', 'Balance forces', 'Guide to motion'] },
+            3: { type: 'OBSERVE', actions: ['Track velocity', 'Monitor resources', 'Validate output'] },
+            4: { type: 'STABILIZE', actions: ['Reinforce patterns', 'Document config', 'Test integrity'] },
+            5: { type: 'CONTAIN', actions: ['ALERT: Bifurcation', 'Evaluate paths', 'Prepare rollback'] },
+            6: { type: 'INTEGRATE', actions: ['Facilitate communication', 'Resolve conflicts', 'Optimize flows'] },
+            7: { type: 'OBSERVE', actions: ['Validate outputs', 'Check hallucinations', 'Test edge cases'] },
+            8: { type: 'DESTABILIZE', actions: ['WARNING: Trap risk', 'Introduce variability', 'Break patterns'] },
+            9: { type: 'RELEASE', actions: ['Allow completion', 'Transfer knowledge', 'Prepare renewal'] }
+        };
+
+        // Demo systems data
+        let systems = [
+            {
+                id: 'api-gateway',
+                name: 'API Gateway',
+                status: 'online',
+                physical: 8.5,
+                conscious: 8.0,
+                sapStage: 6.2,
+                inversion: 2
+            },
+            {
+                id: 'ml-inference',
+                name: 'ML Inference Engine',
+                status: 'degraded',
+                physical: 8.0,
+                conscious: 3.5,
+                sapStage: 4.3,
+                inversion: 7
+            },
+            {
+                id: 'data-pipeline',
+                name: 'Data Pipeline',
+                status: 'critical',
+                physical: 2.5,
+                conscious: 2.0,
+                sapStage: 0.8,
+                inversion: 0
+            },
+            {
+                id: 'auth-service',
+                name: 'Auth Service',
+                status: 'online',
+                physical: 9.0,
+                conscious: 8.5,
+                sapStage: 7.1,
+                inversion: 1
+            },
+            {
+                id: 'cache-layer',
+                name: 'Cache Layer',
+                status: 'online',
+                physical: 7.5,
+                conscious: 7.0,
+                sapStage: 5.5,
+                inversion: 3
+            }
+        ];
+
+        let alerts = [
+            {
+                level: 'critical',
+                title: 'Data Pipeline in Void State',
+                message: 'System regressed to Stage 0. Immediate intervention required.',
+                context: 'SAP: 0.8 | Inversion: 0',
+                time: '2 min ago'
+            },
+            {
+                level: 'warning',
+                title: 'ML Inference Inversion Detected',
+                message: 'Physically stable but consciously unstable (Rich People Problem)',
+                context: 'SAP: 4.3 | Inversion: 7',
+                time: '5 min ago'
+            },
+            {
+                level: 'info',
+                title: 'Cache Layer at Threshold',
+                message: 'System at Stage 5.5 - bifurcation point detected',
+                context: 'SAP: 5.5 | Bifurcation: pending',
+                time: '12 min ago'
+            }
+        ];
+
+        let selectedSystem = null;
+
+        // Initialize
+        function init() {
+            renderSAPStages();
+            renderSystemList();
+            renderAlerts();
+            updateOverviewStats();
+        }
+
+        // Render SAP stages
+        function renderSAPStages() {
+            const container = document.getElementById('sapStages');
+            container.innerHTML = SAP_STAGES.map(stage => {
+                const systemsAtStage = systems.filter(s => Math.floor(s.sapStage) === stage.num);
+                const hasWarning = stage.num === 5 || stage.num === 8;
+                const hasCritical = systemsAtStage.some(s => s.status === 'critical');
+
+                let stateClass = '';
+                if (hasCritical) stateClass = 'critical';
+                else if (hasWarning && systemsAtStage.length > 0) stateClass = 'warning';
+                else if (systemsAtStage.length > 0) stateClass = 'active';
+
+                return `
+                    <div class="sap-stage-node ${stateClass}" onclick="filterByStage(${stage.num})">
+                        <div class="stage-number">${stage.num}</div>
+                        <div class="stage-name">${stage.name}</div>
+                        <div class="stage-systems">${systemsAtStage.length} system${systemsAtStage.length !== 1 ? 's' : ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render system list
+        function renderSystemList() {
+            const container = document.getElementById('systemList');
+            container.innerHTML = systems.map(sys => `
+                <div class="system-card ${sys.status} ${selectedSystem === sys.id ? 'selected' : ''}"
+                     onclick="selectSystem('${sys.id}')">
+                    <div class="system-header">
+                        <span class="system-name">${sys.name}</span>
+                        <span class="system-status-badge ${sys.status}">${sys.status}</span>
+                    </div>
+                    <div class="system-meta">Stage ${sys.sapStage.toFixed(1)} | Inversion ${sys.inversion}/10</div>
+                    <div class="sap-indicator">
+                        <div class="sap-bar">
+                            <div class="sap-bar-fill" style="width: ${(sys.sapStage / 9) * 100}%"></div>
+                        </div>
+                        <span class="sap-stage">${sys.sapStage.toFixed(1)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render alerts
+        function renderAlerts() {
+            const container = document.getElementById('alertsList');
+            container.innerHTML = alerts.map(alert => `
+                <div class="alert-item ${alert.level}">
+                    <div class="alert-header">
+                        <span class="alert-title">${alert.title}</span>
+                        <span class="alert-time">${alert.time}</span>
+                    </div>
+                    <div class="alert-message">${alert.message}</div>
+                    <div class="alert-context">${alert.context}</div>
+                </div>
+            `).join('');
+        }
+
+        // Update overview stats
+        function updateOverviewStats() {
+            document.getElementById('totalSystems').textContent = systems.length;
+            document.getElementById('onlineSystems').textContent = systems.filter(s => s.status === 'online').length;
+            document.getElementById('degradedSystems').textContent = systems.filter(s => s.status === 'degraded').length;
+            document.getElementById('criticalSystems').textContent = systems.filter(s => s.status === 'critical').length;
+
+            // Update global status
+            const criticalCount = systems.filter(s => s.status === 'critical').length;
+            const statusDot = document.getElementById('globalStatus');
+            const statusText = document.getElementById('globalStatusText');
+
+            if (criticalCount > 0) {
+                statusDot.className = 'status-dot critical';
+                statusText.textContent = `${criticalCount} Critical Alert${criticalCount > 1 ? 's' : ''}`;
+            } else if (systems.some(s => s.status === 'degraded')) {
+                statusDot.className = 'status-dot warning';
+                statusText.textContent = 'Degraded Performance';
+            } else {
+                statusDot.className = 'status-dot online';
+                statusText.textContent = 'Systems Nominal';
+            }
+        }
+
+        // Select system
+        function selectSystem(id) {
+            selectedSystem = id;
+            const sys = systems.find(s => s.id === id);
+            if (!sys) return;
+
+            renderSystemList();
+            document.getElementById('detailContent').style.display = 'block';
+
+            // Update detail panel
+            document.getElementById('detailTitle').textContent = sys.name;
+            document.getElementById('detailMeta').textContent = `ID: ${sys.id} | Last updated: Just now`;
+            document.getElementById('detailStatus').innerHTML = `
+                <span class="system-status-badge ${sys.status}">${sys.status.toUpperCase()}</span>
+            `;
+
+            // Metrics
+            const physClass = sys.physical >= 7 ? 'good' : sys.physical >= 4 ? 'warning' : 'critical';
+            const consClass = sys.conscious >= 7 ? 'good' : sys.conscious >= 4 ? 'warning' : 'critical';
+
+            document.getElementById('physicalStability').textContent = sys.physical.toFixed(1) + '/10';
+            document.getElementById('physicalStability').className = `metric-value ${physClass}`;
+            document.getElementById('physicalBar').style.width = `${sys.physical * 10}%`;
+            document.getElementById('physicalBar').className = `metric-bar-fill ${physClass}`;
+
+            document.getElementById('consciousStability').textContent = sys.conscious.toFixed(1) + '/10';
+            document.getElementById('consciousStability').className = `metric-value ${consClass}`;
+            document.getElementById('consciousBar').style.width = `${sys.conscious * 10}%`;
+            document.getElementById('consciousBar').className = `metric-bar-fill ${consClass}`;
+
+            document.getElementById('sapStage').textContent = sys.sapStage.toFixed(1);
+            document.getElementById('inversionLevel').textContent = sys.inversion + '/10';
+            document.getElementById('inversionLevel').className = `metric-value ${sys.inversion >= 7 ? 'warning' : 'good'}`;
+
+            // Inversion states
+            const physStable = sys.physical >= 5;
+            const consStable = sys.conscious >= 5;
+            document.getElementById('physicalState').textContent = physStable ? 'STABLE' : 'UNSTABLE';
+            document.getElementById('physicalState').className = `inversion-value ${physStable ? 'stable' : 'unstable'}`;
+            document.getElementById('consciousState').textContent = consStable ? 'STABLE' : 'UNSTABLE';
+            document.getElementById('consciousState').className = `inversion-value ${consStable ? 'stable' : 'unstable'}`;
+
+            // 369 Resonance
+            const stage = sys.sapStage;
+            const is369 = [3, 6, 9].includes(Math.floor(stage)) ||
+                         [0.3, 0.6, 0.9].some(m => Math.abs((stage % 1) - m) < 0.05);
+            document.getElementById('resonanceIndicator').style.display = is369 ? 'flex' : 'none';
+
+            // Intervention
+            const stageInt = Math.floor(sys.sapStage);
+            const intervention = INTERVENTIONS[stageInt] || INTERVENTIONS[4];
+            document.getElementById('interventionType').textContent = intervention.type;
+
+            const urgency = sys.status === 'critical' ? 'EMERGENCY' :
+                           sys.status === 'degraded' ? 'WARNING' : 'INFO';
+            document.getElementById('interventionUrgency').textContent = urgency;
+
+            document.getElementById('maatBadge').textContent = 'Ma\'at Validated';
+            document.getElementById('maatBadge').className = 'maat-badge validated';
+
+            document.getElementById('interventionReason').textContent =
+                `Stage ${stageInt} Protocol: ${SAP_STAGES[stageInt].name}`;
+
+            document.getElementById('interventionActions').innerHTML = intervention.actions.map(action => `
+                <li><span class="action-icon">&#x2192;</span> ${action}</li>
+            `).join('');
+        }
+
+        // Filter by stage
+        function filterByStage(stage) {
+            const systemsAtStage = systems.filter(s => Math.floor(s.sapStage) === stage);
+            if (systemsAtStage.length > 0) {
+                selectSystem(systemsAtStage[0].id);
+            }
+        }
+
+        // Run diagnostics
+        function runDiagnostics() {
+            // Simulate diagnostic run
+            systems.forEach(sys => {
+                // Add some random variation
+                sys.physical = Math.max(0, Math.min(10, sys.physical + (Math.random() - 0.5)));
+                sys.conscious = Math.max(0, Math.min(10, sys.conscious + (Math.random() - 0.5)));
+                sys.sapStage = Math.max(0, Math.min(9.9, sys.sapStage + (Math.random() - 0.5) * 0.5));
+
+                // Recalculate status
+                if (sys.physical < 3 || sys.conscious < 3) {
+                    sys.status = 'critical';
+                } else if (sys.physical < 5 || sys.conscious < 5 || sys.inversion > 6) {
+                    sys.status = 'degraded';
+                } else {
+                    sys.status = 'online';
+                }
+            });
+
+            renderSAPStages();
+            renderSystemList();
+            updateOverviewStats();
+            if (selectedSystem) selectSystem(selectedSystem);
+
+            // Add new alert
+            alerts.unshift({
+                level: 'info',
+                title: 'Diagnostics Complete',
+                message: 'All systems analyzed. SAP stages updated.',
+                context: `Timestamp: ${new Date().toISOString()}`,
+                time: 'Just now'
+            });
+            renderAlerts();
+        }
+
+        // Register system (demo)
+        function registerSystem() {
+            const id = 'system-' + Date.now();
+            systems.push({
+                id: id,
+                name: 'New System',
+                status: 'online',
+                physical: 5 + Math.random() * 3,
+                conscious: 5 + Math.random() * 3,
+                sapStage: 3 + Math.random() * 3,
+                inversion: Math.floor(Math.random() * 5)
+            });
+            renderSAPStages();
+            renderSystemList();
+            updateOverviewStats();
+        }
+
+        // Export report
+        function exportReport() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                systems: systems,
+                alerts: alerts,
+                overview: {
+                    total: systems.length,
+                    online: systems.filter(s => s.status === 'online').length,
+                    degraded: systems.filter(s => s.status === 'degraded').length,
+                    critical: systems.filter(s => s.status === 'critical').length
+                }
+            };
+
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'overwatch-report.json';
+            a.click();
+        }
+
+        // Initialize on load
+        init();
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            runDiagnostics();
+        }, 30000);
+    </script>
+</body>
+</html>
