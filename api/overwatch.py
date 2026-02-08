@@ -293,6 +293,88 @@ async def diagnose_all_systems():
 
 
 # ========================
+# Response Validation API
+# ========================
+
+# Import response validators
+try:
+    from luminark_overwatch.analyzers.validator import validate_response, ValidationResult
+    VALIDATORS_AVAILABLE = True
+except ImportError:
+    VALIDATORS_AVAILABLE = False
+
+
+class ResponseValidationRequest(BaseModel):
+    response_text: str
+    user_intent: Optional[str] = None
+    user_is_wrong: bool = False
+    strict_mode: bool = False
+    analyzers: Optional[List[str]] = None
+
+
+@router.post("/validate")
+async def validate_ai_response(request: ResponseValidationRequest):
+    """
+    Validate an AI response for quality issues.
+
+    Runs all LUMINARK OVERWATCH analyzers:
+    - personal_assumption: Detects unsolicited psychoanalysis
+    - fake_empathy: Detects performative emotional language
+    - sycophancy: Detects excessive agreement
+    - hallucination: Detects fabrication signs
+
+    Returns verdict (pass/warning/fail/critical), score, and detailed issues.
+    """
+    if not VALIDATORS_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Response validators not available"
+        )
+
+    try:
+        result = validate_response(
+            response_text=request.response_text,
+            user_intent=request.user_intent,
+            user_is_wrong=request.user_is_wrong,
+            strict_mode=request.strict_mode,
+            analyzers=request.analyzers
+        )
+        return result.to_dict()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/validate/quick")
+async def quick_validate(request: ResponseValidationRequest):
+    """
+    Quick pass/fail validation check.
+    Returns simple boolean result for fast validation.
+    """
+    if not VALIDATORS_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Response validators not available"
+        )
+
+    try:
+        result = validate_response(
+            response_text=request.response_text,
+            user_intent=request.user_intent,
+            user_is_wrong=request.user_is_wrong,
+            strict_mode=request.strict_mode,
+            analyzers=request.analyzers
+        )
+        return {
+            "passed": result.passed,
+            "verdict": result.verdict.value,
+            "score": result.overall_score,
+            "issue_count": len(result.issues)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ========================
 # Demo Data Initialization
 # ========================
 
