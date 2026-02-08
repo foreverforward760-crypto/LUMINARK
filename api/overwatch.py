@@ -375,6 +375,67 @@ async def quick_validate(request: ResponseValidationRequest):
 
 
 # ========================
+# Partner Bundle Export
+# ========================
+
+try:
+    from luminark_overwatch.export_bundle import create_partner_bundle
+    BUNDLE_EXPORT_AVAILABLE = True
+except ImportError:
+    BUNDLE_EXPORT_AVAILABLE = False
+
+
+@router.get("/export/bundle")
+async def export_partner_bundle():
+    """
+    Export comprehensive partner bundle as ZIP.
+
+    Returns ZIP containing:
+    - README.txt: Bundle overview
+    - systems_report.csv: All systems with SAP diagnostics
+    - systems_report.json: Full JSON export
+    - alerts.csv: Alert history
+    - overwatch_summary.html: Visual summary
+    """
+    if not BUNDLE_EXPORT_AVAILABLE:
+        raise HTTPException(
+            status_code=503,
+            detail="Bundle export not available"
+        )
+
+    from fastapi.responses import Response
+
+    try:
+        overview = overwatch.get_overview()
+        systems = overview.get("systems", [])
+        alerts_data = overwatch.get_alerts(limit=100)
+        alerts = [
+            {
+                "system_id": a.system_id,
+                "level": a.level.name,
+                "title": a.title,
+                "message": a.message,
+                "sap_context": a.sap_context,
+                "timestamp": a.timestamp.isoformat(),
+                "acknowledged": a.acknowledged
+            }
+            for a in alerts_data
+        ]
+
+        bundle_bytes = create_partner_bundle(overview, systems, alerts)
+
+        return Response(
+            content=bundle_bytes,
+            media_type="application/zip",
+            headers={
+                "Content-Disposition": "attachment; filename=luminark_overwatch_bundle.zip"
+            }
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ========================
 # Demo Data Initialization
 # ========================
 
