@@ -52,9 +52,10 @@ Optional environment settings:
 
 The repository includes selected scenario-based tests. They are useful for checking that specific code paths produce expected outputs for the supplied examples. The test scenarios are hand-authored and small; reported percentages are scenario pass rates, not estimates of general-world accuracy or safety effectiveness.
 
-Run the safety scenario tests with:
+Run the regression checks with:
 
 ```bash
+python -m unittest discover -s tests -v
 python test_safety_protocols.py
 ```
 
@@ -64,7 +65,7 @@ A passing test suite does not establish production readiness or independent vali
 
 - Repository-wide dependencies and installation paths have not yet been fully reconciled.
 - Some modules are optional, experimental, or dependent on packages not required by the dashboard.
-- The framework implementation contains legacy stage labels that need reconciliation with the current canonical 0-9-0 terminology.
+- The legacy framework implementation now uses the canonical stage names, but its stage-state assumptions and domain meanings still require review against the complete framework specification.
 - No independent benchmarks, prospective studies, clinical evaluations, or production customer results are established by this repository.
 - Authentication, authorization, data retention, privacy, monitoring, and deployment controls require further engineering before networked use.
 - Third-party dependency licenses and code provenance have not yet been fully inventoried.
