@@ -2,12 +2,10 @@
 """ 
 Experimental SAP-guided neural-network demonstration. The historical filename includes 'quantum', but this code uses classical PyTorch operations and does not perform quantum computation. 
 """ 
-import sys
 import torch
 import torch.nn as nn
-import numpy as np
 
-# Import from our new LUMINARK Production Framework
+# Import the experimental PyTorch components used by this demo
 from luminark.nn.layers import Module, Linear, GatedLinear
 from luminark.nn.layers import ToroidalAttention # [NEW] Imported for Hybrid Arch
 from luminark.training.trainer import LuminarkTrainer
@@ -73,7 +71,7 @@ print("\n🏗️ Building classical SAP-guided neural-network model...")
 model = MyLuminarkModel() 
 print(f" Model Architecture:\n{model}")
 
-# Step 4: Initialize Quantum & Defense Systems 
+# Step 4: Initialize the heuristic training monitor 
 print("\n🔬 Initializing rule-based SAP stage monitoring...") 
 defense = LuminarkSafetySystem() 
 
