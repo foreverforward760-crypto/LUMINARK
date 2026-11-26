@@ -10,7 +10,8 @@ Core Functions:
 3. INTERVENE - Prescribe corrections to restore balance
 4. VALIDATE - Ensure interventions pass Ma'at ethical checks
 
-Author: Richard L. Stanfield
+Conceptual framework and project direction: Richard L. Stanfield (owner's account)
+Implementation: AI-generated code under owner direction; not a legal authorship determination.
 Version: 1.0.0
 """
 
