@@ -44,7 +44,7 @@ sar = SARFramework() if SARFramework else None
 # Global state
 current_state = {
     "stage": 4,
-    "stage_name": "Foundation",
+    "stage_name": "CRUCIBLE OF EQUILIBRIUM",
     "physical_state": "stable",
     "conscious_state": "unstable",
     "inversion_level": 0,
