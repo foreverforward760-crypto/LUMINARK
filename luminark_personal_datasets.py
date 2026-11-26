@@ -1,20 +1,15 @@
 """
-LUMINARK PERSONAL ASSESSMENT - REAL DATASETS
-Research-backed content library for the personal SAP assessment tool
+LUMINARK PERSONAL ASSESSMENT - EXPLORATORY CONTENT
+Research references and interpretive content for an experimental SAP reflection tool.
 
-Includes:
-- Real psychological research citations
-- Historical case studies
-- Stage-specific interventions
-- Validated assessment questions
-- Crisis detection patterns
+The research citations do not validate SAP stage mappings, historical profiles, question items, interventions, or crisis predictions.
 """
 
 import json
 from typing import Dict, List
 
 
-# Real psychological research backing SAP stages
+# Research references used as conceptual parallels; these works do not validate SAP
 RESEARCH_FOUNDATIONS = {
     "developmental_psychology": {
         "piaget": {
@@ -57,7 +52,7 @@ RESEARCH_FOUNDATIONS = {
 }
 
 
-# Real historical figures mapped to SAP stages
+# Illustrative interpretations of historical figures through SAP; not objective or independently validated classifications
 HISTORICAL_CASE_STUDIES = {
     "stage_3_expression": [
         {
@@ -244,7 +239,7 @@ VALIDATED_QUESTIONS = {
 }
 
 
-# Stage-specific interventions (evidence-based)
+# Stage-specific reflection suggestions; not validated clinical interventions
 STAGE_INTERVENTIONS = {
     "stage_1_pulse": {
         "primary_need": "Direction and focus",
@@ -387,34 +382,32 @@ STAGE_INTERVENTIONS = {
 }
 
 
-# Real crisis patterns (from clinical psychology)
+# Exploratory framework-defined patterns; not clinical crisis predictors
 CRISIS_PATTERNS = {
     "stage_5_to_7_failure": {
-        "description": "Failed threshold crossing leads to forced crisis",
+        "description": "A framework-defined threshold pattern for reflection; not a clinical crisis prediction",
         "common_triggers": [
             "Refusing to make necessary decision",
             "Low adaptability (<5.0) at threshold",
             "External pressure forcing choice",
             "Container breach from accumulated strain"
         ],
-        "timeline": "6-18 months from threshold to crisis",
         "examples": [
             "Staying in toxic relationship → divorce crisis",
             "Ignoring career misalignment → layoff/burnout",
             "Denying health issues → medical emergency"
         ],
-        "prevention": "Increase adaptability, make threshold decision within 6 months"
+        "prevention": "Reflect on available choices and seek qualified support when needed; not a clinical intervention"
     },
     
     "stage_8_collapse": {
-        "description": "Permanence trap leads to catastrophic failure",
+        "description": "A framework-defined permanence pattern for reflection; not a forecast of failure",
         "common_triggers": [
             "Arrogance and hubris",
             "Ignoring feedback and critics",
             "Believing rules don't apply",
             "Adaptability dropping below 4.0"
         ],
-        "timeline": "3-10 years from peak to collapse",
         "examples": [
             "Lance Armstrong: 7 years from peak to scandal",
             "Tiger Woods: 4 years from peak to crisis",
@@ -431,7 +424,7 @@ def save_datasets():
     datasets = {
         "research_foundations": RESEARCH_FOUNDATIONS,
         "historical_case_studies": HISTORICAL_CASE_STUDIES,
-        "validated_questions": VALIDATED_QUESTIONS,
+        "assessment_question_examples": VALIDATED_QUESTIONS,
         "stage_interventions": STAGE_INTERVENTIONS,
         "crisis_patterns": CRISIS_PATTERNS
     }
@@ -447,11 +440,11 @@ if __name__ == "__main__":
     
     # Print summary
     print("\n" + "="*80)
-    print("LUMINARK PERSONAL ASSESSMENT - REAL DATASETS SUMMARY")
+    print("LUMINARK PERSONAL ASSESSMENT - EXPLORATORY CONTENT SUMMARY")
     print("="*80)
     print(f"\n📚 Research Citations: {len(RESEARCH_FOUNDATIONS)} categories")
     print(f"👤 Historical Case Studies: {sum(len(v) for v in HISTORICAL_CASE_STUDIES.values())} people")
-    print(f"❓ Validated Questions: {len(VALIDATED_QUESTIONS)} assessment scales")
+    print(f"❓ Question examples (not SAP-validated): {len(VALIDATED_QUESTIONS)} groups")
     print(f"💊 Stage Interventions: {len(STAGE_INTERVENTIONS)} stages covered")
     print(f"⚠️  Crisis Patterns: {len(CRISIS_PATTERNS)} patterns documented")
     print("\n" + "="*80)
