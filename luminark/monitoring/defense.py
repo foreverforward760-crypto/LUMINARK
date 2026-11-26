@@ -3,8 +3,6 @@
 LUMINARK Safety and Monitoring System
 """
 import torch
-import asyncio
-import random
 
 class LuminarkSafetySystem:
     """
@@ -37,13 +35,15 @@ class LuminarkSafetySystem:
             "action": "Trigger Yunus Protocol" if risk_level > 7 else "Log"
         }
 
+    def estimate_prediction_confidence(self, predictions_tensor):
+        """Return mean maximum softmax probability as an uncalibrated heuristic.
+
+        This is a conventional neural-network confidence proxy, not a calibrated
+        probability of correctness and not a quantum-mechanical calculation.
+        """
+        probabilities = torch.nn.functional.softmax(predictions_tensor, dim=-1)
+        return probabilities.max(dim=-1).values.mean().item()
+
     def estimate_quantum_confidence(self, predictions_tensor):
-        """Experiment 3: Use Quantum mechanics to estimate confidence"""
-        # Calculate Entropy
-        probs = torch.nn.functional.softmax(predictions_tensor, dim=-1)
-        entropy = -torch.sum(probs * torch.log(probs + 1e-9))
-        
-        # Quantum Scaling (simulated interaction)
-        q_factor = 0.85 # Mocked for speed
-            
-        return (1.0 - torch.tanh(entropy).item()) * 0.95
+        """Deprecated compatibility alias; no quantum calculation is performed."""
+        return self.estimate_prediction_confidence(predictions_tensor)
