@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 class LuminarkTrainer:
     """
-    Autonomous Training System with Verified Safety
+    Experimental training helper with heuristic monitoring; no safety verification is implied.
     """
     def __init__(self, model, safety_system):
         self.model = model
@@ -22,8 +22,8 @@ class LuminarkTrainer:
         output = self.model(x)
         loss = F.cross_entropy(output.view(-1, output.size(-1)), y.view(-1))
         
-        # 2. Quantum Verification (Experiment 3)
-        confidence = self.safety.estimate_quantum_confidence(output.detach())
+        # 2. Uncalibrated prediction-confidence heuristic
+        confidence = self.safety.estimate_prediction_confidence(output.detach())
         
         # 3. Defense Scan (Experiment 2)
         grad_norm = 0.0 # Placeholder until backward
@@ -53,7 +53,8 @@ class LuminarkTrainer:
             'loss': loss.item(),
             'confidence': confidence,
             'grad_norm': grad_norm,
-            'safety_stage': safety_status['stage_value']
+            'safety_stage': safety_status['stage_value'],
+            'description': safety_status['description']
         }
         self.history.append(metrics)
         return metrics
