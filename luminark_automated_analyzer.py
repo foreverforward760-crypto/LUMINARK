@@ -200,8 +200,9 @@ class AutomatedSAPAnalyzer:
     
     def _calculate_data_quality(self, raw_data: Dict) -> float:
         """
-        Calculate data quality score (0-100)
-        Higher score = more data sources available
+        Calculate a source-presence indicator (0-100).
+        This counts non-empty source responses; it does not measure data accuracy,
+        completeness, freshness, or reliability.
         """
         sources = raw_data.get('sources', {})
         score = 0
@@ -256,6 +257,9 @@ LUMINARK SAP CORPORATE ANALYSIS REPORT
 Company: {analysis['company_name']} ({analysis['symbol']})
 Analysis Date: {analysis['timestamp'][:10]}
 Source Coverage Indicator: {analysis['source_coverage_score']}/100
+Estimated fields: {', '.join(analysis.get('estimated_fields', []))}
+
+NOTICE: {analysis.get('analysis_notice', 'Exploratory rule-based output; not validated.')}
 
 {'='*80}
 SAP CLASSIFICATION
@@ -272,7 +276,7 @@ SPAT Vectors:
   Coherence:     {sap['spat_vectors']['coherence']:.2f}/10
 
 {'='*80}
-INVESTMENT SIGNAL
+EXPLORATORY SIGNAL — NOT INVESTMENT ADVICE
 {'='*80}
 
 Action: {sap['investment_signal']['action']}
@@ -280,6 +284,8 @@ Risk Level: {sap['investment_signal']['risk']}
 
 Rationale:
 {sap['investment_signal']['reason']}
+
+WARNING: This signal is based on unvalidated rules and estimated inputs. Do not use it as a basis for investment decisions.
 
 """
         
