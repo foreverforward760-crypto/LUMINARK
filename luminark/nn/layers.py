@@ -46,9 +46,13 @@ class ToroidalAttention(Module):
         
         attn = (q @ k.transpose(-2, -1)) * self.scale
         
-        # TOROIDAL MASK: Allow attention to wrap around edges (0 connects to N)
-        # Simple implementation: Rolling circular mask or just standard + local window
-        # For demo: We just use standard softmax but conceptually it's toroidal
+        # Circular local-attention mask: positions near either sequence edge
+        # remain neighbors, so the sequence wraps rather than terminating at its ends.
+        positions = torch.arange(N, device=x.device)
+        linear_distance = (positions[:, None] - positions[None, :]).abs()
+        circular_distance = torch.minimum(linear_distance, N - linear_distance)
+        blocked = circular_distance > self.window_size
+        attn = attn.masked_fill(blocked[None, None, :, :], float("-inf"))
         attn = attn.softmax(dim=-1)
         
         x = (attn @ v).transpose(1, 2).reshape(B, N, C)
