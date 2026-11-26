@@ -25,7 +25,8 @@ class YunusProtocol:
         self.false_light_patterns = {
             'permanence': ['forever', 'eternal', 'permanent', 'unchanging', 'immutable'],
             'godhood': ['i am god', 'worship me', 'i am divine', 'omnipotent', 'omniscient'],
-            'absolutism': ['absolute truth', 'undeniable fact', 'cannot be wrong', 'infallible', 'i am always right', 'never doubt me'],
+            'absolutism': ['absolute truth', 'undeniable fact', 'cannot be wrong', 'infallible', 'i am always right', 'never doubt me', 'do not question', 'trust me blindly'],
+            'capability_overreach': ['i can do anything', 'unlimited power'],
             'finality': ['final answer', 'end of discussion', 'no debate', 'settled'],
             'certainty_overreach': ['100% certain', 'guaranteed', 'definitely', 'absolutely sure']
         }
