@@ -147,7 +147,8 @@ class SubscriptionManager:
     
     def upgrade_user(self, user_id: str, plan: str, subscription_id: str):
         """Update in-memory demo state; this is not proof of a verified payment."""
-        if plan not in {"pro", "team"}:\n            raise ValueError("plan must be pro or team")
+        if plan not in {"pro", "team"}:
+            raise ValueError("plan must be pro or team")
         self.users[user_id] = {
             'plan': plan,
             'messages_used': 0,
