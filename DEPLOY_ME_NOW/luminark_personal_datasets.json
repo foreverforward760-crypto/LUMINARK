@@ -38,7 +38,7 @@
     },
     "crisis_psychology": {
       "kubler_ross": {
-        "citation": "K\u00fcbler-Ross, E. (1969). On Death and Dying.",
+        "citation": "Kübler-Ross, E. (1969). On Death and Dying.",
         "relevance": "Stage 7 crisis follows grief/transformation patterns",
         "stages_mapped": [
           7
@@ -89,7 +89,7 @@
           "a": 8,
           "h": 8
         },
-        "outcome": "Vietnam draft refusal \u2192 Stage 7 crisis"
+        "outcome": "Vietnam draft refusal → Stage 7 crisis"
       }
     ],
     "stage_4_foundation": [
@@ -173,7 +173,7 @@
           "a": 7,
           "h": 2
         },
-        "outcome": "Harry Potter breakthrough \u2192 Stage 3"
+        "outcome": "Harry Potter breakthrough → Stage 3"
       }
     ],
     "stage_8_unity_peak": [
@@ -188,7 +188,7 @@
           "a": 3,
           "h": 8
         },
-        "outcome": "Permanence trap \u2192 Stage 7 collapse (doping scandal)"
+        "outcome": "Permanence trap → Stage 7 collapse (doping scandal)"
       },
       {
         "name": "Tiger Woods (2009)",
@@ -201,7 +201,7 @@
           "a": 4,
           "h": 7
         },
-        "outcome": "Permanence trap \u2192 Stage 7 crisis (infidelity scandal)"
+        "outcome": "Permanence trap → Stage 7 crisis (infidelity scandal)"
       }
     ],
     "stage_9_release": [
@@ -307,7 +307,8 @@
         "score_51_100": "Threshold - Stage 5 likely",
         "score_101_150": "Crisis - Stage 7 likely"
       }
-    }
+    },
+    "status": "Question examples referencing published scales; not validated as a combined SAP assessment and not necessarily verbatim scale items."
   },
   "stage_interventions": {
     "stage_1_pulse": {
@@ -447,36 +448,41 @@
   },
   "crisis_patterns": {
     "stage_5_to_7_failure": {
-      "description": "Failed threshold crossing leads to forced crisis",
+      "description": "Exploratory SAP reflection pattern; not a clinical crisis prediction or forecast.",
       "common_triggers": [
         "Refusing to make necessary decision",
         "Low adaptability (<5.0) at threshold",
         "External pressure forcing choice",
         "Container breach from accumulated strain"
       ],
-      "timeline": "6-18 months from threshold to crisis",
       "examples": [
-        "Staying in toxic relationship \u2192 divorce crisis",
-        "Ignoring career misalignment \u2192 layoff/burnout",
-        "Denying health issues \u2192 medical emergency"
+        "Staying in toxic relationship → divorce crisis",
+        "Ignoring career misalignment → layoff/burnout",
+        "Denying health issues → medical emergency"
       ],
-      "prevention": "Increase adaptability, make threshold decision within 6 months"
+      "prevention": "Increase adaptability, make threshold decision within 6 months",
+      "notice": "No validated predictive timeline is established."
     },
     "stage_8_collapse": {
-      "description": "Permanence trap leads to catastrophic failure",
+      "description": "Exploratory SAP reflection pattern; not a clinical crisis prediction or forecast.",
       "common_triggers": [
         "Arrogance and hubris",
         "Ignoring feedback and critics",
         "Believing rules don't apply",
         "Adaptability dropping below 4.0"
       ],
-      "timeline": "3-10 years from peak to collapse",
       "examples": [
         "Lance Armstrong: 7 years from peak to scandal",
         "Tiger Woods: 4 years from peak to crisis",
         "Enron: 5 years from 'most innovative' to bankruptcy"
       ],
-      "prevention": "Monthly permanence trap audit, maintain beginner's mind"
+      "prevention": "Monthly permanence trap audit, maintain beginner's mind",
+      "notice": "No validated predictive timeline is established."
     }
+  },
+  "metadata": {
+    "status": "Exploratory SAP reflection content; not a clinically validated assessment or prediction system.",
+    "note": "Research citations do not validate SAP mappings. Question examples may be adapted from published instruments and are not validated reproductions of those instruments. Historical profiles and stage assignments are interpretive.",
+    "crisis_notice": "Crisis-pattern content is not a clinical risk assessment and does not predict events or timelines. Seek qualified help for health or safety concerns."
   }
 }
