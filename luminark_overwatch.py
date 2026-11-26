@@ -35,16 +35,16 @@ except ImportError:
     from enum import Enum as _Enum
 
     class Gate81(_Enum):
-        GATE_0T = "0: Plenara - Primordial Source"
-        GATE_1 = "1: Spark - Initial Ignition"
-        GATE_2 = "2: Polarity - Understanding Duality"
-        GATE_3 = "3: Motion - Movement, Action"
-        GATE_4 = "4: Foundation - Stability, Structure"
-        GATE_5 = "5: Threshold - Critical Decision"
-        GATE_6 = "6: Integration - Merging Dualities"
-        GATE_7 = "7: Illusion - Testing Reality"
-        GATE_8 = "8: Rigidity - Crystallization"
-        GATE_0B = "9: Renewal - Transcendence"
+        GATE_0T = "0ᵀ: PLENARA - upper Stage 0 boundary"
+        GATE_1 = "1: SPARK OF NAVIGATION"
+        GATE_2 = "2: FORGE OF POLARITY"
+        GATE_3 = "3: ENGINE OF EXPRESSION"
+        GATE_4 = "4: CRUCIBLE OF EQUILIBRIUM"
+        GATE_5 = "5: DYNAMO OF WILL"
+        GATE_6 = "6: NEXUS OF HARMONY"
+        GATE_7 = "7: LENS OF DISTILLATION"
+        GATE_8 = "8: VESSEL OF GROUNDING"
+        GATE_9 = "9: TRANSPARENCY OF THE GUIDE"
 
     class SAPArc(_Enum):
         DESCENDING = "Descending Arc"
@@ -70,7 +70,7 @@ except ImportError:
 
     class SAP81Framework:
         def __init__(self):
-            self.gates = list(Gate81)
+            self.gates = [Gate81.GATE_0T, Gate81.GATE_1, Gate81.GATE_2, Gate81.GATE_3, Gate81.GATE_4, Gate81.GATE_5, Gate81.GATE_6, Gate81.GATE_7, Gate81.GATE_8, Gate81.GATE_9]
             self.gate_states = {
                 Gate81.GATE_0T: ('unstable', 'unstable'),
                 Gate81.GATE_1: ('unstable', 'stable'),
@@ -81,11 +81,12 @@ except ImportError:
                 Gate81.GATE_6: ('stable', 'unstable'),
                 Gate81.GATE_7: ('unstable', 'stable'),
                 Gate81.GATE_8: ('stable', 'unstable'),
+                Gate81.GATE_9: ('stable', 'stable'),
                 Gate81.GATE_0B: ('stable', 'stable')
             }
 
         def get_state(self, absolute_stage: float) -> SAPState81:
-            absolute_stage = max(0.0, min(9.9, absolute_stage))
+            absolute_stage = max(0.0, min(9.9, absolute_stage))  # Numbered stages 0-9; 0B is a separate boundary.
             gate_num = int(absolute_stage)
             micro_stage = absolute_stage - gate_num
             gate = self.gates[gate_num]
