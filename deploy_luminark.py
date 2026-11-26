@@ -135,10 +135,9 @@ backup_count = 5
         test_code = """
 import sys
 try:
-    import torch
-    import numpy
     import flask
     import flask_socketio
+    import requests
 except ImportError as exc:
     print(f"Import check failed: {exc}")
     sys.exit(1)
