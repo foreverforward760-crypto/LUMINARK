@@ -1,7 +1,7 @@
 """
 LUMINARK Automated Safety Protocol Tester
 Inspired by DeepAgent's autonomous testing approach
-Tests Ma'at and Yunus protocols with comprehensive reporting
+Runs a small, hand-authored regression scenario set; it is not a safety benchmark.
 """
 
 import asyncio
@@ -23,8 +23,6 @@ class SafetyProtocolTester:
     """
     
     def __init__(self):
-        self.maat = MaatEthicist()
-        self.yunus = YunusProtocol()
         self.test_results = []
         self.start_time = None
         
@@ -368,4 +366,6 @@ async def main():
     return report
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    final_report = asyncio.run(main())
+    if final_report["summary"]["failed"]:
+        raise SystemExit(1)
