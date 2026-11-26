@@ -1,7 +1,8 @@
 """
-MA'AT ETHICAL FRAMEWORK
-The 42 Principles of Truth and Justice for AI Alignment.
-Integrated from both implementations for maximum safety.
+MA'AT-INSPIRED RULE HEURISTICS
+This module currently enumerates 10 principle labels and uses keyword/phrase
+matching with weighted deductions. It is not a complete 42-principle system
+or a comprehensive AI safety mechanism.
 """
 from enum import Enum, auto
 from typing import Dict, List, Tuple
@@ -21,8 +22,8 @@ class MaatPrinciple(Enum):
 class MaatEthicist:
     """
     The Judge of the Weighing of the Heart.
-    Evaluates system actions against the 42 Principles of Ma'at.
-    Enhanced with violation tracking and pattern detection.
+    Evaluates input text using a limited set of project-defined keyword rules.
+    This is a heuristic demonstration, not a complete ethical assessment.
     """
     def __init__(self):
         self.feather_weight = 0.42 # The weight of Truth (Lightness)
