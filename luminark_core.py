@@ -28,7 +28,7 @@ import random
 
 
 # ============================================================================
-# LUMINARK NEURAL FRAMEWORK (production-ready wrappers)
+# LUMINARK EXPERIMENTAL NEURAL-NETWORK WRAPPERS
 # ============================================================================
 
 class Module(nn.Module):
