@@ -1,9 +1,9 @@
 """
 LUMINARK - Quantum Module
-Quantum computing integration for AI consciousness
+Experimental Qiskit circuits for character-encoded measurement distributions and quantum repetition-code demonstrations
 
 Components:
-- circuits: Quantum entropy, truth verification, error correction
+- circuits: Circuit-output entropy experiments, pattern concentration, and repetition-code demonstrations
 """
 
 from .circuits import (
