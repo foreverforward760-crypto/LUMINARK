@@ -1,3 +1,5 @@
+> **ARCHIVED HISTORICAL SUMMARY.** The checkmarks and phrases such as “all integrations complete,” “fully operational,” or “historically described as production ready (not verified)” record earlier development notes, not verified current functionality. Some listed integrations are stubs, demonstrations, synthetic inputs, or unvalidated experiments. This file is not a capability or deployment certification.
+
 # 🌟 LUMINARK - MASTER INTEGRATION SUMMARY
 
 ## ✅ **ALL INTEGRATIONS COMPLETE!**
