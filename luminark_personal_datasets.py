@@ -158,7 +158,7 @@ HISTORICAL_CASE_STUDIES = {
 }
 
 
-# Validated assessment questions (research-backed)
+# Question examples adapted or inspired by published scales; not validated as a combined SAP assessment
 VALIDATED_QUESTIONS = {
     "adaptability_assessment": {
         "source": "Cognitive Flexibility Scale (Martin & Rubin, 1995)",
