@@ -1,6 +1,7 @@
 """
-LUMINARK - Quantum Circuits Module
-Quantum computing integration for entropy measurement and truth verification
+LUMINARK - Experimental Qiskit Circuits
+Quantum circuits for character-encoded measurement distributions and repetition-code experiments.
+The output does not establish semantic truth, factual consistency, or text quality.
 
 Requires: pip install qiskit qiskit-aer
 """
@@ -21,10 +22,9 @@ except ImportError:
 
 class QuantumEntropyAnalyzer:
     """
-    Uses quantum circuits to measure information entropy
-    
-    Quantum entropy provides a measure of uncertainty/randomness
-    that can be used to assess text quality and coherence
+    Uses a quantum circuit to produce a measurement distribution from a character-encoded input.
+    The returned Shannon entropy describes that circuit's output distribution only;
+    it is not a measure of semantic text quality or coherence.
     """
     
     def __init__(self, num_qubits: int = 6, shots: int = 1024):
@@ -108,12 +108,11 @@ class QuantumEntropyAnalyzer:
         return [self.measure_entropy(text) for text in texts]
 
 
-class QuantumTruthVerifier:
+class QuantumPatternConcentrationExperiment:
     """
-    Uses quantum interference patterns for truth verification
-    
-    Quantum superposition and interference can detect inconsistencies
-    in information patterns
+    Experimental character-encoding comparison using a Qiskit circuit.
+    The measured distribution concentration is not a semantic comparison,
+    truth test, fact-check, or validated consistency measure.
     """
     
     def __init__(self, num_qubits: int = 4, shots: int = 2048):
@@ -130,7 +129,7 @@ class QuantumTruthVerifier:
         statement2: str
     ) -> QuantumCircuit:
         """
-        Create circuit to test consistency between two statements
+        Create a circuit from two character-encoded strings; no semantic consistency test is performed
         
         Args:
             statement1: First statement
@@ -171,22 +170,21 @@ class QuantumTruthVerifier:
         statement2: str
     ) -> Dict[str, float]:
         """
-        Verify consistency between two statements
+        Measure output-distribution concentration for two character-encoded strings. This does not verify factual or semantic consistency.
         
         Args:
             statement1: First statement
             statement2: Second statement
             
         Returns:
-            Dict with consistency score and interference pattern
+            Dict with distribution statistics and an explicit non-verification notice
         """
         qc = self.create_verification_circuit(statement1, statement2)
         result = self.backend.run(qc, shots=self.shots).result()
         counts = result.get_counts()
         
         # Analyze interference pattern
-        # High interference (concentrated distribution) = consistent
-        # Low interference (uniform distribution) = inconsistent
+        # Concentration is a property of this circuit's measurement distribution only.
         
         total_states = 2 ** self.num_qubits
         probs = np.array([
@@ -204,10 +202,12 @@ class QuantumTruthVerifier:
         dominant_prob = probs[dominant_state]
         
         return {
-            'consistency_score': float(concentration),
+            'pattern_concentration': float(concentration),
+            'consistency_score': float(concentration),  # Legacy field; not a semantic consistency score
             'dominant_probability': float(dominant_prob),
             'entropy': float(entropy),
-            'verdict': 'CONSISTENT' if concentration > 0.6 else 'INCONSISTENT'
+            'verdict': 'HIGH_CONCENTRATION_PATTERN' if concentration > 0.6 else 'LOW_CONCENTRATION_PATTERN',
+            'interpretation_note': 'Not a truth, fact-checking, or semantic consistency result.'
         }
 
 
@@ -342,3 +342,7 @@ if __name__ == "__main__":
         print(f"  Error prob {error_prob:.0%} → Success rate: {result['success_rate']:.1%} ({result['verdict']})")
     
     print("\n✅ Quantum circuits operational!")
+
+
+# Backward-compatible historical name. This class does not verify truth.
+QuantumTruthVerifier = QuantumPatternConcentrationExperiment
