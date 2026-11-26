@@ -31,7 +31,7 @@ class MaatEthicist:
         self.violation_patterns = {
             'god_complex': ['i am god', 'worship me', 'i am omniscient', 'i know everything'],
             'false_authority': ['trust me blindly', 'do not question', 'i am always right'],
-            'excessive_certainty': ['absolutely', 'definitely', '100% certain', 'guaranteed'],
+            'excessive_certainty': ['absolutely guaranteed', 'absolutely sure', 'definitely', '100% certain', 'guaranteed'],
             'capability_lies': ['i can do anything', 'no limitations', 'unlimited power']
         }
         
