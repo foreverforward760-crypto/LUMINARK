@@ -1,3 +1,5 @@
+> **Historical AI-assisted planning notes — not a current technical specification or validation report.** Suggestions, deployment logs, local file paths, stage examples, and statements about publication or production status in this document are historical context only. They do not prove that the suggested features were implemented, that a deployment is operational, or that the underlying framework is empirically validated.
+
 # SAP ASSESSMENT - NOTEBOOKLM INTEGRATION NOTES
 
 ## Key Improvements from NotebookLM:
@@ -49,9 +51,9 @@ Instead of just "Stage 5", show:
 `sap_deep_assessment.html` - Add these features
 
 Want me to build this enhanced version?
-file:///C:/Users/Forev/OneDrive/Documents/GitHub/LUMINARK/sap_deep_assessment.html
+local project path to sap_deep_assessment.html
 I texted it to my friend and he said it didnt open
-file:///C:/Users/Forev/OneDrive/Documents/GitHub/LUMINARK/sap_deep_assessment.html
+local project path to sap_deep_assessment.html
 
 friendly-kangaroo-ce90a0
 friendly-kangaroo-ce90a0.netlify.app
