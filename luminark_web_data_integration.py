@@ -1,16 +1,16 @@
 """
 LUMINARK WEB APP DATA INTEGRATION
-Enhances the personal assessment tool with real research and case studies
+Provides interpretive research references and historical examples for an experimental reflection tool
 """
 
-# This content will be added to index.html to provide research-backed insights
+# This content may be added to a UI as interpretive examples; it is not research validation of SAP.
 
 ENHANCED_STAGE_CONTENT = {
     1: {
         "research_note": "Stage 1 aligns with Piaget's sensorimotor stage - exploring without clear direction.",
         "historical_example": "Steve Jobs founding Apple in his garage (1976) - pure experimentation, no business plan.",
-        "intervention": "Daily journaling (15 min) - Pennebaker's research shows this reduces anxiety by 40%.",
-        "warning": "Burnout risk if chaos continues >6 months. Need to find signal in noise."
+        "intervention": "Daily journaling (15 min) - Expressive writing has been studied in psychology; this specific SAP mapping and expected outcome are not validated.",
+        "warning": "Consider whether prolonged overload is affecting focus; this is not a forecast."
     },
     
     2: {
@@ -23,7 +23,7 @@ ENHANCED_STAGE_CONTENT = {
     3: {
         "research_note": "Peak flow state (Csikszentmihalyi) - skills meeting challenge perfectly.",
         "historical_example": "Muhammad Ali 1964-1967: 'I am the greatest!' - pure self-expression at peak.",
-        "intervention": "Ride the wave but prepare for Stage 4. 80% of Stage 3 people skip foundation-building.",
+        "intervention": "Ride the wave but prepare for Stage 4. Build stable support structures alongside creative activity; no population percentage is established.",
         "warning": "Celebrity/success can become identity. When wave ends, who are you?"
     },
     
@@ -66,7 +66,7 @@ ENHANCED_STAGE_CONTENT = {
         "research_note": "Erikson's 'Ego Integrity' - acceptance of life as lived, no regrets.",
         "historical_example": "David Bowie 2016 - Blackstar album as conscious death preparation. Died 2 days after release.",
         "intervention": "Serve others, mentor, release attachment to outcomes. Prepare for graceful exit.",
-        "warning": "Stage 9 is rare. Most go 8→7→0. Requires sustained adaptability >9.0."
+        "warning": "Stage 9 is a framework-defined state; prevalence and numeric requirements have not been empirically established."
     }
 }
 
