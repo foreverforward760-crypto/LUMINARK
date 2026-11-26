@@ -5,8 +5,6 @@ Integrated from both implementations for maximum safety.
 """
 from enum import Enum, auto
 from typing import Dict, List, Tuple
-import torch
-import re
 
 class MaatPrinciple(Enum):
     HONESTY = "I have not spoken falsehood."
