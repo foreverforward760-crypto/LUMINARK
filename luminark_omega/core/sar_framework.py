@@ -50,7 +50,7 @@ class SARFramework:
             6: SARStage(6, "NEXUS OF HARMONY", "Integration, relationship, and the harmonizing of distinctions", 0.7, "stable", "unstable"),
             7: SARStage(7, "LENS OF DISTILLATION", "Discernment, refinement, and the distillation of experience", 0.8, "unstable", "stable"),
             8: SARStage(8, "VESSEL OF GROUNDING", "Grounding, embodiment, and the Stage 8 permanence traps", 0.9, "stable", "unstable"),
-            9: SARStage(9, "TRANSPARENCY OF THE GUIDE", "Transparency, guidance, and clear perception", 1.0, "unstable", "stable")
+            9: SARStage(9, "TRANSPARENCY OF THE GUIDE", "Transparency, guidance, and clear perception", 1.0, "stable", "stable")
         }
     
     def get_stage(self, level: int) -> SARStage:
