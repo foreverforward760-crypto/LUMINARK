@@ -21,7 +21,7 @@ The repository contains several distinct experiments rather than one unified, va
 - **SAP / 0-9-0 stage model:** code representing a ten-stage framework and selected transition or inversion rules.
 - **Ma'at and Yunus modules:** rule-based text-pattern checks and response/containment concepts. These are heuristic examples, not comprehensive AI safety controls.
 - **Dashboard:** a Flask and Flask-SocketIO interface for displaying and interacting with selected stage-model outputs.
-- **Neural-network experiments:** PyTorch-oriented and other ML examples; the presence of model classes does not establish trained or useful model performance.
+- **Neural-network experiments:** PyTorch-oriented examples. The historical my_quantum_ai.py demo uses classical PyTorch operations, random synthetic tensors and labels (not the MNIST corpus), and an uncalibrated softmax-confidence heuristic. It does not perform quantum computation or establish useful model performance.
 - **Biofeedback demonstration:** sample monitoring interfaces and data structures. No verified wearable integration or physiological validation is established here.
 - **Logistics experiments:** prototype interfaces and scoring concepts. No validated freight-risk prediction or verified live commercial data integration is claimed.
 
@@ -67,6 +67,7 @@ A passing test suite does not establish production readiness or independent vali
 - Some modules are optional, experimental, or dependent on packages not required by the dashboard.
 - The legacy framework implementation now uses the canonical stage names, but its stage-state assumptions and domain meanings still require review against the complete framework specification.
 - No independent benchmarks, prospective studies, clinical evaluations, or production customer results are established by this repository.
+- The 81-stage and quantum experiments are separate prototypes; their mathematical and scientific validity has not been independently established.
 - Authentication, authorization, data retention, privacy, monitoring, and deployment controls require further engineering before networked use.
 - Third-party dependency licenses and code provenance have not yet been fully inventoried.
 
