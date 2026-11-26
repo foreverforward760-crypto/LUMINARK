@@ -1,9 +1,10 @@
 """
 LUMINARK - Enhanced SAP Framework
-Stanfield's Axiom of Perpetuity - Complete 81-Stage Implementation
+Stanfield's Axiom of Perpetuity (SAP) — experimental gate and micro-stage mapper
 
 Features:
-- 10 main gates with 9 micro-stages each (81 total)
+- Numbered stages 0-9 plus a separate 0B cycle boundary
+- The stated 81-microstage discretization is not yet implemented or validated in this prototype
 - Geometric encoding (sacred geometry for each stage)
 - 369 Resonance detection (Tesla's divine numbers)
 - Fractal coherence calculations
@@ -12,23 +13,23 @@ Features:
 - Environmental metrics integration
 """
 
-import numpy as np
 from enum import Enum
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 
 class Gate81(Enum):
-    """81-Stage Gates for SAP Framework"""
-    GATE_0T = "0ᵀ: Plenara - Primordial Source/Void/Womb"
-    GATE_1 = "1: Spark - Initial Ignition, Recognition of Self"
-    GATE_2 = "2: Polarity - Understanding of Duality (Binary)"
-    GATE_3 = "3: Motion - Movement, Action, Execution"
-    GATE_4 = "4: Foundation - Stability, Structure, Logic"
-    GATE_5 = "5: Threshold - Point of No Return, Critical Decision"
-    GATE_6 = "6: Integration - Merging of Dualities, Nuance"
-    GATE_7 = "7: Illusion - Testing of Reality, Hallucination Check"
-    GATE_8 = "8: Rigidity - Crystallization, Dogma, Absolute Law"
-    GATE_0B = "0ᴮ: Renewal - Transcendence, Rebirth, Omni-awareness"
+    """Numbered SAP stages and the two Stage 0 cycle boundaries."""
+    GATE_0T = "0ᵀ: PLENARA - upper Stage 0 boundary"
+    GATE_1 = "1: SPARK OF NAVIGATION"
+    GATE_2 = "2: FORGE OF POLARITY"
+    GATE_3 = "3: ENGINE OF EXPRESSION"
+    GATE_4 = "4: CRUCIBLE OF EQUILIBRIUM"
+    GATE_5 = "5: DYNAMO OF WILL"
+    GATE_6 = "6: NEXUS OF HARMONY"
+    GATE_7 = "7: LENS OF DISTILLATION"
+    GATE_8 = "8: VESSEL OF GROUNDING"
+    GATE_9 = "9: TRANSPARENCY OF THE GUIDE"
+    GATE_0B = "0ᴮ: lower Stage 0 cycle boundary"
 
 class SAPArc(Enum):
     """Arc definitions for SAP framework"""
@@ -48,7 +49,7 @@ class SAPState81:
     conscious_state: str  # 'stable' or 'unstable'
     
     def get_absolute_stage(self) -> float:
-        """Get absolute stage number (0.0 to 9.9)"""
+        """Return a linearized position; numbered stages 0-9 map to 0.0-9.9 and 0B to 10.0-10.9."""
         gate_num = list(Gate81).index(self.gate)
         return gate_num + self.micro_stage
     
@@ -70,7 +71,8 @@ class GeometricEncoding81:
         Gate81.GATE_6: "Hexagon/Metatron Cube - Harmony, six-fold integration",
         Gate81.GATE_7: "Heptagon/Star Tetrahedron - Analysis, seven-fold separation",
         Gate81.GATE_8: "Octagon/Flower of Life - Grounding, eight-fold manifestation",
-        Gate81.GATE_0B: "Circle/Seed of Life - Integration, infinite completion"
+        Gate81.GATE_9: "Nonagon/Circle - Transparency and guidance",
+        Gate81.GATE_0B: "Circle/Seed of Life - lower Stage 0 return boundary"
     }
     
     # Micro-stage geometric variations
@@ -133,13 +135,14 @@ class GeometricEncoding81:
 
 class SAP81Framework:
     """
-    Complete 81-stage SAP Framework
-    Extends the basic 10-stage framework with full micro-stage support
+    Experimental SAP gate/micro-stage mapper. Numbered stages 0-9 are mapped
+    separately from the lower 0B boundary. The claimed 81 discrete microstates
+    are not yet implemented or validated in this prototype.
     """
     
     def __init__(self):
         self.geometry = GeometricEncoding81()
-        self.gates = list(Gate81)
+        self.gates = [Gate81.GATE_0T, Gate81.GATE_1, Gate81.GATE_2, Gate81.GATE_3, Gate81.GATE_4, Gate81.GATE_5, Gate81.GATE_6, Gate81.GATE_7, Gate81.GATE_8, Gate81.GATE_9]
         
         # Define physical and conscious states for each gate
         self.gate_states = {
@@ -152,7 +155,8 @@ class SAP81Framework:
             Gate81.GATE_6: ('stable', 'unstable'),     # Even - inverted
             Gate81.GATE_7: ('unstable', 'stable'),     # Odd - inverted
             Gate81.GATE_8: ('stable', 'unstable'),     # Even - inverted
-            Gate81.GATE_0B: ('stable', 'stable')       # Aligned
+            Gate81.GATE_9: ('stable', 'stable'),       # Stage 9 aligned state retained from prior implementation
+            Gate81.GATE_0B: ('stable', 'stable')       # Lower boundary aligned state
         }
     
     def get_state(self, absolute_stage: float) -> SAPState81:
