@@ -15,7 +15,7 @@ from typing import Dict, Optional
 stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 class SubscriptionManager:
-    """Manages user subscriptions and payment"""
+    """In-memory subscription demo; not production billing or entitlement management."""
     
     # Pricing (in cents)
     PLANS = {
@@ -102,7 +102,7 @@ class SubscriptionManager:
         Returns:
             Dict with subscription status and limits
         """
-        # In production, query database
+        # Demo only: query process-local memory; no persistent database is connected.
         user = self.users.get(user_id, {
             'plan': 'free',
             'messages_used': 0,
@@ -162,8 +162,10 @@ class SubscriptionManager:
         Process an event object that must already have passed Stripe signature verification.
         This method does NOT verify webhook signatures and must never receive raw public requests.
 
-        Handle Stripe webhook events
-        
+        Process a Stripe event object only after an external server has verified
+        its signature. This method performs no signature verification, persistence,
+        or complete subscription lifecycle handling.
+
         Events to handle:
         - checkout.session.completed: User subscribed
         - customer.subscription.deleted: User cancelled
@@ -177,7 +179,7 @@ class SubscriptionManager:
             plan = session['metadata']['plan']
             subscription_id = session['subscription']
             
-            # Upgrade user (in production, use email to find user_id)
+            # Demonstration only: email is used as an in-memory key, not an account identity.
             user_id = user_email  # Simplified
             self.upgrade_user(user_id, plan, subscription_id)
             
@@ -187,8 +189,7 @@ class SubscriptionManager:
             subscription = event['data']['object']
             subscription_id = subscription['id']
             
-            # Downgrade user to free (in production, find user by subscription_id)
-            # self.downgrade_user(user_id)
+            # No downgrade or persistent account update is implemented.
             
             return {'status': 'subscription_cancelled'}
         
@@ -196,7 +197,7 @@ class SubscriptionManager:
             invoice = event['data']['object']
             customer_email = invoice['customer_email']
             
-            # Send payment failed email
+            # No email or payment-recovery workflow is implemented.
             return {'status': 'payment_failed', 'email': customer_email}
         
         return {'status': 'unhandled_event', 'type': event_type}
