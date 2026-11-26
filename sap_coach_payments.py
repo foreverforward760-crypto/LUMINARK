@@ -42,7 +42,8 @@ class SubscriptionManager:
     }
     
     def __init__(self):
-        # In-memory demo state only; it is lost on restart and is not multi-user persistence.\n        self.users = {}
+        # In-memory demo state only; it is lost on restart and is not multi-user persistence.
+        self.users = {}
     
     def create_checkout_session(self, plan: str, user_email: str, success_url: str, cancel_url: str) -> Dict:
         """
