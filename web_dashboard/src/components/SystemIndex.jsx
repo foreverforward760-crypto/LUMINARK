@@ -187,7 +187,7 @@ const SystemIndex = ({ isOpen, onClose, currentStage }) => {
                                 <ul>
                                     <li><strong>Permanence Trap (Stage 8):</strong> Detects hubris, rigidity, declining adaptability</li>
                                     <li><strong>Container Rule (Stage 4):</strong> Assesses if structure can hold complexity</li>
-                                    <li><strong>Threshold Crisis (Stage 5→7):</strong> Predicts forced crisis from decision paralysis</li>
+                                    <li><strong>Stage 5→7 pattern:</strong> Flags a framework-defined pattern for reflection; it does not predict a crisis</li>
                                 </ul>
                             </section>
                         </div>
@@ -234,9 +234,9 @@ const SystemIndex = ({ isOpen, onClose, currentStage }) => {
                                     <span className="version-number">v3.0.0</span>
                                     <span className="version-date">2026-01-27</span>
                                 </div>
-                                <h4>📚 Research-Backed Content</h4>
+                                <h4>📚 Research References and Interpretive Content</h4>
                                 <ul>
-                                    <li>Added 9 academic research citations</li>
+                                    <li>Added 9 research references used as conceptual comparisons</li>
                                     <li>18 historical case studies across stages</li>
                                     <li>Exploratory question examples referencing published instruments (not validated as a SAP assessment)</li>
                                     <li>Reflective suggestions per stage (not clinical interventions)</li>
