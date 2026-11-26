@@ -25,7 +25,7 @@ class LuminarkTrainer:
         # 2. Uncalibrated prediction-confidence heuristic
         confidence = self.safety.estimate_prediction_confidence(output.detach())
         
-        # 3. Defense Scan (Experiment 2)
+        # 3. Collect gradient information for the prototype monitor
         grad_norm = 0.0 # Placeholder until backward
         
         # 4. Backward
@@ -38,14 +38,14 @@ class LuminarkTrainer:
                 total_norm += p.grad.data.norm(2).item() ** 2
         grad_norm = total_norm ** 0.5
         
-        # Safety Check NOW
+        # Apply the prototype training-metric threshold
         safety_status = self.safety.analyze_training_state({
             'loss': loss.item(),
             'confidence': confidence,
             'grad_norm': grad_norm
         })
         
-        if safety_status['stage_value'] < 8: # Only step if safe
+        if safety_status['stage_value'] < 8: # Continue only when the heuristic threshold is not crossed
             self.optimizer.step()
         
         # Log
