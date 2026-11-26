@@ -38,12 +38,12 @@ class SAPArc(Enum):
 
 @dataclass
 class SAPState81:
-    """Complete 81-stage SAP state"""
+    """One SAP gate and its prototype micro-stage coordinate."""
     gate: Gate81
     micro_stage: float  # 0.0 to 0.9
     arc: SAPArc
-    integrity: float  # 0-100%, system coherence
-    fractal_coherence: float  # 0-1, 369 resonance
+    integrity: float  # 0-100 heuristic score derived from the inversion rule
+    fractal_coherence: float  # 0-1 project-defined 369 pattern score, not measured coherence
     inversion_level: int  # 0-10
     physical_state: str  # 'stable' or 'unstable'
     conscious_state: str  # 'stable' or 'unstable'
@@ -58,9 +58,9 @@ class SAPState81:
         return abs(self.micro_stage - 0.5) < 0.05 or abs(self.micro_stage - 0.9) < 0.05
 
 class GeometricEncoding81:
-    """81-stage geometric patterns for SAP optimization"""
+    """Project-defined geometry labels and digit-pattern calculations."""
     
-    # Sacred geometry patterns for each Gate
+    # Project-defined geometric labels for each gate
     GATE_GEOMETRIES = {
         Gate81.GATE_0T: "Void/Sphere - Empty space, infinite potential",
         Gate81.GATE_1: "Point/Tetrahedron - Emergence, single direction",
@@ -98,9 +98,10 @@ class GeometricEncoding81:
     
     def get_369_pattern(self, stage_number: float) -> Dict:
         """
-        Analyze 369 resonance pattern (Tesla's divine numbers)
+        Calculate the framework-defined 3/6/9 digit-pattern score.
         
-        3, 6, 9 are the key to the universe (Nikola Tesla)
+        This arithmetic rule is not a measurement of physical resonance and is
+        not attributed here to a verified statement by Nikola Tesla.
         """
         gate_num = int(stage_number)
         micro = stage_number - gate_num
@@ -130,7 +131,8 @@ class GeometricEncoding81:
             'is_369_micro': is_369_micro,
             'is_perfect_369': is_perfect,
             'resonance_strength': resonance,
-            'harmonic_frequency': 3 * gate_num + 6 * int(micro * 10)  # Harmonic calculation
+            'harmonic_frequency': 3 * gate_num + 6 * int(micro * 10),  # Project-defined index, not a physical frequency
+            'interpretation_note': 'Internal digit-pattern calculation; not an empirical resonance measurement.'
         }
 
 class SAP81Framework:
@@ -155,7 +157,7 @@ class SAP81Framework:
             Gate81.GATE_6: ('stable', 'unstable'),     # Even - inverted
             Gate81.GATE_7: ('unstable', 'stable'),     # Odd - inverted
             Gate81.GATE_8: ('stable', 'unstable'),     # Even - inverted
-            Gate81.GATE_9: ('stable', 'stable'),       # Stage 9 aligned state retained from prior implementation
+            Gate81.GATE_9: ('stable', 'stable'),       # Provisional state carried forward from prior Stage 0B assignment
             Gate81.GATE_0B: ('stable', 'stable')       # Lower boundary aligned state
         }
     
@@ -250,10 +252,10 @@ class SAP81Framework:
     
     def calculate_trap_risk(self, state: SAPState81) -> float:
         """
-        Calculate risk of Stage 8 trap (rigidity/permanence illusion)
+        Calculate a heuristic Stage 8 pattern score.
         
         Returns:
-            Risk level (0.0 to 1.0)
+            An uncalibrated project-defined score (0.0 to 1.0), not a probability of failure or a validated risk estimate.
         """
         if state.gate != Gate81.GATE_8:
             return 0.0
