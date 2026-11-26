@@ -1,19 +1,19 @@
 
 """
-LUMINARK Safety and Monitoring System
+LUMINARK Experimental Training-Metric Monitor
 """
 import torch
 
 class LuminarkSafetySystem:
     """
-    Monitors AI internal state for hallucinations, instability, and ethical alignment.
+    Applies simple numeric heuristics to selected training metrics. It does not detect hallucinations or verify ethical alignment.
     """
     def __init__(self):
         self.safety_layer_active = True
         self.yunus_protocol_engaged = False
         
     def analyze_training_state(self, metrics):
-        """Monitor training stability and hallucination risks (Experiment 2)"""
+        """Apply prototype thresholds to selected training metrics; not hallucination detection."""
         loss = metrics.get('loss', 0)
         conf = metrics.get('confidence', 0)
         grad_norm = metrics.get('grad_norm', 0)
@@ -32,7 +32,7 @@ class LuminarkSafetySystem:
         return {
             "stage_value": risk_level,
             "description": desc,
-            "action": "Trigger Yunus Protocol" if risk_level > 7 else "Log"
+            "action": "Flag for review" if risk_level > 7 else "Continue"
         }
 
     def estimate_prediction_confidence(self, predictions_tensor):
