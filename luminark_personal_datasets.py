@@ -14,17 +14,17 @@ RESEARCH_FOUNDATIONS = {
     "developmental_psychology": {
         "piaget": {
             "citation": "Piaget, J. (1952). The Origins of Intelligence in Children.",
-            "relevance": "Stage progression follows cognitive development patterns",
+            "relevance": "Used as a conceptual comparison only; this source does not validate SAP stage progression",
             "stages_mapped": [0, 1, 2, 3, 4]
         },
         "kegan": {
             "citation": "Kegan, R. (1982). The Evolving Self: Problem and Process in Human Development.",
-            "relevance": "Subject-object theory maps to SAP stages 2-6",
+            "relevance": "Used as an interpretive comparison; the SAP stage mapping is not validated by this source",
             "stages_mapped": [2, 3, 4, 5, 6]
         },
         "cook_greuter": {
             "citation": "Cook-Greuter, S. (2004). Making the case for a developmental perspective.",
-            "relevance": "Ego development stages align with SAP 4-9",
+            "relevance": "Used as an interpretive comparison; the SAP stage mapping is not validated by this source",
             "stages_mapped": [4, 5, 6, 7, 8, 9]
         }
     },
@@ -32,12 +32,12 @@ RESEARCH_FOUNDATIONS = {
     "crisis_psychology": {
         "kubler_ross": {
             "citation": "Kübler-Ross, E. (1969). On Death and Dying.",
-            "relevance": "Stage 7 crisis follows grief/transformation patterns",
+            "relevance": "Used as a thematic comparison only; it does not validate SAP crisis stages",
             "stages_mapped": [7]
         },
         "frankl": {
             "citation": "Frankl, V. (1946). Man's Search for Meaning.",
-            "relevance": "Meaning-making in Stage 7 crisis and Stage 9 release",
+            "relevance": "Used as a thematic comparison only; it does not validate SAP stage assignments",
             "stages_mapped": [7, 9]
         }
     },
@@ -45,7 +45,7 @@ RESEARCH_FOUNDATIONS = {
     "systems_theory": {
         "bateson": {
             "citation": "Bateson, G. (1972). Steps to an Ecology of Mind.",
-            "relevance": "Double-bind theory explains Stage 5 threshold dynamics",
+            "relevance": "Used as a conceptual analogy only; it does not validate SAP Stage 5 dynamics",
             "stages_mapped": [5]
         }
     }
