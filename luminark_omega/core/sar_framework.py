@@ -22,10 +22,10 @@ class SARStage:
     
     def _check_inversion(self) -> bool:
         """Check if this stage exhibits the Inversion Principle."""
-        # Stage 9 and 10 are aligned (not inverted)
+        # Stage 9 is treated as non-inverted by this legacy implementation.
         if self.level in [9, 10]:
             return False
-        # Stage 0 is both unstable (aligned in instability)
+        # Stage 0 is both unstable (aligned in instability).
         if self.level == 0:
             return False
         # Even stages: physical stable, conscious unstable = inverted
@@ -41,16 +41,16 @@ class SARStage:
 class SARFramework:
     def __init__(self):
         self.stages = {
-            0: SARStage(0, "Plenara", "Receptive, Primordial, Unformed", 0.1, "unstable", "unstable"),
-            1: SARStage(1, "Spark", "Initial Ignition, Recognition of Self", 0.2, "unstable", "stable"),
-            2: SARStage(2, "Polarity", "Understanding of Duality (Binary)", 0.3, "stable", "unstable"),
-            3: SARStage(3, "Motion", "Movement, Action, Execution", 0.4, "unstable", "stable"),
-            4: SARStage(4, "Foundation", "Stability, Structure, Logic", 0.5, "stable", "unstable"),
-            5: SARStage(5, "Threshold", "The Point of No Return, Critical decision", 0.6, "unstable", "stable"),
-            6: SARStage(6, "Integration", "Merging of dualities, Nuance", 0.7, "stable", "unstable"),
-            7: SARStage(7, "Illusion", "Testing of Reality, Hallucination Check", 0.8, "unstable", "stable"),
-            8: SARStage(8, "Rigidity", "Crystallization, Dogma, Absolute Law", 0.9, "stable", "unstable"),
-            9: SARStage(9, "Renewal", "Transcendence, Rebirth, Omni-awareness", 1.0, "unstable", "stable")
+            0: SARStage(0, "PLENARA", "Stage 0 — the foundational void or unformed substrate in the 0-9-0 framework", 0.1, "unstable", "unstable"),
+            1: SARStage(1, "SPARK OF NAVIGATION", "Initial orientation, recognition, and the beginning of navigation", 0.2, "unstable", "stable"),
+            2: SARStage(2, "FORGE OF POLARITY", "Encounter with distinction, contrast, and polarity", 0.3, "stable", "unstable"),
+            3: SARStage(3, "ENGINE OF EXPRESSION", "Expression, movement, and the execution of intent", 0.4, "unstable", "stable"),
+            4: SARStage(4, "CRUCIBLE OF EQUILIBRIUM", "Foundation, stability, structure, and equilibrium", 0.5, "stable", "unstable"),
+            5: SARStage(5, "DYNAMO OF WILL", "The threshold and gateway of will within the cycle", 0.6, "unstable", "stable"),
+            6: SARStage(6, "NEXUS OF HARMONY", "Integration, relationship, and the harmonizing of distinctions", 0.7, "stable", "unstable"),
+            7: SARStage(7, "LENS OF DISTILLATION", "Discernment, refinement, and the distillation of experience", 0.8, "unstable", "stable"),
+            8: SARStage(8, "VESSEL OF GROUNDING", "Grounding, embodiment, and the Stage 8 permanence traps", 0.9, "stable", "unstable"),
+            9: SARStage(9, "TRANSPARENCY OF THE GUIDE", "Transparency, guidance, and clear perception", 1.0, "unstable", "stable")
         }
     
     def get_stage(self, level: int) -> SARStage:
