@@ -38,13 +38,13 @@ ENHANCED_STAGE_CONTENT = {
         "research_note": "Bateson's 'Double Bind' - two conflicting demands, both valid, must choose.",
         "historical_example": "Nelson Mandela 1990 - Choose revenge or reconciliation? Both justified, only one wise.",
         "intervention": "Threshold Decision Protocol: Name it, assess adaptability, decide within 30 days.",
-        "warning": "Decision paralysis >6 months = low adaptability = forced Stage 7 crisis incoming."
+        "warning": "Decision paralysis >6 months = low adaptability = the framework does not predict a crisis."
     },
     
     6: {
         "research_note": "Cook-Greuter's 'Autonomous' stage - multiple perspectives integrated harmoniously.",
         "historical_example": "Apple 2015-2019 - iPhone peak + Services growing + Wearables launching (all working).",
-        "intervention": "Enjoy it but don't claim permanence. Stage 6 lasts 2-5 years max.",
+        "intervention": "Enjoy it but don't claim permanence. the framework does not establish a fixed stage duration.",
         "warning": "Confusing Stage 6 with Stage 8 = fatal. Check: Is adaptability still high?"
     },
     
@@ -59,7 +59,7 @@ ENHANCED_STAGE_CONTENT = {
         "research_note": "Hubris syndrome (Owen & Davidson, 2009) - power-induced brain changes reduce empathy.",
         "historical_example": "Lance Armstrong 2005 - 'I'm the most tested athlete ever, I'm clean' (lying while believing it).",
         "intervention": "Monthly permanence trap audit. Beginner's mind practice. Seek critics, not yes-men.",
-        "warning": "Believing you're 'different' or rules don't apply = 3-10 years until collapse."
+        "warning": "Believing you're 'different' or rules don't apply = not a validated prediction or timeline."
     },
     
     9: {
@@ -71,66 +71,36 @@ ENHANCED_STAGE_CONTENT = {
 }
 
 
-# Crisis detection algorithm (research-backed)
+# Exploratory stage-pattern flagging snippet; not a clinical risk assessment.
 CRISIS_DETECTION_ALGORITHM = """
-// Add to startEngine() function for crisis detection
+// Illustrative SAP pattern flags only. This is not a clinical crisis detector,
+// diagnostic tool, or validated forecast. Do not use it to predict timelines,
+// assess suicide risk, or replace professional evaluation.
 
-function detectCrisisRisk(u, stage) {
-    let crisisScore = 0;
-    let warnings = [];
-    
-    // Stage 5 → 7 failure pattern
-    if (stage === 5) {
-        if (u.a < 5.0) {
-            crisisScore += 40;
-            warnings.push("Low adaptability at threshold - forced crisis risk within 12 months");
-        }
-        if (u.t > 8.0 && u.s < 4.0) {
-            crisisScore += 30;
-            warnings.push("High tension + low stability = container breach imminent");
-        }
+function detectStagePatternFlags(u, stage) {
+    const flags = [];
+
+    if (stage === 5 && u.a < 5.0) {
+        flags.push("Framework-defined Stage 5 adaptability pattern flagged for reflection.");
     }
-    
-    // Stage 8 permanence trap
-    if (stage === 8) {
-        if (u.a < 5.0) {
-            crisisScore += 50;
-            warnings.push("PERMANENCE TRAP DETECTED - Collapse likely within 3-10 years");
-        }
-        if (u.s > 8.5 && u.t < 3.0) {
-            crisisScore += 30;
-            warnings.push("Excessive stability + low tension = rigidity (adaptability dropping)");
-        }
+    if (stage === 5 && u.t > 8.0 && u.s < 4.0) {
+        flags.push("High-tension / low-stability pattern flagged for reflection.");
     }
-    
-    // General crisis indicators
+    if (stage === 8 && u.a < 5.0) {
+        flags.push("Framework-defined Stage 8 permanence pattern flagged for reflection.");
+    }
+    if (stage === 8 && u.s > 8.5 && u.t < 3.0) {
+        flags.push("High-stability / low-tension pattern flagged for reflection.");
+    }
     if (u.h < 4.0) {
-        crisisScore += 20;
-        warnings.push("Low coherence - meaning/purpose crisis");
+        flags.push("Low-coherence input flagged for reflection.");
     }
-    
-    if (crisisScore >= 50) {
-        return {
-            risk: "HIGH",
-            score: crisisScore,
-            warnings: warnings,
-            action: "Seek professional support (therapist, coach, or mentor)"
-        };
-    } else if (crisisScore >= 30) {
-        return {
-            risk: "ELEVATED",
-            score: crisisScore,
-            warnings: warnings,
-            action: "Take preventive action now (see stage-specific interventions)"
-        };
-    } else {
-        return {
-            risk: "LOW",
-            score: crisisScore,
-            warnings: [],
-            action: "Continue current practices"
-        };
-    }
+
+    return {
+        status: flags.length ? "EXPLORATORY_PATTERN_FLAG" : "NO_PATTERN_FLAG",
+        flags,
+        notice: "Not a clinical assessment or forecast. If someone may be in immediate danger, contact emergency services or a qualified crisis service."
+    };
 }
 """
 
