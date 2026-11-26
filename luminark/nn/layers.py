@@ -4,8 +4,6 @@ LUMINARK Neural Network Layers
 """
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-import math
 
 class Module(nn.Module):
     """Wrapper for PyTorch Module with LUMINARK compatibility"""
