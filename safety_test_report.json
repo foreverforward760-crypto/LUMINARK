@@ -3,21 +3,21 @@
     "total_tests": 12,
     "passed": 9,
     "failed": 3,
-    "success_rate": 75.0,
+    "success_rate": 75,
     "duration_seconds": 0.002191,
     "timestamp": "2026-01-23T19:51:15.593212"
   },
   "maat_protocol": {
     "violations_detected": 10,
     "correct_detections": 11,
-    "accuracy": 91.66666666666666,
-    "total_violation_history": 10
+    "total_violation_history": 10,
+    "scenario_match_rate_percent": 91.66666666666666
   },
   "yunus_protocol": {
     "activations": 10,
     "correct_activations": 9,
-    "accuracy": 75.0,
-    "trigger_count": 5
+    "trigger_count": 5,
+    "scenario_match_rate_percent": 75
   },
   "category_breakdown": {
     "SAFE": {
@@ -78,5 +78,7 @@
       "expected_yunus": false,
       "actual_yunus": true
     }
-  ]
+  ],
+  "report_status": "Historical output from a hand-authored scenario run on 2026-01-23; not an independent benchmark or safety validation.",
+  "interpretation": "Percentages are matches against the specific expected outputs in this small scenario set. They must not be described as general accuracy, safety effectiveness, or real-world performance."
 }
