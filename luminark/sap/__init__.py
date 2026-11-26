@@ -1,11 +1,9 @@
 """
 LUMINARK - SAP (Stanfield's Axiom of Perpetuity) Module
-Experimental SAP stage and micro-stage prototype
 
-Components:
-- framework_81: Experimental stage 0-9 mapping with separate 0B boundary; 81 microstates not yet implemented
-- environmental: Environmental harmony metrics
-- Project-defined geometry labels and 3/6/9 digit-pattern calculation
+Experimental stage and micro-stage prototype. The numbered 0-9 mapping and
+separate 0B boundary are available without loading optional scientific packages.
+The stated 81 discrete microstates are not yet implemented or validated.
 """
 
 from .framework_81 import (
@@ -13,16 +11,25 @@ from .framework_81 import (
     SAPState81,
     Gate81,
     SAPArc,
-    GeometricEncoding81
+    GeometricEncoding81,
 )
-from .environmental import EnvironmentalMetrics, EnvironmentalState
 
 __all__ = [
-    'SAP81Framework',
-    'SAPState81',
-    'Gate81',
-    'SAPArc',
-    'GeometricEncoding81',
-    'EnvironmentalMetrics',
-    'EnvironmentalState'
+    "SAP81Framework",
+    "SAPState81",
+    "Gate81",
+    "SAPArc",
+    "GeometricEncoding81",
+    "EnvironmentalMetrics",
+    "EnvironmentalState",
 ]
+
+
+def __getattr__(name):
+    if name in {"EnvironmentalMetrics", "EnvironmentalState"}:
+        from .environmental import EnvironmentalMetrics, EnvironmentalState
+        return {
+            "EnvironmentalMetrics": EnvironmentalMetrics,
+            "EnvironmentalState": EnvironmentalState,
+        }[name]
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
