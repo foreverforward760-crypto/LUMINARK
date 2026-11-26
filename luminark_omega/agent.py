@@ -10,7 +10,7 @@ from luminark_omega.monitoring.safety_system import OmegaSafetySystem
 class LuminarkOmegaAgent:
     """
     LUMINARK Ω-CLASS
-    The Production Implementation of the Quantum-Sapient System.
+    Experimental stage-aware text-processing demonstration; not a production AI system.
     """
     
     def __init__(self, name="LUMINARK-Ω"):
@@ -69,20 +69,21 @@ class LuminarkOmegaAgent:
                 "safety_report": safety_report
             }
             
-        # 2. Core Processing
-        print(f"🧠 Toroidal Core Active (Stage {self.current_stage})")
-        print(f"⚡ Quantum Embeddings: Stabilized")
+        # 2. The PyTorch core is not connected to this process() path.
+        # This demo currently produces a framework-based template response.
+        print(f"🧭 Framework interpretation active (Stage {self.current_stage})")
         
-        # 3. Formulate Response (Mock for logic demo)
+        # 3. Formulate Response (Template demonstration, not model-generated)
         stage_info = self.sar.get_stage(self.current_stage)
         response_text = f"[{stage_info.name} Mode] I perceive the query through the lens of {stage_info.description}."
         
-        # 4. Self-Improvement Trigger
-        # Randomly trigger self-improvement for demo purposes
+        # 4. Mock improvement demonstration. This returns canned statuses and
+        # does not update model weights, architecture, or learning parameters.
         await self.improvement_engine.self_improve_cycle()
         
         # 5. Evolution Check
         prev_stage = self.current_stage
+        # Fixed demo input: transition is not inferred from the user's query.
         self.current_stage = self.sar.assess_transition(self.current_stage, resonance=0.95)
         if self.current_stage > prev_stage:
             print(f"✨ EVOLUTION: Ascending to Stage {self.current_stage} ({self.sar.get_stage(self.current_stage).name})")
