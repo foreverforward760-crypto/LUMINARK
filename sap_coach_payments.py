@@ -31,20 +31,20 @@ class SubscriptionManager:
             'name': 'Pro',
             'price': 2900,  # $29.00
             'message_limit': None,  # Unlimited
-            'stripe_price_id': 'price_xxx',  # Replace with actual Stripe price ID
+            'stripe_price_id': None,  # Configure a real Stripe Price ID before use
             'features': ['Unlimited messages', 'Advanced SAP insights', 'Priority support', 'Conversation history']
         },
         'team': {
             'name': 'Team',
             'price': 9900,  # $99.00
             'message_limit': None,
-            'stripe_price_id': 'price_yyy',  # Replace with actual Stripe price ID
+            'stripe_price_id': None,  # Configure a real Stripe Price ID before use
             'features': ['Everything in Pro', 'Up to 5 team members', 'Team analytics', 'API access']
         }
     }
     
     def __init__(self):
-        self.users = {}  # In production, use database
+        # In-memory demo state only; it is lost on restart and is not multi-user persistence.\n        self.users = {}
     
     def create_checkout_session(self, plan: str, user_email: str, success_url: str, cancel_url: str) -> Dict:
         """
@@ -63,6 +63,10 @@ class SubscriptionManager:
             raise ValueError("Invalid plan. Must be 'pro' or 'team'")
         
         plan_info = self.PLANS[plan]
+        if not stripe.api_key:
+            return {"success": False, "error": "STRIPE_SECRET_KEY is not configured."}
+        if not plan_info.get("stripe_price_id"):
+            return {"success": False, "error": "A real Stripe Price ID has not been configured for this plan."}
         
         try:
             session = stripe.checkout.Session.create(
@@ -144,7 +148,8 @@ class SubscriptionManager:
         self.users[user_id]['messages_used'] += 1
     
     def upgrade_user(self, user_id: str, plan: str, subscription_id: str):
-        """Upgrade user to paid plan"""
+        """Update in-memory demo state; this is not proof of a verified payment."""
+        if plan not in {"pro", "team"}:\n            raise ValueError("plan must be pro or team")
         self.users[user_id] = {
             'plan': plan,
             'messages_used': 0,
@@ -154,6 +159,9 @@ class SubscriptionManager:
     
     def handle_webhook(self, event: Dict) -> Dict:
         """
+        Process an event object that must already have passed Stripe signature verification.
+        This method does NOT verify webhook signatures and must never receive raw public requests.
+
         Handle Stripe webhook events
         
         Events to handle:
@@ -231,7 +239,7 @@ if __name__ == "__main__":
             print("  ⚠️ Limit reached! Upgrade required.")
             break
     
-    print("\n✅ Payment integration ready!")
+    print("\nPrototype status check completed. No live checkout or verified webhook was tested.")
     print("\nNext steps:")
     print("1. Create Stripe account")
     print("2. Create products (Pro $29, Team $99)")
