@@ -238,9 +238,9 @@ const SystemIndex = ({ isOpen, onClose, currentStage }) => {
                                 <ul>
                                     <li>Added 9 academic research citations</li>
                                     <li>18 historical case studies across stages</li>
-                                    <li>Validated assessment questions (3 scales)</li>
-                                    <li>Evidence-based interventions per stage</li>
-                                    <li>Crisis detection patterns with timelines</li>
+                                    <li>Exploratory question examples referencing published instruments (not validated as a SAP assessment)</li>
+                                    <li>Reflective suggestions per stage (not clinical interventions)</li>
+                                    <li>Unvalidated framework-pattern flags (not crisis predictions)</li>
                                     <li>Emergency resources for Stage 7</li>
                                 </ul>
                             </div>
