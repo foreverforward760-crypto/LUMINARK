@@ -6,7 +6,7 @@ Features:
 - Numbered stages 0-9 plus a separate 0B cycle boundary
 - The stated 81-microstage discretization is not yet implemented or validated in this prototype
 - Geometric encoding (sacred geometry for each stage)
-- 369 Resonance detection (Tesla's divine numbers)
+- Project-defined 3/6/9 digit-pattern calculation (not a physical resonance measurement)
 - Fractal coherence calculations
 - Arc detection (ascending/descending)
 - Bifurcation analysis (Stage 5.5)
