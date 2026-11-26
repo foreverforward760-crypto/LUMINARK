@@ -16,7 +16,7 @@ jobs:
         run: python -m pip install requests
       - name: Compile changed Python modules
         run: |
-          python -m py_compile deploy_luminark.py test_safety_protocols.py web_dashboard/app.py luminark_omega/core/sar_framework.py luminark_omega/protocols/maat.py luminark_omega/protocols/yunus.py luminark/nn/layers.py luminark/training/trainer.py luminark/monitoring/defense.py luminark/data/dataset.py my_quantum_ai.py luminark_mocks.py luminark_data_connectors.py luminark_automated_analyzer.py
+          python -m py_compile deploy_luminark.py test_safety_protocols.py web_dashboard/app.py luminark_omega/core/sar_framework.py luminark_omega/protocols/maat.py luminark_omega/protocols/yunus.py luminark/sap/framework_81.py luminark_overwatch.py luminark/nn/layers.py luminark/training/trainer.py luminark/monitoring/defense.py luminark/data/dataset.py my_quantum_ai.py luminark_mocks.py luminark_data_connectors.py luminark_automated_analyzer.py
       - name: Run stage framework unit tests
         run: python -m unittest discover -s tests -v
       - name: Run isolated Ma'at and Yunus scenarios
