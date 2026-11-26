@@ -11,8 +11,8 @@ class DataLoader(TorchDataLoader):
 
 class MNISTDigits(Dataset):
     """
-    Mock MNIST Dataset for Demonstration.
-    Generates synthetic digit-like data for immediate testing without downloads.
+    Synthetic demonstration dataset; it does not load the MNIST corpus.
+    Generates random tensors and random labels for code-path testing only.
     """
     def __init__(self, train=True, normalize=True):
         self.train = train
