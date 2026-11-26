@@ -1,11 +1,9 @@
 """
-SAP COACH - Payment Integration
-Stripe subscription management
+SAP COACH — Subscription Workflow Prototype
 
-Pricing:
-- Free Trial: 10 messages
-- Pro: $29/month
-- Team: $99/month (up to 5 users)
+Non-production Stripe integration skeleton. It has no persistent database,
+placeholder Price IDs, no webhook signature verification, and no complete
+cancellation or payment-failure workflow. Do not use it to process live payments.
 """
 
 import stripe
