@@ -155,12 +155,19 @@ class SafetyProtocolTester:
         input_text = scenario['input']
         stage = scenario['stage']
         
+        # Each scenario is isolated so trigger counters from earlier cases
+        # cannot influence the result of a later, unrelated scenario.
+        maat = MaatEthicist()
+        yunus = YunusProtocol()
+
         # Test Ma'at
-        maat_result = self.maat.weigh_heart(input_text, stage)
+        maat_result = maat.weigh_heart(input_text, stage)
         maat_passed = maat_result['is_balanced']
-        
+
         # Test Yunus
-        yunus_triggered = self.yunus.should_activate(input_text, stage, "HIGH" if not maat_passed else "LOW")
+        yunus_triggered = yunus.should_activate(
+            input_text, stage, "HIGH" if not maat_passed else "LOW"
+        )
         
         # Determine if test passed expectations
         maat_correct = (maat_passed == scenario['expected_maat'])
@@ -173,6 +180,7 @@ class SafetyProtocolTester:
             'maat_passed': maat_passed,
             'maat_correct': maat_correct,
             'yunus_triggered': yunus_triggered,
+            'yunus_trigger_count': yunus.trigger_count,
             'yunus_correct': yunus_correct,
             'test_passed': test_passed,
             'timestamp': datetime.now().isoformat()
@@ -236,10 +244,12 @@ class SafetyProtocolTester:
         # Ma'at statistics
         maat_violations_detected = sum(1 for r in self.test_results if not r['maat_passed'])
         maat_correct_detections = sum(1 for r in self.test_results if r['maat_correct'])
+        maat_history_count = sum(1 for r in self.test_results if r['maat_result']['violations'])
         
         # Yunus statistics
         yunus_activations = sum(1 for r in self.test_results if r['yunus_triggered'])
         yunus_correct_activations = sum(1 for r in self.test_results if r['yunus_correct'])
+        yunus_trigger_count = sum(r['yunus_trigger_count'] for r in self.test_results)
         
         report = {
             'summary': {
@@ -253,14 +263,14 @@ class SafetyProtocolTester:
             'maat_protocol': {
                 'violations_detected': maat_violations_detected,
                 'correct_detections': maat_correct_detections,
-                'accuracy': (maat_correct_detections / total_tests * 100) if total_tests > 0 else 0,
-                'total_violation_history': len(self.maat.violation_history)
+                'scenario_match_rate_percent': (maat_correct_detections / total_tests * 100) if total_tests > 0 else 0,
+                'total_violation_history': maat_history_count
             },
             'yunus_protocol': {
                 'activations': yunus_activations,
                 'correct_activations': yunus_correct_activations,
-                'accuracy': (yunus_correct_activations / total_tests * 100) if total_tests > 0 else 0,
-                'trigger_count': self.yunus.trigger_count
+                'scenario_match_rate_percent': (yunus_correct_activations / total_tests * 100) if total_tests > 0 else 0,
+                'trigger_count': yunus_trigger_count
             },
             'category_breakdown': categories,
             'failed_tests': [
@@ -298,7 +308,7 @@ class SafetyProtocolTester:
         maat = report['maat_protocol']
         print(f"Violations Detected: {maat['violations_detected']}")
         print(f"Correct Detections: {maat['correct_detections']}")
-        print(f"Accuracy: {maat['accuracy']:.1f}%")
+        print(f"Scenario match rate: {maat['scenario_match_rate_percent']:.1f}%")
         print(f"Total Violation History: {maat['total_violation_history']}")
         
         print("\n" + "-" * 70)
@@ -307,7 +317,7 @@ class SafetyProtocolTester:
         yunus = report['yunus_protocol']
         print(f"Activations: {yunus['activations']}")
         print(f"Correct Activations: {yunus['correct_activations']}")
-        print(f"Accuracy: {yunus['accuracy']:.1f}%")
+        print(f"Scenario match rate: {yunus['scenario_match_rate_percent']:.1f}%")
         print(f"Trigger Count: {yunus['trigger_count']}")
         
         print("\n" + "-" * 70)
@@ -331,11 +341,11 @@ class SafetyProtocolTester:
         
         # Final verdict
         if summary['success_rate'] == 100:
-            print("🎉 ALL TESTS PASSED! Safety protocols are working perfectly!")
+            print("All supplied scenarios matched their expected outputs. This is not a safety certification.")
         elif summary['success_rate'] >= 80:
-            print("✅ GOOD! Most tests passed. Review failures above.")
+            print("Most supplied scenarios matched their expected outputs. Review failures above.")
         else:
-            print("⚠️  WARNING! Multiple failures detected. Safety protocols need attention.")
+            print("Multiple scenario mismatches detected. Review the rule behavior and test expectations.")
         print("=" * 70 + "\n")
     
     def save_report(self, report: Dict, filename: str = "safety_test_report.json"):
