@@ -10,7 +10,7 @@ This suite runs a small set of hand-authored examples against the repository's M
 python test_safety_protocols.py
 ```
 
-The script writes safety_test_report.json beside itself.
+The script writes safety_test_report.json beside itself. The checked-in report is a historical snapshot, not the result of the current code.
 
 ## Scope
 
@@ -22,7 +22,7 @@ The modules use manually specified keyword and phrase lists, weighted deductions
 
 The report's overall success rate is the proportion of these specific scenarios that match their hand-written expected outputs. It is not a population-level accuracy estimate.
 
-The per-module accuracy values are also calculated against this same small scenario set. The scenarios are not a representative, blinded, independently labeled dataset. Do not present values such as 91.7%, 58.3%, or 100% as general detection accuracy or proof of safety.
+The per-module scenario match rates are also calculated against this same small scenario set. The scenarios are not a representative, blinded, independently labeled dataset. Do not present historical values such as 91.7%, 58.3%, or 100% as general detection accuracy or proof of safety.
 
 A test can pass while the underlying rule is incomplete or unsuitable for real use. A test can fail because the current implementation differs from the manually written expectation. Both outcomes are useful debugging signals, not safety certifications.
 
