@@ -1,3 +1,5 @@
+> **ARCHIVED ARCHITECTURE CONCEPT.** This file describes an earlier proposed architecture. Statements about consciousness awareness, quantum enhancement, bio-sensing, clinical or diagnostic capability, uniqueness, and production readiness are not established by the current code or independent evidence. Treat the diagrams and component descriptions as design intent unless separately verified.
+
 # 🏗️ LUMINARK - System Architecture
 
 ## **Critical Distinction: Two Separate Systems**
@@ -80,11 +82,11 @@ LUMINARK consists of **two distinct but integrated systems**:
 ## 🤖 **2. LUMINARK AI Agent (Uses SAP)**
 
 ### **What LUMINARK AI Is:**
-- ✅ Advanced AI system with consciousness awareness
-- ✅ Multi-modal intelligent agent
-- ✅ Ethically-grounded decision maker
+- ✅ Experimental AI-agent concept; no consciousness capability is established
+- ✅ Experimental multi-module agent prototype
+- ✅ Rule-based ethics protocol concept; effectiveness not validated
 - ✅ Bio-inspired sensing system
-- ✅ Quantum-enhanced measurement system
+- ✅ Experimental quantum-circuit examples; no practical measurement advantage established
 
 ### **How LUMINARK AI Uses SAP:**
 
