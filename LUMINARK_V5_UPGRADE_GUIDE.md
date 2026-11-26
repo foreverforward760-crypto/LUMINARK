@@ -1,3 +1,5 @@
+> **Historical implementation notes — not a current release or validation report.** This document describes an earlier AI-assisted UI design effort. Its feature checklist, accessibility claims, deployment instructions, and statements about real LLM/oracle readiness have not been independently verified against the current repository. Do not treat it as proof of production readiness. The current repository README and tested source code take precedence.
+
 # 🚀 LUMINARK v5 UPGRADED - Complete Implementation Guide
 
 ## Executive Summary
