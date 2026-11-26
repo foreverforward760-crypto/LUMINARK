@@ -19,7 +19,7 @@ class MetaLearner:
         return {"status": "improved", "learning_rate_strategy": "cyclical_stage_aware"}
 
 class RecursiveImprovementEngine:
-    """AI that recursively improves itself using SAR framework"""
+    """Mock improvement orchestrator; does not train or modify a model."""
     
     def __init__(self):
         self.performance_metrics = {}
@@ -33,7 +33,7 @@ class RecursiveImprovementEngine:
         self.meta_learner = MetaLearner()
         
     async def self_improve_cycle(self):
-        """Complete self-improvement cycle"""
+        """Return canned demonstration results without changing model state."""
         print("🔄 Self-Improvement Cycle Initiated...")
         
         # Phase 1: Assessment (Mock)
