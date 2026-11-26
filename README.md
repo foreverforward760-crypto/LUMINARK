@@ -67,7 +67,9 @@ A passing test suite does not establish production readiness or independent vali
 - Some modules are optional, experimental, or dependent on packages not required by the dashboard.
 - The legacy framework implementation now uses the canonical stage names, but its stage-state assumptions and domain meanings still require review against the complete framework specification.
 - No independent benchmarks, prospective studies, clinical evaluations, or production customer results are established by this repository.
-- The 81-stage and quantum experiments are separate prototypes; their mathematical and scientific validity has not been independently established.
+- The 81-stage prototype now maps numbered stages 0-9 plus a separate 0B boundary, but its claimed 81 discrete microstates are not yet implemented. Stage 9 state semantics remain provisional.
+- The Qiskit module contains experimental quantum circuits; this does not establish truth verification, semantic coherence measurement, or a useful quantum advantage.
+- The personal assessment content contains interpretive research comparisons and question examples, not a validated SAP or clinical assessment.
 - Authentication, authorization, data retention, privacy, monitoring, and deployment controls require further engineering before networked use.
 - Third-party dependency licenses and code provenance have not yet been fully inventoried.
 
