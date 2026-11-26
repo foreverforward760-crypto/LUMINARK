@@ -1,11 +1,11 @@
 """
 LUMINARK - SAP (Stanfield's Axiom of Perpetuity) Module
-Complete 81-stage consciousness framework
+Experimental SAP stage and micro-stage prototype
 
 Components:
-- framework_81: Complete 81-stage SAP implementation
+- framework_81: Experimental stage 0-9 mapping with separate 0B boundary; 81 microstates not yet implemented
 - environmental: Environmental harmony metrics
-- Geometric encoding and 369 resonance detection
+- Project-defined geometry labels and 3/6/9 digit-pattern calculation
 """
 
 from .framework_81 import (
