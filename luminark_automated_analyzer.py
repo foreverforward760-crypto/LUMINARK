@@ -58,7 +58,18 @@ class AutomatedSAPAnalyzer:
             'timestamp': datetime.now().isoformat(),
             'raw_data_sources': list(raw_data['sources'].keys()),
             'sap_analysis': sap_result,
-            'data_quality_score': self._calculate_data_quality(raw_data)
+            'data_quality_score': self._calculate_data_quality(raw_data),  # Legacy source-presence score, not a data-quality measure
+            'source_coverage_score': self._calculate_data_quality(raw_data),
+            'estimated_fields': [
+                'debt_to_equity (derived from profit margin)',
+                'cash_reserves_months (bucketed from market capitalization)',
+                'r_d_spending_pct (sector heuristic)',
+                'employee_turnover_pct', 'management_layers', 'employee_satisfaction',
+                'market_share_pct', 'competitive_threats', 'new_products_last_2yrs',
+                'innovation_index', 'leadership_tenure_years', 'ceo_tenure_years',
+                'mission_clarity', 'market_growth_yoy', 'analyst_rating'
+            ],
+            'analysis_notice': 'Exploratory rule-based classification. Several input fields are estimated; stage scores and investment signals are not validated and are not investment advice.'
         }
         
         return complete_analysis
@@ -244,14 +255,14 @@ LUMINARK SAP CORPORATE ANALYSIS REPORT
 
 Company: {analysis['company_name']} ({analysis['symbol']})
 Analysis Date: {analysis['timestamp'][:10]}
-Data Quality: {analysis['data_quality_score']}/100
+Source Coverage Indicator: {analysis['source_coverage_score']}/100
 
 {'='*80}
 SAP CLASSIFICATION
 {'='*80}
 
 Stage: {sap['sap_stage']} - {sap['stage_name']}
-Confidence: {sap['confidence']}%
+Stage-match score (not calibrated): {sap['confidence']}%
 
 SPAT Vectors:
   Complexity:    {sap['spat_vectors']['complexity']:.2f}/10
