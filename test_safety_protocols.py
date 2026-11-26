@@ -11,7 +11,8 @@ import json
 
 # Import the safety protocols
 import sys
-sys.path.insert(0, 'c:\\Users\\Forev\\OneDrive\\Documents\\GitHub\\LUMINARK')
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from luminark_omega.protocols.maat import MaatEthicist
 from luminark_omega.protocols.yunus import YunusProtocol
 
@@ -352,7 +353,7 @@ async def main():
     tester = SafetyProtocolTester()
     report = await tester.run_all_tests()
     tester.print_report(report)
-    tester.save_report(report, "c:\\Users\\Forev\\OneDrive\\Documents\\GitHub\\LUMINARK\\safety_test_report.json")
+    tester.save_report(report, str(Path(__file__).resolve().parent / "safety_test_report.json"))
     
     return report
 
