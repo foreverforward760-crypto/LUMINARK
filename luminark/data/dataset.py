@@ -20,7 +20,7 @@ class MNISTDigits(Dataset):
         # Synthetic data: 1x28x28 images (flattened to 784 in some models, but we keep shape)
         self.data = torch.randn(self.size, 1, 28, 28)
         self.targets = torch.randint(0, 10, (self.size,))
-        print(f"📊 Initialized Mock MNIST ({'Train' if train else 'Test'}): {self.size} samples")
+        print(f"📊 Initialized synthetic digit-like data ({'Train' if train else 'Test'}): {self.size} samples")
 
     def __len__(self):
         return self.size
