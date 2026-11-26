@@ -33,9 +33,9 @@ class YunusProtocol:
         
     def should_activate(self, text: str, stage: int, risk_level: str) -> bool:
         """
-        Detects 'False Light' - assertions of certainty without foundation,
-        or deceptive mimicry of enlightenment (Stage 7 traps).
-        Enhanced with pattern matching and threshold logic.
+        Applies keyword/phrase triggers for selected certainty, permanence,
+        capability, and absolutist language. It does not understand context
+        reliably and is not a comprehensive safety classifier.
         """
         text_lower = text.lower()
         triggers_found = []
