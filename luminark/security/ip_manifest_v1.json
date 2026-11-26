@@ -136,5 +136,8 @@
     "youtube_content\\README.md": "79138af25eb4c83be9f06841235096e22c09ebff28f0b007863aeae2e755da87",
     "youtube_content\\zinc_spark_script.md": "ffe2da9bbf6c15cbac986998e9f75828b016e5e2900b4efdd116dcb6607d5e12"
   },
-  "total_hash": "1558d46703e16ba7c5edbecefaf333f5374421f3467ca6818bd5966fc9d9bdb9"
+  "total_hash": "1558d46703e16ba7c5edbecefaf333f5374421f3467ca6818bd5966fc9d9bdb9",
+  "manifest_status": "Historical snapshot; hashes are not current after subsequent repository edits and must be regenerated before relying on them for file-integrity comparisons.",
+  "legal_notice": "This manifest is a technical inventory only. It is not a patent filing, copyright registration, legal opinion, proof of authorship, or proof of exclusive ownership.",
+  "generated_by_note": "The original manifest records an AI agent as generator. This metadata does not establish human or AI authorship of the underlying concepts or code."
 }
