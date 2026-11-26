@@ -102,18 +102,32 @@ class SECEdgarConnector(DataConnector):
         }
         self.rate_limit_delay = 0.1  # SEC requires 10 requests/second max
     
+    @staticmethod
+    def resolve_ticker_cik(ticker: str, ticker_records: Dict) -> Optional[str]:
+        """Resolve a stock ticker to its zero-padded SEC CIK using SEC ticker records."""
+        target = ticker.strip().upper()
+        for record in ticker_records.values():
+            if str(record.get("ticker", "")).strip().upper() == target:
+                cik = record.get("cik_str")
+                if cik is not None:
+                    return str(cik).zfill(10)
+        return None
+
     def get_company_cik(self, ticker: str) -> Optional[str]:
-        """Get CIK (Central Index Key) for a ticker"""
+        """Resolve ticker symbols through the SEC's company_tickers.json file."""
         try:
-            url = f"{self.base_url}/submissions/CIK{ticker.upper()}.json"
+            url = "https://www.sec.gov/files/company_tickers.json"
             response = requests.get(url, headers=self.headers, timeout=10)
-            
-            if response.status_code == 200:
-                return response.json().get('cik')
-            return None
-            
+            response.raise_for_status()
+            cik = self.resolve_ticker_cik(ticker, response.json())
+            if cik is None:
+                print(f"No SEC CIK found for ticker {ticker}")
+                return None
+            self._rate_limit()
+            return cik
+
         except Exception as e:
-            print(f"Error fetching CIK for {ticker}: {e}")
+            print(f"Error resolving SEC CIK for {ticker}: {e}")
             return None
     
     def get_recent_filings(self, cik: str, form_type: str = "10-K") -> List[Dict]:
